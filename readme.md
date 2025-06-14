@@ -1,5 +1,6 @@
 Hi, guys please clone this repo to see if your git is working fine.
 
+Python version: 3.13.2
 
 HOW?:
 
