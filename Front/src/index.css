@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom font family for Arial */
+.font-arial {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Base styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-neutral-50 text-neutral-900;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-tum-blue-600 hover:bg-tum-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-tum-blue-500 focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border border-neutral-300 hover:border-neutral-400 text-neutral-700 hover:text-neutral-900 font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-tum-blue-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-neutral-100 hover:bg-neutral-200 text-neutral-700 hover:text-neutral-900 font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2;
+  }
+  
+  .btn-sm {
+    @apply py-1 px-3 text-sm;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-neutral-200;
+  }
+  
+  .input {
+    @apply block w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-tum-blue-500 focus:border-tum-blue-500;
+  }
+  
+  .textarea {
+    @apply block w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-tum-blue-500 focus:border-tum-blue-500;
+    resize: vertical;
+  }
+  
+  .select {
+    @apply block w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-tum-blue-500 focus:border-tum-blue-500;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  @apply outline-none min-h-[600px] p-4;
+}
+
+.ProseMirror p {
+  @apply mb-4;
+}
+
+.ProseMirror h1 {
+  @apply text-2xl font-bold mb-4;
+}
+
+.ProseMirror h2 {
+  @apply text-xl font-semibold mb-3;
+}
+
+.ProseMirror h3 {
+  @apply text-lg font-medium mb-2;
+}
+
+.ProseMirror ul {
+  @apply list-disc list-inside mb-4;
+}
+
+.ProseMirror ol {
+  @apply list-decimal list-inside mb-4;
+}
+
+.ProseMirror li {
+  @apply mb-1;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 border-neutral-300 pl-4 italic mb-4;
+}
+
+.ProseMirror code {
+  @apply bg-neutral-100 px-1 py-0.5 rounded text-sm;
+}
+
+.ProseMirror pre {
+  @apply bg-neutral-100 p-4 rounded mb-4 overflow-x-auto;
+}
+
+/* Generated content specific styles */
+.generated-content {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+} 
