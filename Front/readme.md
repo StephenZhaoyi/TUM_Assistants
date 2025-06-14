@@ -15,6 +15,7 @@ A modern web application for generating high-quality administrative documents us
 ## Language Support
 
 The application supports two languages:
+
 - **English** (default)
 - **German** (Deutsch)
 
@@ -25,22 +26,25 @@ Users can switch between languages using the language switcher in the header. Th
 ### Prerequisites
 
 - Node.js (version 16 or higher) (the one we use: Node.js v22.16.0.)
-- npm or yarn
+- npm or yarn （we used 10.9.2）
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
-cd TUM_Assistants
+cd TUM_Assistants/Front
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -50,11 +54,13 @@ npm run dev
 ## Usage
 
 ### Dashboard
+
 - View recent drafts and quick statistics
 - Access different generation methods
 - Navigate to history and other features
 
 ### Structured Input
+
 - Select document type (Announcement, Student Notice, Meeting Minutes, Formal Letter)
 - Choose target audience
 - Enter key content points
@@ -62,15 +68,18 @@ npm run dev
 - Generate professional documents
 
 ### Free Text Generation
+
 - Use natural language to describe your document requirements
 - Generate documents with AI assistance
 
 ### Draft Editor
+
 - Edit generated documents
 - Save changes
 - Export or share documents
 
 ### History
+
 - View all generated drafts
 - Search and filter documents
 - Copy, edit, or delete drafts
@@ -118,6 +127,7 @@ src/
 ### Modifying TUM Branding
 
 The application uses TUM brand colors defined in `tailwind.config.js`:
+
 - TUM Blue: `#0066B3`
 - TUM Orange: `#E37222`
 - TUM Gray: `#425563`
