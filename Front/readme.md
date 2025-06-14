@@ -24,7 +24,7 @@ Users can switch between languages using the language switcher in the header. Th
 
 ### Prerequisites
 
-- Node.js (version 16 or higher)
+- Node.js (version 16 or higher) (the one we use: Node.js v22.16.0.)
 - npm or yarn
 
 ### Installation
