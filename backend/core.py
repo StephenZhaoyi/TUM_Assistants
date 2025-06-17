@@ -95,7 +95,7 @@ def process_course_registration(time_start=None, time_end=None, target_group=Non
         print(f"\n发生错误：{str(e)}")
         return None
 
-def process_event_notice(event_name=None, event_intro=None, time_start=None, time_end=None, event_location=None, target_group=None):
+def process_event_notice(event_name=None, event_intro=None, info_url=None, time_start=None, time_end=None, event_location=None, target_group=None, registration_url=None, language=None, note=None, name=None):
     """
     读取campus活动信息并生成通知
     """
@@ -117,7 +117,10 @@ def process_event_notice(event_name=None, event_intro=None, time_start=None, tim
     if event_intro:
         template = template.replace("{event_intro}", event_intro)
     if info_url:
-        template = template.replace("{info_url}", info_url)
+        info_url_line = info_url
+    else:
+        info_url_line = ""
+    template = template.replace("{info_url_line}", info_url_line)
     if time_start:
         template = template.replace("{time_start}", time_start)
     if time_end:
@@ -128,9 +131,16 @@ def process_event_notice(event_name=None, event_intro=None, time_start=None, tim
         template = template.replace("{target_group}", target_group)
     if note_content:
         template = template.replace("{note}", note_content)
+    if registration_url:
+        template = template.replace("{registration_url}", registration_url)
+    if note:
+        template = template.replace("{note}", note)
+    if name:
+        template = template.replace("{name}", name)
     else:
-        template = template.replace("{note}", "")
-
+        template = template.replace("{name}", "Student Service Center")
+    
+       
     # 构造 prompt 交给 Gemini
     prompt = f"""
     请严格按照以下模板格式生成通知：
@@ -157,7 +167,7 @@ def process_event_notice(event_name=None, event_intro=None, time_start=None, tim
             model="gemini-2.0-flash",
             contents=prompt
         )
-        return response.text.replace('\n', '<br>')
+        return response.text
     except Exception as e:
         print(f"\n发生错误：{str(e)}")
         return None
@@ -171,6 +181,19 @@ if __name__ == "__main__":
         target_group="Master in Informatics",
         name="TUM Examination Office"
     )
+    result = process_event_notice(
+    event_name="AI in Healthcare Forum",
+    event_intro="An insightful day full of keynotes, panels and startup showcases.",
+    info_url="https://tum.ai/event-info",
+    registration_url="https://tum.ai/event-registration",
+    language="english",
+    time_start="2025-06-25",
+    time_end="2025-06-25",
+    event_location="Audimax, TUM Main Campus",
+    target_group="All Master's students",
+    name="TUM AI Club",
+    note="sign before 20-06-2025"
+)
     
 
     if result:

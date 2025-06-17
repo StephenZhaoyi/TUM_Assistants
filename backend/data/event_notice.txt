@@ -1,42 +1,46 @@
-📩 Scroll down for English version<br><br>
----<br><br>
-[Deutsch]<br><br>
-Liebe Mitglieder der {target_group},<br><br>
+📩 Scroll down for English version
+
+---
+
+[Deutsch]
+
+Liebe Mitglieder der {target_group},
 
 {event_intro}
 
-Wir freuen uns, Sie zur Veranstaltung **{event_name}** einzuladen, die vom **{time_start}** bis **{time_end}** auf dem **{event_location}** stattfindet.<br><br>
+Wir freuen uns, Sie zur Veranstaltung **{event_name}** einzuladen, die vom **{time_start}** bis **{time_end}** auf dem **{event_location}** stattfindet.
 
-Diese Veranstaltung ist Teil unseres Engagements für Innovation und Unternehmertum an der TUM. Sie erwartet ein vielseitiges Programm mit Vorträgen, Panels, Messebereichen und Networking-Gelegenheiten.<br><br>
+Diese Veranstaltung ist Teil unseres Engagements für Innovation und Unternehmertum an der TUM. Sie erwartet ein vielseitiges Programm mit Vorträgen, Panels, Messebereichen und Networking-Gelegenheiten.
 
-🔹 Datum: {time_start} – {time_end}<br>
-🔹 Ort: {event_location}<br>
-🔹 Sprache: {language}<br>
-🔹 Anmeldung: <a href="{registration_url}">{registration_url}</a><br>
-🔹 Weitere Informationen: <a href="{info_url}">{info_url}</a><br><br>
+🔹 Datum: {time_start} – {time_end}  
+🔹 Ort: {event_location}  
+🔹 Sprache: {language}  
+🔹 Anmeldung: {registration_url}  
+🔹 Weitere Informationen: {info_url_line}
 
-{note}<br><br>
+**Hinweis: {note}** 
 
-Mit freundlichen Grüßen<br>
-TUM Veranstaltungskoordination<br><br>
+Mit freundlichen Grüßen  
+{name}
+---
 
----<br><br>
-[English]<br><br>
-Dear members of the {target_group},<br><br>
+[English]
+
+Dear members of the {target_group},
 
 {event_intro}
 
-We are pleased to invite you to **{event_name}**, taking place from **{time_start}** to **{time_end}** at **{event_location}**.<br><br>
+We are pleased to invite you to **{event_name}**, taking place from **{time_start}** to **{time_end}** at **{event_location}**.
 
-This event is part of our ongoing efforts to foster innovation and entrepreneurship at TUM. You can look forward to a diverse program including keynotes, panels, exhibitions, and networking opportunities.<br><br>
+This event is part of our ongoing efforts to foster innovation and entrepreneurship at TUM. You can look forward to a diverse program including keynotes, panels, exhibitions, and networking opportunities.
 
-🔹 Date: {time_start} – {time_end}<br>
-🔹 Location: {event_location}<br>
-🔹 Language: {language}<br>
-🔹 Registration: <a href="{registration_url}">{registration_url}</a><br>
-🔹 Info: <a href="{info_url}">{info_url}</a><br><br>
+🔹 Date: {time_start} – {time_end}  
+🔹 Location: {event_location}  
+🔹 Language: {language}  
+🔹 Registration: {registration_url}  
+🔹 Info: {info_url_line}
 
-{note}<br><br>
+**Note:{note}** 
 
-Best regards,<br>
-TUM Event Coordination Team
+Best regards,  
+{name}
