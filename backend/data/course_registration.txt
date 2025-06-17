@@ -1,0 +1,43 @@
+📩 Scroll down for English version
+
+---
+
+[Deutsch]
+
+**Zielgruppe: {target_group}**
+
+Liebe*r Studierende*r,
+
+bitte beachten Sie, dass die Prüfungsanmeldung für Ihre Prüfungen ab **{time_start}** möglich ist. Die Anmeldefrist endet am **{time_end}**.
+
+Alle oben genannten Studierenden werden gebeten, sich rechtzeitig über TUMonline für die entsprechenden Prüfungen anzumelden. Eine nachträgliche Anmeldung ist nicht möglich.
+
+Bitte stellen Sie sicher, dass Sie alle relevanten Informationen zu Ihren Prüfungen frühzeitig überprüfen.
+
+Bei Fragen wenden Sie sich bitte an das Prüfungsamt oder Ihre Studienkoordination.
+
+**Hinweis: {note}** 
+
+Mit freundlichen Grüßen  
+{name}
+
+---
+
+[English]
+
+**Target group: {target_group}**
+
+Dear Student,
+
+Please note that exam registration will be open from **{time_start}** and will close on **{time_end}**.
+
+All students in the above-mentioned group are required to register for their exams in TUMonline within the given period. Late registration is not possible.
+
+Make sure to review all relevant exam information in advance.
+
+If you have any questions, please contact the Examination Office or your program coordinator.
+
+**Note:{note}** 
+
+Best regards,  
+{name}

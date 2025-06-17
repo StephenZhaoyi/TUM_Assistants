@@ -8,6 +8,7 @@ import {
   MessageSquare, 
   History
 } from 'lucide-react'
+import tumLogo from '../assets/TUM.png'
 
 const Layout = ({ children }) => {
   const location = useLocation()
@@ -40,9 +41,9 @@ const Layout = ({ children }) => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <img 
-                src="https://keystoneacademic-res.cloudinary.com/image/upload/f_auto/q_auto/g_auto/w_200/dpr_2.0/element/22/220289_TUM_Logo_CHN_rgb_1400px.png"
+                src={tumLogo}
                 alt={t('header.logo')}
-                className="h-10 w-auto"
+                className="h-12 w-auto"
               />
             </div>
             <div className="flex items-center space-x-4">

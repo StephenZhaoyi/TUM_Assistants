@@ -217,130 +217,35 @@ This is a regenerated version based on your current content. Please adjust as ne
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="btn-outline"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            {t('draftEditor.back')}
-          </button>
-          <h1 className="text-2xl font-bold text-neutral-900">
-            {getDraftTitle()}
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+            {t('draftEditor.title')}
           </h1>
+          <p className="text-lg text-neutral-600">
+            {draft.title}
+          </p>
         </div>
-        
         <div className="flex items-center gap-2">
           <button
             onClick={handleCopy}
-            className="btn-outline"
+            className="btn-secondary"
           >
-            <Copy className="h-5 w-5 mr-2" />
             {t('draftEditor.copy')}
           </button>
           <button
             onClick={handleSave}
-            disabled={isSaving}
             className="btn-primary"
+            disabled={isSaving}
           >
-            {isSaving ? (
-              <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                {t('draftEditor.saving')}
-              </>
-            ) : (
-              <>
-                <Save className="h-5 w-5 mr-2" />
-                {t('draftEditor.save')}
-              </>
-            )}
-          </button>
-          <button
-            onClick={handleRegenerate}
-            className="btn-secondary"
-          >
-            <RotateCcw className="h-5 w-5 mr-2" />
-            {t('draftEditor.regenerate')}
-          </button>
-          <button
-            onClick={generateSuggestions}
-            disabled={isGeneratingSuggestions}
-            className="btn-outline"
-          >
-            <Lightbulb className="h-5 w-5 mr-2" />
-            {t('draftEditor.suggestions')}
+            {isSaving ? t('draftEditor.saving') : t('draftEditor.save')}
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Editor */}
-        <div className="lg:col-span-3">
-          <div className="card p-0 flex flex-col h-[600px] min-h-[400px]">
-            {/* 编辑器内容区 */}
-            <div className="p-6 flex-1 overflow-auto">
-              <EditorContent 
-                editor={editor} 
-                className="prose max-w-none h-full font-arial text-base leading-relaxed"
-                style={{ minHeight: '400px' }}
-                key={language}
-              />
-            </div>
-            {/* 如需底部按钮栏，可在此添加 */}
-          </div>
-        </div>
-
-        {/* Suggestions Panel */}
-        <div className="lg:col-span-1">
-          {showSuggestions && (
-            <div className="card p-6 h-[calc(100vh-200px)] overflow-y-auto">
-              <h3 className="text-lg font-semibold text-neutral-900 mb-4">
-                {t('draftEditor.suggestions')}
-              </h3>
-              
-              {isGeneratingSuggestions ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-7 w-7 animate-spin text-primary-600 mr-2" />
-                  <span className="text-neutral-600">
-                    {t('draftEditor.generatingSuggestions')}
-                  </span>
-                </div>
-              ) : suggestions.length > 0 ? (
-                <div className="space-y-4">
-                  {suggestions.map((suggestion) => (
-                    <div key={suggestion.id} className="border border-neutral-200 rounded-lg p-4">
-                      <div className="text-sm text-neutral-600 mb-2">
-                        <strong>{t('draftEditor.moreFormal')}:</strong> {suggestion.reason}
-                      </div>
-                      <div className="text-sm mb-2">
-                        <div className="text-red-600 line-through">
-                          {suggestion.original}
-                        </div>
-                        <div className="text-green-600 font-medium">
-                          {suggestion.suggestion}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => applySuggestion(suggestion)}
-                        className="btn-outline btn-sm w-full"
-                      >
-                        <Check className="h-4 w-4 mr-1" />
-                        {t('draftEditor.applySuggestion')}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-neutral-500">
-                  {t('draftEditor.noSuggestions')}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+      <div className="card">
+        <div className="generated-content" dangerouslySetInnerHTML={{ __html: draft.content }} />
       </div>
     </div>
   )

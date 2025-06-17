@@ -149,6 +149,7 @@ export const de = {
     memo: 'Memo',
     policy: 'Richtlinie',
     guideline: 'Leitfaden',
+    courseRegistration: 'Kursanmeldung Benachrichtigung',
     freeTextGeneration: 'Freitextgenerierung'
   },
 
@@ -197,16 +198,19 @@ export const de = {
   form: {
     title: 'Titel',
     content: 'Inhalt',
-    type: 'Typ',
+    type: 'Dokumenttyp',
     tone: 'Ton',
     date: 'Datum',
     author: 'Autor',
     department: 'Abteilung',
-    recipient: 'Empfänger',
+    recipient: 'Zielgruppe',
     subject: 'Betreff',
     description: 'Beschreibung',
     keywords: 'Schlüsselwörter',
-    template: 'Vorlage'
+    template: 'Vorlage',
+    startDate: 'Startdatum',
+    endDate: 'Enddatum',
+    additionalNote: 'Zusätzliche Hinweise'
   },
 
   // Messages
@@ -233,6 +237,10 @@ export const de = {
     content: 'Geben Sie hier Ihren Inhalt ein...',
     description: 'Beschreibung eingeben...',
     keywords: 'Schlüsselwörter durch Kommas getrennt eingeben...',
-    search: 'Entwürfe durchsuchen...'
+    search: 'Entwürfe durchsuchen...',
+    recipient: 'Zielgruppe eingeben...',
+    additionalNote: 'Geben Sie zusätzliche Hinweise oder Anforderungen ein...',
+    startDate: 'Startdatum eingeben (z.B. "1. Oktober 2024")',
+    endDate: 'Enddatum eingeben (z.B. "15. Februar 2024")'
   }
 } 

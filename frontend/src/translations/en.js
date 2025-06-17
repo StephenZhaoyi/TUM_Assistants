@@ -149,6 +149,7 @@ export const en = {
     memo: 'Memo',
     policy: 'Policy',
     guideline: 'Guideline',
+    courseRegistration: 'Course Registration Notice',
     freeTextGeneration: 'Free Text Generation'
   },
 
@@ -197,16 +198,19 @@ export const en = {
   form: {
     title: 'Title',
     content: 'Content',
-    type: 'Type',
+    type: 'Document Type',
     tone: 'Tone',
     date: 'Date',
     author: 'Author',
     department: 'Department',
-    recipient: 'Recipient',
+    recipient: 'Target Audience',
     subject: 'Subject',
     description: 'Description',
     keywords: 'Keywords',
-    template: 'Template'
+    template: 'Template',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    additionalNote: 'Additional Notes'
   },
 
   // Messages
@@ -233,6 +237,10 @@ export const en = {
     content: 'Enter your content here...',
     description: 'Enter description...',
     keywords: 'Enter keywords separated by commas...',
-    search: 'Search drafts...'
+    search: 'Search drafts...',
+    recipient: 'Enter target audience...',
+    additionalNote: 'Enter any additional notes or requirements...',
+    startDate: 'Enter start date (e.g., "October 1, 2024")',
+    endDate: 'Enter end date (e.g., "February 15, 2024")'
   }
 } 
