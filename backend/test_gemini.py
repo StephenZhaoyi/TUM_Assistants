@@ -7,6 +7,8 @@ load_dotenv()
 
 # 配置 Gemini API
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+print("当前读取的 API key：", GOOGLE_API_KEY)
+
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
 def test_gemini():

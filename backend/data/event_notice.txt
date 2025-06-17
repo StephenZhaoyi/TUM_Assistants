@@ -1,0 +1,42 @@
+📩 Scroll down for English version<br><br>
+---<br><br>
+[Deutsch]<br><br>
+Liebe Mitglieder der {target_group},<br><br>
+
+{event_intro}
+
+Wir freuen uns, Sie zur Veranstaltung **{event_name}** einzuladen, die vom **{time_start}** bis **{time_end}** auf dem **{event_location}** stattfindet.<br><br>
+
+Diese Veranstaltung ist Teil unseres Engagements für Innovation und Unternehmertum an der TUM. Sie erwartet ein vielseitiges Programm mit Vorträgen, Panels, Messebereichen und Networking-Gelegenheiten.<br><br>
+
+🔹 Datum: {time_start} – {time_end}<br>
+🔹 Ort: {event_location}<br>
+🔹 Sprache: {language}<br>
+🔹 Anmeldung: <a href="{registration_url}">{registration_url}</a><br>
+🔹 Weitere Informationen: <a href="{info_url}">{info_url}</a><br><br>
+
+{note}<br><br>
+
+Mit freundlichen Grüßen<br>
+TUM Veranstaltungskoordination<br><br>
+
+---<br><br>
+[English]<br><br>
+Dear members of the {target_group},<br><br>
+
+{event_intro}
+
+We are pleased to invite you to **{event_name}**, taking place from **{time_start}** to **{time_end}** at **{event_location}**.<br><br>
+
+This event is part of our ongoing efforts to foster innovation and entrepreneurship at TUM. You can look forward to a diverse program including keynotes, panels, exhibitions, and networking opportunities.<br><br>
+
+🔹 Date: {time_start} – {time_end}<br>
+🔹 Location: {event_location}<br>
+🔹 Language: {language}<br>
+🔹 Registration: <a href="{registration_url}">{registration_url}</a><br>
+🔹 Info: <a href="{info_url}">{info_url}</a><br><br>
+
+{note}<br><br>
+
+Best regards,<br>
+TUM Event Coordination Team

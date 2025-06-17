@@ -95,6 +95,74 @@ def process_course_registration(time_start=None, time_end=None, target_group=Non
         print(f"\n发生错误：{str(e)}")
         return None
 
+def process_event_notice(event_name=None, event_intro=None, time_start=None, time_end=None, event_location=None, target_group=None):
+    """
+    读取campus活动信息并生成通知
+    """
+    # 读取文件内容
+    file_path = './data/event_notice.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取文件时发生错误：{str(e)}")
+        return None
+
+    # 读取附加说明（note.txt）
+    note_content = read_note()
+
+    # 替换模板变量
+    if event_name:
+        template = template.replace("{event_name}", event_name)
+    if event_intro:
+        template = template.replace("{event_intro}", event_intro)
+    if info_url:
+        template = template.replace("{info_url}", info_url)
+    if time_start:
+        template = template.replace("{time_start}", time_start)
+    if time_end:
+        template = template.replace("{time_end}", time_end)
+    if event_location:
+        template = template.replace("{event_location}", event_location)
+    if target_group:
+        template = template.replace("{target_group}", target_group)
+    if note_content:
+        template = template.replace("{note}", note_content)
+    else:
+        template = template.replace("{note}", "")
+
+    # 构造 prompt 交给 Gemini
+    prompt = f"""
+    请严格按照以下模板格式生成通知：
+    如果note_content内容为空，则不显示**Hinweis:**和**Note:**。
+    否则请将note_content内容添加在**Hinweis:**或者**Note:**后。
+    无论note_content是什么语言，都把信件翻译成相应的德语和英语，并且嵌入在相应语言区域。
+    不要添加任何额外的内容或解释。
+    保持所有格式和标记（如 **、换行等）不变。
+    如果模板中有未替换的变量（如 {{time_start}}），请保持原样。
+    如果模板中{{time_start}}或者{{time_end}}未被添加，请添加为今天的日期。
+    如果用户写入until + 日期，或者 bis + 日期，或者其他格式的日期，请识别并添加。
+    如果模板中{{target_group}}未被添加，默认添加为所有人。
+    如果模板中{{name}}未被添加，默认添加为Student Service Center。
+    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字。
+
+
+    模板内容：
+    {template}
+    """
+    print("\n正在生成通知...")
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+        return response.text.replace('\n', '<br>')
+    except Exception as e:
+        print(f"\n发生错误：{str(e)}")
+        return None
+
+
 if __name__ == "__main__":
     # 示例：可以传入参数来替换变量
     result = process_course_registration(
@@ -103,6 +171,8 @@ if __name__ == "__main__":
         target_group="Master in Informatics",
         name="TUM Examination Office"
     )
+    
+
     if result:
         print("\n=== 考试通知 ===\n")
         print(result) 
