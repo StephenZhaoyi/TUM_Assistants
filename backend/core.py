@@ -146,7 +146,7 @@ def process_event_notice(event_name=None, event_intro=None, info_url=None, time_
     请严格按照以下模板格式生成通知：
     如果note_content内容为空，则不显示**Hinweis:**和**Note:**。
     否则请将note_content内容添加在**Hinweis:**或者**Note:**后。
-    无论note_content是什么语言，都把信件翻译成相应的德语和英语，并且嵌入在相应语言区域。
+    无论note_content和是什么语言，你都应该转化成信件相应的德语和英语，并使用相应的信件语言。
     不要添加任何额外的内容或解释。
     保持所有格式和标记（如 **、换行等）不变。
     如果模板中有未替换的变量（如 {{time_start}}），请保持原样。
