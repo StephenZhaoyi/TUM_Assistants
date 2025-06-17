@@ -1,25 +1,109 @@
-Hi, guys please clone this repo to see if your git is working fine.
+# TUM Assistants
 
-Python version: 3.13.2
+Project demo is now complete! Below are the instructions for running and stopping the project.
 
-HOW?:
+## Requirements
 
+- Python version: 3.13.2
+- Node.js version: 18.0.0 or higher
+- npm version: 9.0.0 or higher
+- Gemini API key
+
+## Environment Setup
+
+Before running the project, you need to set up your environment variables:
+
+1. Navigate to the backend directory:
+
+```bash
+cd backend
 ```
+
+2. Create a `.env` file and add your Gemini API key:
+
+```bash
+GOOGLE_API_KEY=your_gemini_api_key_here
+```
+
+Replace `your_gemini_api_key_here` with your actual Gemini API key.
+
+## How to Run the Project
+
+1. First, clone the repository:
+
+```bash
 git clone https://github.com/StephenZhaoyi/TUM_Assistants.git
 ```
 
-and try to run hello.py
+2. Navigate to the project directory:
 
-if you are using Windows
-
-```
-python ./hello.py
+```bash
+cd TUM_Assistants
 ```
 
-if you are using MacOS
+3. Run the backend service:
 
-```
-python3 ./hello.py
+Windows users:
+
+```bash
+cd backend
+python ./core.py
 ```
 
-Beibei's first push
+MacOS users:
+
+```bash
+cd backend
+python3 ./core.py
+```
+
+4. Run the frontend project:
+
+First, install dependencies:
+
+```bash
+cd frontend
+npm install
+```
+
+Then start the development server:
+
+```bash
+npm run dev
+```
+
+## How to Stop the Project
+
+### Stop Backend Service
+
+- Press `Ctrl + C` (Windows/Linux) or `Command + C` (MacOS) in the terminal running the backend service
+- If the backend is running in the background, use the following commands to terminate the process:
+
+Windows users:
+
+```bash
+taskkill /F /IM python.exe
+```
+
+MacOS/Linux users:
+
+```bash
+pkill -f core.py
+```
+
+### Stop Frontend Service
+
+- Press `Ctrl + C` (Windows/Linux) or `Command + C` (MacOS) in the terminal running the frontend service
+- If the frontend is running in the background, use the following commands to terminate the process:
+
+Windows users:
+
+```bash
+taskkill /F /IM node.exe
+```
+
+MacOS/Linux users:
+
+```bash
+pkill -f node
+```
