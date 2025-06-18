@@ -8,20 +8,19 @@ Liebe Mitglieder der {target_group},
 
 {event_intro}
 
-Wir freuen uns, Sie zur Veranstaltung **{event_name}** einzuladen, die vom **{time_start}** bis **{time_end}** auf dem **{event_location}** stattfindet.
+Wir freuen uns, Sie zur Veranstaltung **{event_name}** einzuladen, die am **{event_time}** auf dem **{event_location}** stattfindet.
 
-Diese Veranstaltung ist Teil unseres Engagements für Innovation und Unternehmertum an der TUM. Sie erwartet ein vielseitiges Programm mit Vorträgen, Panels, Messebereichen und Networking-Gelegenheiten.
+Die Veranstaltungsinformationen lauten wie folgt:
 
-🔹 Datum: {time_start} – {time_end}  
+🔹 Datum: {event_time}  
 🔹 Ort: {event_location}  
 🔹 Sprache: {language}  
 🔹 Anmeldung: {registration_url}  
 🔹 Weitere Informationen: {info_url_line}
 
-**Hinweis: {note}** 
-
 Mit freundlichen Grüßen  
 {name}
+
 ---
 
 [English]
@@ -30,17 +29,15 @@ Dear members of the {target_group},
 
 {event_intro}
 
-We are pleased to invite you to **{event_name}**, taking place from **{time_start}** to **{time_end}** at **{event_location}**.
+We are pleased to invite you to **{event_name}**, taking place on **{event_time}** at **{event_location}**.
 
 This event is part of our ongoing efforts to foster innovation and entrepreneurship at TUM. You can look forward to a diverse program including keynotes, panels, exhibitions, and networking opportunities.
 
-🔹 Date: {time_start} – {time_end}  
+🔹 Date: {event_time}  
 🔹 Location: {event_location}  
 🔹 Language: {language}  
 🔹 Registration: {registration_url}  
 🔹 Info: {info_url_line}
-
-**Note:{note}** 
 
 Best regards,  
 {name}

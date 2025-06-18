@@ -1,0 +1,39 @@
+📩 Scroll down for English version
+
+---
+
+[Deutsch]
+
+Sehr geehrte Professorin / geehrter Professor,
+
+ich hoffe, diese Nachricht erreicht Sie wohlbehalten.
+
+Im Rahmen der Vorbereitungen für das kommende {semester}-Semester möchten wir die Vorlesung **{course_name} ({course_code})** terminlich koordinieren. Zu diesem Zweck bitten wir Sie höflich, Ihre zeitlichen Präferenzen aus den folgenden Optionen mitzuteilen:
+
+{time_options}
+
+Bitte teilen Sie uns Ihre Verfügbarkeit bis spätestens **{reply_deadline}** mit, damit wir die Raumplanung und Studierendeninformation rechtzeitig abschließen können.
+
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen  
+{name}
+
+---
+
+[English]
+
+Dear Professor,
+
+I hope this message finds you well.
+
+In preparation for the upcoming {semester} semester, we are coordinating the schedule for the lecture **{course_name} ({course_code})**. We kindly ask you to indicate your preferred time slots from the following options:
+
+{time_options}
+
+Please let us know your availability by **{reply_deadline}** so that we can finalize room assignments and inform students in a timely manner.
+
+If you have any questions, feel free to contact us.
+
+Best regards,  
+{name}
