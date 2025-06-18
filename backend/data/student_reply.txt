@@ -1,0 +1,25 @@
+📩 Scroll down for English version
+
+[Deutsch]
+
+Liebe/r {student_name},
+
+vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.
+
+Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.
+
+Mit freundlichen Grüßen  
+{name}
+
+---
+
+[English]
+
+Dear {student_name},
+
+Thank you for your message. We have received your request and will get back to you as soon as possible.
+
+If you have any further questions, feel free to reach out.
+
+Best regards,  
+{name}

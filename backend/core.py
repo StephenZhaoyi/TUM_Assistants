@@ -416,3 +416,41 @@ if __name__ == "__main__":
     if result_schedule_change:
         print("\n=== 课程时间变更通知 ===\n")
         print(result_schedule_change)
+
+
+
+#学生问题回复
+
+def process_student_reply(student_name=None, name=None):
+    """
+    读取 student_reply.txt 模板并替换 {student_name} 和 {name} 变量
+    """
+    file_path = './data/student_reply.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取 student_reply 模板失败: {str(e)}")
+        return None
+
+    # 替换模板变量
+    if student_name:
+        template = template.replace("{student_name}", student_name)
+    if name:
+        template = template.replace("{name}", name)
+
+    return template
+
+if __name__ == "__main__":
+    # 示例：生成学生问题回复模板
+    result_student_reply = process_student_reply(
+        student_name="Max Mustermann",
+        name="TUM Helpdesk"
+    )
+
+    if result_student_reply:
+        print("\n=== 学生回复模板 ===\n")
+        print(result_student_reply)
+
+
+    
