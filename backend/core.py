@@ -419,7 +419,7 @@ if __name__ == "__main__":
 
 
 
-#学生问题回复
+#学生邮件问题回复
 
 def process_student_reply(student_name=None, name=None):
     """
