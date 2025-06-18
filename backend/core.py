@@ -453,4 +453,45 @@ if __name__ == "__main__":
         print(result_student_reply)
 
 
+#节假日放假通知
+
+
+def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
+    """
+    节假日放假通知
+    """
+    file_path = './data/holiday_notice.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取 holiday_notice 模板失败: {str(e)}")
+        return None
+
+    if holiday_name:
+        template = template.replace("{holiday_name}", holiday_name)
+    if holiday_date:
+        template = template.replace("{holiday_date}", holiday_date)
+    if name:
+        template = template.replace("{name}", name)
+    else:
+        template = template.replace("{name}", "Student Service Center")
+
+    return template
+
+result_holiday = process_holiday_notice(
+    holiday_name="Tag der Deutschen Einheit",
+    holiday_date="03.10.2025",
+    name="TUM Helpdesk"
+)
+
+if result_holiday:
+    print("\n=== 节假日放假通知 ===\n")
+    print(result_holiday)
+
+    
+    
+
+
+
     
