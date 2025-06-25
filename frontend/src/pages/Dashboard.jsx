@@ -20,7 +20,7 @@ const Dashboard = () => {
   const { t, isInitialized } = useTranslation()
 
   useEffect(() => {
-    if (!isInitialized) retur
+    if (!isInitialized) return
     setIsLoading(true)
     fetch('/api/drafts')
       .then(res => res.json())
