@@ -13,7 +13,7 @@ import ToneSelector from '../components/ToneSelector'
 
 const FreePromptInput = () => {
   const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { t, isInitialized } = useTranslation()
   const [prompt, setPrompt] = useState('')
   const [tone, setTone] = useState('neutral')
   const [generatedDraft, setGeneratedDraft] = useState(null)
@@ -37,27 +37,36 @@ const FreePromptInput = () => {
     setError('')
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      const mockDraft = {
-        id: Date.now().toString(),
-        title: `${t('freePrompt.title')} - ${new Date().toLocaleDateString()}`,
-        content: `Based on your requirements: "${prompt}", I have generated the following content:\n\n${prompt.includes('notice') ? 'Notice' : prompt.includes('minutes') ? 'Meeting Minutes' : prompt.includes('announcement') ? 'Announcement' : 'Document'}\n\n${prompt}\n\nPlease make necessary modifications and adjustments according to actual circumstances. If you have any questions, please contact the relevant department promptly.`,
+      const response = await fetch('/api/free_prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, tone })
+      })
+      if (!response.ok) throw new Error(t('freePrompt.generationError'))
+      const data = await response.json()
+      const newDraft = {
         type: 'freeTextGeneration',
-        tone: tone,
-        prompt: prompt,
+        title: `${t('freePrompt.title')} - ${new Date().toLocaleDateString()}`,
+        content: data.content,
+        tone,
+        prompt,
         createdAt: new Date().toISOString()
       }
-
-      setGeneratedDraft(mockDraft)
-      
-      // Save to localStorage
-      const existingDrafts = JSON.parse(localStorage.getItem('drafts') || '[]')
-      localStorage.setItem('drafts', JSON.stringify([mockDraft, ...existingDrafts]))
-      
+      // 保存到后端
+      const saveRes = await fetch('/api/drafts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newDraft)
+      })
+      if (!saveRes.ok) {
+        const errorData = await saveRes.json().catch(() => ({}))
+        throw new Error(errorData.detail || t('draftEditor.saveError'))
+      }
+      const savedDraft = await saveRes.json()
+      setGeneratedDraft(savedDraft)
     } catch (err) {
-      setError(t('freePrompt.generationError'))
+      console.error('Free prompt generation/save error:', err)
+      setError(err.message || t('freePrompt.generationError'))
     } finally {
       setIsGenerating(false)
     }
@@ -82,6 +91,10 @@ const FreePromptInput = () => {
 
   const handleExampleClick = (example) => {
     setPrompt(example)
+  }
+
+  if (!isInitialized) {
+    return null;
   }
 
   return (

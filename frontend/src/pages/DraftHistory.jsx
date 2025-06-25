@@ -8,9 +8,8 @@ import {
   Copy, 
   Edit, 
   Trash2,
-  Calendar,
   FileText,
-  MessageSquare
+  Loader2
 } from 'lucide-react'
 
 const DraftHistory = () => {
@@ -24,88 +23,74 @@ const DraftHistory = () => {
 
   useEffect(() => {
     if (!isInitialized) return
-    
-    try {
-      // Get all drafts from localStorage
-      const savedDrafts = JSON.parse(localStorage.getItem('drafts') || '[]')
-      setDrafts(savedDrafts)
-      setFilteredDrafts(savedDrafts)
-    } catch (error) {
-      console.warn('Failed to load drafts from localStorage:', error)
-      setDrafts([])
-      setFilteredDrafts([])
-    } finally {
-      setIsLoading(false)
-    }
+    setIsLoading(true)
+    fetch('/api/drafts')
+      .then(res => res.json())
+      .then(data => {
+        const draftsArray = Array.isArray(data) ? data : []
+        setDrafts(draftsArray)
+        setFilteredDrafts(draftsArray)
+      })
+      .catch(() => {
+        setDrafts([])
+        setFilteredDrafts([])
+      })
+      .finally(() => setIsLoading(false))
   }, [isInitialized])
 
   useEffect(() => {
-    // Filter and sort drafts
     let filtered = drafts.filter(draft => {
-      const matchesSearch = draft.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           draft.content.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesType = selectedType === 'all' || draft.type === selectedType
+      if (!draft || !draft.title || !draft.content) return false;
+      const matchesSearch = (draft.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           (draft.content || '').toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesType = selectedType === 'all' || (draft.type || '') === selectedType
       return matchesSearch && matchesType
     })
 
-    // Sort
     filtered.sort((a, b) => {
       if (sortBy === 'newest') {
-        return new Date(b.createdAt) - new Date(a.createdAt)
+        const dateA = a.createdAt && !isNaN(Date.parse(a.createdAt)) ? Date.parse(a.createdAt) : 0
+        const dateB = b.createdAt && !isNaN(Date.parse(b.createdAt)) ? Date.parse(b.createdAt) : 0
+        return dateB - dateA
       } else if (sortBy === 'oldest') {
-        return new Date(a.createdAt) - new Date(b.createdAt)
+        const dateA = a.createdAt && !isNaN(Date.parse(a.createdAt)) ? Date.parse(a.createdAt) : 0
+        const dateB = b.createdAt && !isNaN(Date.parse(b.createdAt)) ? Date.parse(b.createdAt) : 0
+        return dateA - dateB
       } else if (sortBy === 'type') {
-        return a.type.localeCompare(b.type)
+        return (a.type || '').localeCompare(b.type || '')
       }
       return 0
     })
 
     setFilteredDrafts(filtered)
   }, [drafts, searchTerm, selectedType, sortBy])
+  
+  const documentTypes = [
+    { value: 'all', label: t('draftHistory.allTypes') },
+    { value: 'course_registration', label: t('documentTypes.courseRegistration') },
+    { value: 'event_notice', label: t('documentTypes.eventNotice') },
+    { value: 'schedule_request', label: t('documentTypes.scheduleRequest') },
+    { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
+    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
+    { value: 'student_reply', label: t('documentTypes.studentReply') },
+    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') },
+    { value: 'free_prompt', label: t('documentTypes.freeTextGeneration') }
+  ];
+
+  // Helper: snake_case -> camelCase
+  const toCamel = (str) => str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
 
   const handleCopy = (content) => {
-    navigator.clipboard.writeText(content)
-    // Could add copy success notification here
+    const div = document.createElement('div');
+    div.innerHTML = content.replace(/<br>/g, '\n');
+    navigator.clipboard.writeText(div.innerText);
   }
 
-  const handleDelete = (id) => {
-    const updatedDrafts = drafts.filter(draft => draft.id !== id)
-    setDrafts(updatedDrafts)
-    localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
+  const handleDelete = async (id) => {
+    await fetch(`/api/drafts/${id}`, { method: 'DELETE' })
+    const newDrafts = drafts.filter(d => d.id !== id)
+    setDrafts(newDrafts)
   }
-
-  const getTypeIcon = (type) => {
-    switch (type) {
-      case t('documentTypes.announcement'):
-      case t('documentTypes.studentNotice'):
-      case t('documentTypes.meetingMinutes'):
-      case t('documentTypes.formalLetter'):
-        return <FileText className="h-5 w-5" />
-      case t('documentTypes.freeTextGeneration'):
-        return <MessageSquare className="h-5 w-5" />
-      default:
-        return <FileText className="h-5 w-5" />
-    }
-  }
-
-  const getTypeColor = (type) => {
-    switch (type) {
-      case t('documentTypes.announcement'):
-        return 'bg-blue-100 text-blue-800'
-      case t('documentTypes.studentNotice'):
-        return 'bg-green-100 text-green-800'
-      case t('documentTypes.meetingMinutes'):
-        return 'bg-purple-100 text-purple-800'
-      case t('documentTypes.formalLetter'):
-        return 'bg-orange-100 text-orange-800'
-      case t('documentTypes.freeTextGeneration'):
-        return 'bg-indigo-100 text-indigo-800'
-      default:
-        return 'bg-neutral-100 text-neutral-800'
-    }
-  }
-
-  const documentTypes = ['all', t('documentTypes.announcement'), t('documentTypes.studentNotice'), t('documentTypes.meetingMinutes'), t('documentTypes.formalLetter'), t('documentTypes.freeTextGeneration')]
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -150,8 +135,8 @@ const DraftHistory = () => {
               className="select pl-10 w-full"
             >
               {documentTypes.map(type => (
-                <option key={type} value={type}>
-                  {type === 'all' ? t('draftHistory.allTypes') : type}
+                <option key={type.value} value={type.value}>
+                  {type.label}
                 </option>
               ))}
             </select>
@@ -159,7 +144,6 @@ const DraftHistory = () => {
 
           {/* Sort */}
           <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -175,7 +159,11 @@ const DraftHistory = () => {
 
       {/* Drafts List */}
       <div className="space-y-4">
-        {filteredDrafts.length === 0 ? (
+        {isLoading ? (
+          <div className="card p-12 text-center">
+             <Loader2 className="h-12 w-12 text-neutral-400 mx-auto mb-4 animate-spin" />
+          </div>
+        ) : filteredDrafts.length === 0 ? (
           <div className="card p-12 text-center">
             <History className="h-12 w-12 text-neutral-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-neutral-900 mb-2">
@@ -199,12 +187,14 @@ const DraftHistory = () => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(draft.type)}`}>
-                      {getTypeIcon(draft.type)}
-                      <span className="ml-1">{draft.type}</span>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
+                      <FileText className="h-4 w-4 mr-1.5" />
+                      {t(`documentTypes.${toCamel(draft.type || '')}`) || draft.type || 'N/A'}
                     </span>
                     <span className="text-sm text-neutral-500">
-                      {new Date(draft.createdAt).toLocaleDateString()}
+                      {draft.createdAt && !isNaN(Date.parse(draft.createdAt))
+                        ? new Date(draft.createdAt).toLocaleDateString()
+                        : '-'}
                     </span>
                     {draft.updatedAt && (
                       <span className="text-xs text-neutral-400">
@@ -213,31 +203,32 @@ const DraftHistory = () => {
                     )}
                   </div>
                   <h3 className="font-medium text-neutral-900 mb-2">
-                    {draft.title}
+                    {draft.title || 'Untitled Draft'}
                   </h3>
-                  <p className="text-sm text-neutral-600 line-clamp-2">
-                    {draft.content.substring(0, 150)}...
-                  </p>
+                  <div 
+                    className="text-sm text-neutral-600 line-clamp-2 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: (draft.content || '').substring(0, 200) + '...' }}
+                  />
                 </div>
                 <div className="flex items-center gap-2 ml-4">
                   <button
                     onClick={() => handleCopy(draft.content)}
                     className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                    title={t('draftHistory.copy')}
+                    title={t('actions.copy')}
                   >
                     <Copy className="h-5 w-5" />
                   </button>
                   <Link
                     to={`/draft/${draft.id}`}
                     className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                    title={t('draftHistory.edit')}
+                    title={t('actions.edit')}
                   >
                     <Edit className="h-5 w-5" />
                   </Link>
                   <button
                     onClick={() => handleDelete(draft.id)}
                     className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded"
-                    title={t('draftHistory.delete')}
+                    title={t('actions.delete')}
                   >
                     <Trash2 className="h-5 w-5" />
                   </button>
@@ -248,7 +239,7 @@ const DraftHistory = () => {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default DraftHistory 
+export default DraftHistory; 

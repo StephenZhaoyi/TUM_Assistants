@@ -1,0 +1,44 @@
+[
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/25",
+    "content": "**Bekanntmachung: Änderungen des Prüfungsplans**<br><br>Sehr geehrte Studierende,<br><br>hiermit möchten wir Sie über Änderungen im Prüfungsplan informieren.<br><br>Wir bitten Sie, den aktualisierten Prüfungsplan auf der offiziellen Universitätswebseite zu konsultieren. Bitte überprüfen Sie die für Sie relevanten Termine sorgfältig.<br><br>Mit freundlichen Grüßen,<br><br>Die Universitätsverwaltung<br><br>---<br><br>**Notice: Exam Schedule Changes**<br><br>Dear Students,<br><br>Please be advised of adjustments to the examination schedule.<br><br>We request all students to consult the updated examination schedule available on the official university website. Kindly review the dates and times relevant to your exams.<br><br>Sincerely,<br><br>The University Administration",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-06-25T20:57:13.058Z",
+    "id": "9de016f4-24c7-4aaf-9bae-3cfce8e709a1"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/25",
+    "content": "**Bekanntmachung: Änderungen des Prüfungsplans**<br><br>Sehr geehrte Studentinnen und Studenten,<br><br>wir möchten Sie hiermit über wichtige Aktualisierungen des Prüfungsplans für das kommende Prüfungsfenster informieren.<br><br>Aufgrund organisatorischer Anpassungen wurden einige Prüfungstermine und -orte für bestimmte Module geändert. Wir bitten alle Studierenden dringend, sich umgehend über diese Änderungen zu informieren, um etwaige Auswirkungen auf ihre individuellen Prüfungszeiten zu überprüfen.<br><br>Der **aktualisierte und verbindliche Prüfungsplan** ist ab sofort auf der offiziellen Webseite der Universität unter folgendem Link verfügbar:<br>[Link zur Webseite des Prüfungsamtes/Prüfungsplans]<br><br>Es liegt in der Verantwortung jedes Studierenden, den aktualisierten Plan regelmäßig auf mögliche Änderungen zu überprüfen. Individuelle Benachrichtigungen über diese Änderungen werden nicht separat versandt.<br><br>Vielen Dank für Ihr Verständnis und Ihre Kooperation.<br><br>Mit freundlichen Grüßen,<br><br>Das Prüfungsamt<br>[Name der Universität/Fakultät]<br>[Datum]<br><br>---<br><br>**Notice: Changes to the Exam Schedule**<br><br>Dear Students,<br><br>We hereby wish to inform you about important updates to the exam schedule for the upcoming examination period.<br><br>Due to organizational adjustments, some exam dates and locations for specific modules have been altered. We strongly advise all students to check these changes immediately to verify any impact on their individual exam times.<br><br>The **updated and binding exam schedule** is now available on the official university website at the following link:<br>[Link to Examinations Office/Exam Schedule Website]<br><br>It is the responsibility of each student to regularly check the updated schedule for possible changes. Individual notifications regarding these changes will not be sent separately.<br><br>Thank you for your understanding and cooperation.<br><br>Sincerely,<br><br>The Examinations Office<br>[Name of University/Faculty]<br>[Date]",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-06-25T20:52:44.017Z",
+    "id": "9ab79c84-0795-4355-a960-b261e59da03c"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/25",
+    "content": "AI生成内容：Write a notice to inform students about exam schedule changes",
+    "tone": "friendly",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-06-25T20:45:43.166Z",
+    "id": "d304afc9-df9f-410e-a4c2-fdf826759998"
+  },
+  {
+    "type": "course_registration",
+    "title": "documentTypes.course_registration - All students",
+    "content": "<p>📩 Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>**Zielgruppe: Alle Studierenden**<br><br>Liebe*r Studierende*r,<br><br>bitte beachten Sie, dass die Prüfungsanmeldung für Ihre Prüfungen ab **01. Mai 2025** möglich ist. Die Anmeldefrist endet am **01. Juni 2025**.<br><br>Alle oben genannten Studierenden werden gebeten, sich rechtzeitig über TUMonline für die entsprechenden Prüfungen anzumelden. Eine nachträgliche Anmeldung ist nicht möglich.<br><br>Bitte stellen Sie sicher, dass Sie alle relevanten Informationen zu Ihren Prüfungen frühzeitig überprüfen.<br><br>Bei Fragen wenden Sie sich bitte an das Prüfungsamt oder Ihre Studienkoordination.<br><br>Mit freundlichen Grüßen <br>Student Service Center<br><br>---<br><br>[English]<br><br>**Target group: All students**<br><br>Dear Student,<br><br>Please note that exam registration will be open from **01. May 2025** and will close on **01. June 2025**.<br><br>All students in the above-mentioned group are required to register for their exams in TUMonline within the given period. Late registration is not possible.<br><br>Make sure to review all relevant exam information in advance.<br><br>If you have any questions, please contact the Examination Office or your program coordinator.<br><br>Best regards, <br>Student Service Center</p>",
+    "createdAt": "2025-06-25T20:39:23.690Z",
+    "source": {
+      "documentType": "course_registration",
+      "startDate": "01.05.2025",
+      "endDate": "01.06.2025",
+      "targetAudience": "All students",
+      "name": "Students Center"
+    },
+    "id": "9c1c8293-a385-4d82-a0d5-5fbcbab55e71",
+    "updatedAt": "2025-06-25T20:39:27.201Z"
+  }
+]

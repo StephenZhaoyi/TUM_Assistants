@@ -43,35 +43,16 @@ const DraftEditor = () => {
 
   // Load draft data (only depends on id)
   useEffect(() => {
-    const loadDraft = () => {
+    const loadDraft = async () => {
       try {
-        const drafts = JSON.parse(localStorage.getItem('drafts') || '[]')
-        let foundDraft = drafts.find(d => d.id === id)
-        
-        if (!foundDraft) {
-          foundDraft = {
-            id: id,
-            content: '',
-            type: 'announcement', // 默认类型 key
-            createdAt: new Date().toISOString()
-          }
-          drafts.unshift(foundDraft)
-          localStorage.setItem('drafts', JSON.stringify(drafts))
-        }
-        
+        const res = await fetch(`/api/drafts/${id}`)
+        if (!res.ok) throw new Error('Not found')
+        const foundDraft = await res.json()
         setDraft(foundDraft)
       } catch (error) {
-        console.error('Error loading draft:', error)
-        // Create a fallback draft
-        setDraft({
-          id: id,
-          content: '',
-          type: 'announcement',
-          createdAt: new Date().toISOString()
-        })
+        setDraft({ id, content: '', type: 'announcement', createdAt: new Date().toISOString() })
       }
     }
-
     loadDraft()
   }, [id])
 
@@ -95,32 +76,22 @@ const DraftEditor = () => {
 
   const handleSave = async () => {
     if (!editor) return
-    
     setIsSaving(true)
-    
     try {
       const updatedDraft = {
         ...draft,
         content: editor.getHTML(),
         updatedAt: new Date().toISOString(),
-        // 只保留 type key
         type: draft.type || 'announcement',
       }
-      
       setDraft(updatedDraft)
-      
-      // Update localStorage
-      const drafts = JSON.parse(localStorage.getItem('drafts') || '[]')
-      const updatedDrafts = drafts.map(d => d.id === id ? updatedDraft : d)
-      localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
-      
-      // Show save success notification
-      setTimeout(() => {
-        setIsSaving(false)
-      }, 1000)
-      
+      await fetch(`/api/drafts/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedDraft)
+      })
+      setTimeout(() => setIsSaving(false), 1000)
     } catch (error) {
-      console.error(t('draftEditor.saveError'), error)
       setIsSaving(false)
     }
   }

@@ -6,7 +6,7 @@
 
 Liebe Mitglieder der {target_group},
 
-bitte beachten Sie, dass es eine Änderung bei der Veranstaltung **{course_name}** gibt.  
+bitte beachten Sie, dass es eine Änderung bei der Veranstaltung **{course_name}({course_code})** gibt.  
 **Grund der Änderung:** {change_reason}
 
 🕓 Ursprünglicher Termin: {original_time}  
@@ -26,7 +26,7 @@ Mit freundlichen Grüßen
 
 Dear members of the {target_group},
 
-Please note that there has been a change regarding the course **{course_name}**.  
+Please note that there has been a change regarding the course **{course_name}({course_code})**.  
 **Reason for change:** {change_reason}
 
 🕓 Original time: {original_time}  

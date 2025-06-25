@@ -4,7 +4,7 @@
 
 [Deutsch]
 
-Sehr geehrte Professorin / geehrter Professor,
+Sehr {target_group},
 
 ich hoffe, diese Nachricht erreicht Sie wohlbehalten.
 
@@ -23,7 +23,7 @@ Mit freundlichen Grüßen
 
 [English]
 
-Dear Professor,
+Dear {target_group},
 
 I hope this message finds you well.
 

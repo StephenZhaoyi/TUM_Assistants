@@ -12,7 +12,6 @@ wir freuen uns, Ihnen die Details zur bevorstehenden Lehrveranstaltung **{course
 🔹 Beginn der Veranstaltung: {course_start_date}  
 🔹 Wöchentlicher Termin: {weekly_time}  
 🔹 Raum: {weekly_location}  
-🔹 Weitere Informationen: {info_url}
 
 Bei Fragen zur Kursorganisation wenden Sie sich bitte an das Studienbüro.  
 Falls Sie nicht an der Veranstaltung teilnehmen möchten, melden Sie sich bitte rechtzeitig über TUMonline ab.
@@ -32,7 +31,6 @@ We are pleased to share the details of the upcoming course **{course_name} ({cou
 🔹 Course start date: {course_start_date}  
 🔹 Weekly schedule: {weekly_time}  
 🔹 Room: {weekly_location}  
-🔹 Further information: {info_url}
 
 For any organizational questions regarding the course, please contact your program office.  
 If you do not plan to attend the course, make sure to deregister via TUMonline in time.

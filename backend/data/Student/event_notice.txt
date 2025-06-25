@@ -1,0 +1,37 @@
+📩 Scroll down for English version
+
+[Deutsch]
+
+Liebe Mitglieder der {target_group},
+
+{event_intro}
+
+Wir laden Sie herzlich zur Veranstaltung {event_name} ein, die am {event_time} am {event_location} stattfinden wird.
+
+Hier finden Sie die wichtigsten Informationen zur Veranstaltung:
+
+🔹 Datum: {event_time}
+🔹 Ort: {event_location}
+🔹 Sprache: {language}
+🔹 Anmeldung: {registration}
+
+Mit freundlichen Grüßen
+{name}
+
+[English]
+
+Dear members of the {target_group},
+
+{event_intro}
+
+We warmly invite you to attend {event_name}, taking place on {event_time} at {event_location}.
+
+Below are the key details for the event:
+
+🔹 Date: {event_time}
+🔹 Location: {event_location}
+🔹 Language: {language}
+🔹 Registration: {registration}
+
+Best regards,
+{name}

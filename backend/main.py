@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Literal
@@ -8,15 +8,20 @@ from core import (
     process_schedule_request,
     process_schedule_announcement,
     process_schedule_change,
+    process_student_reply,
+    process_holiday_notice,
+    process_free_prompt
 )
 import os
+import json
+from uuid import uuid4
 
 app = FastAPI()
 
 # 配置CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:3002"],
+    allow_origins=["http://localhost:5500", "http://localhost:5501", "http://localhost:5502"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -45,12 +50,40 @@ class TemplateRequest(BaseModel):
     reason: Optional[str] = None
     targetAudience: Optional[str] = None
     location: Optional[str] = None
-    infoUrl: Optional[str] = None
-    registrationUrl: Optional[str] = None
+    registration: Optional[str] = None
     language: Optional[str] = None
     additionalNote: Optional[str] = None
     replyDeadline: Optional[str] = None
     timeOptions: Optional[str] = None
+    name: Optional[str] = None
+
+# 草稿存储文件
+DRAFTS_FILE = './drafts.json'
+
+def load_drafts():
+    if not os.path.exists(DRAFTS_FILE) or os.path.getsize(DRAFTS_FILE) == 0:
+        return []
+    with open(DRAFTS_FILE, 'r', encoding='utf-8') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+def save_drafts(drafts):
+    with open(DRAFTS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(drafts, f, ensure_ascii=False, indent=2)
+
+class FreePromptRequest(BaseModel):
+    prompt: str
+    tone: Optional[str] = None
+
+class StudentReplyRequest(BaseModel):
+    student_name: str
+    name: Optional[str] = None
+
+class HolidayNoticeRequest(BaseModel):
+    holiday_name: str
+    holiday_date: str
     name: Optional[str] = None
 
 @app.post("/api/generate")
@@ -74,11 +107,10 @@ async def generate_document(request: TemplateRequest):
             return {"content": process_event_notice(
                 event_name=request.courseName,
                 event_intro=request.additionalNote,
-                info_url=request.infoUrl,
                 event_time=request.eventTime,
                 event_location=request.location,
                 target_group=request.targetAudience,
-                registration_url=request.registrationUrl,
+                registration=request.registration,
                 language=request.language,
                 name=request.name
             )}
@@ -89,7 +121,8 @@ async def generate_document(request: TemplateRequest):
                 semester=request.semester,
                 time_options=request.timeOptions,
                 reply_deadline=request.replyDeadline,
-                name=request.name
+                name=request.name,
+                target_group=request.targetAudience
             )}
         elif t == "schedule_announcement":
             return {"content": process_schedule_announcement(
@@ -100,12 +133,12 @@ async def generate_document(request: TemplateRequest):
                 weekly_time=request.weeklyTime,
                 weekly_location=request.weeklyLocation,
                 target_group=request.targetAudience,
-                info_url=request.infoUrl,
                 name=request.name
             )}
         elif t == "schedule_change":
             return {"content": process_schedule_change(
                 course_name=request.courseName,
+                course_code=request.courseCode,
                 reason=request.reason,
                 original_time=request.oldTime,
                 original_location=request.oldLocation,
@@ -120,6 +153,57 @@ async def generate_document(request: TemplateRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/student_reply")
+async def student_reply_api(req: StudentReplyRequest):
+    content = process_student_reply(student_name=req.student_name, name=req.name)
+    return {"content": content}
+
+@app.post("/api/holiday_notice")
+async def holiday_notice_api(req: HolidayNoticeRequest):
+    content = process_holiday_notice(holiday_name=req.holiday_name, holiday_date=req.holiday_date, name=req.name)
+    return {"content": content}
+
+@app.post("/api/free_prompt")
+async def free_prompt_api(req: FreePromptRequest):
+    content = process_free_prompt(prompt=req.prompt, tone=req.tone)
+    return {"content": content}
+
+@app.get("/api/drafts")
+async def get_drafts():
+    return load_drafts()
+
+@app.post("/api/drafts")
+async def create_draft(draft: dict = Body(...)):
+    drafts = load_drafts()
+    draft['id'] = str(uuid4())
+    drafts.insert(0, draft)
+    save_drafts(drafts)
+    return draft
+
+@app.get("/api/drafts/{draft_id}")
+async def get_draft(draft_id: str):
+    drafts = load_drafts()
+    for d in drafts:
+        if d['id'] == draft_id:
+            return d
+    raise HTTPException(status_code=404, detail="Draft not found")
+
+@app.put("/api/drafts/{draft_id}")
+async def update_draft(draft_id: str, draft: dict = Body(...)):
+    drafts = load_drafts()
+    for i, d in enumerate(drafts):
+        if d['id'] == draft_id:
+            drafts[i] = {**d, **draft, 'id': draft_id}
+            save_drafts(drafts)
+            return drafts[i]
+    raise HTTPException(status_code=404, detail="Draft not found")
+
+@app.delete("/api/drafts/{draft_id}")
+async def delete_draft(draft_id: str):
+    drafts = load_drafts()
+    drafts = [d for d in drafts if d['id'] != draft_id]
+    save_drafts(drafts)
+    return {"status": "success"}
 
 if __name__ == "__main__":
     import uvicorn

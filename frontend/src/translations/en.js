@@ -43,11 +43,6 @@ export const en = {
     title: 'Structured Input Generation',
     subtitle: 'Generate professional administrative documents quickly by filling out forms',
     form: {
-      title: 'Input Information',
-      documentType: 'Document Type',
-      targetAudience: 'Target Audience',
-      keyPoints: 'Key Content Points',
-      tone: 'Tone Selection',
       required: 'Required',
       selectType: 'Please select document type',
       describePoints: 'Please describe in detail the main content points you want to include...',
@@ -57,7 +52,8 @@ export const en = {
       title: 'Generation Result',
       copyContent: 'Copy Content',
       saveEdit: 'Save & Edit',
-      regenerate: 'Regenerate'
+      regenerate: 'Regenerate',
+      fillForm: 'Fill out the form on the left and click generate to see the result here.'
     },
     generating: 'Generating...',
     generateDraft: 'Generate Draft',
@@ -150,7 +146,13 @@ export const en = {
     policy: 'Policy',
     guideline: 'Guideline',
     courseRegistration: 'Course Registration Notice',
-    freeTextGeneration: 'Free Text Generation'
+    freeTextGeneration: 'Free Text Generation',
+    eventNotice: 'Event Notice',
+    scheduleRequest: 'Schedule Request',
+    scheduleAnnouncement: 'Schedule Announcement',
+    scheduleChange: 'Schedule Change',
+    studentReply: 'Student Reply',
+    holidayNotice: 'Holiday Notice'
   },
 
   // Audience options
@@ -210,7 +212,30 @@ export const en = {
     template: 'Template',
     startDate: 'Start Date',
     endDate: 'End Date',
-    additionalNote: 'Additional Notes'
+    additionalNote: 'Additional Notes',
+    courseName: 'Course Name',
+    courseCode: 'Course Code',
+    instructorName: 'Instructor Name',
+    courseStartDate: 'Course Start Date',
+    weeklyTime: 'Weekly Time',
+    weeklyLocation: 'Weekly Location',
+    eventName: 'Event Name',
+    eventIntro: 'Event Introduction',
+    eventTime: 'Event Time',
+    location: 'Location',
+    registration: 'Registration',
+    language: 'Language',
+    reason: 'Reason',
+    oldTime: 'Original Time',
+    oldLocation: 'Original Location',
+    newTime: 'New Time',
+    newLocation: 'New Location',
+    studentName: 'Student Name',
+    holidayName: 'Holiday Name',
+    holidayDate: 'Holiday Date',
+    replyDeadline: 'Reply Deadline',
+    timeOptions: 'Time Options',
+    semester: 'Semester'
   },
 
   // Messages
@@ -240,7 +265,7 @@ export const en = {
     search: 'Search drafts...',
     recipient: 'Enter target audience...',
     additionalNote: 'Enter any additional notes or requirements...',
-    startDate: 'Enter start date (e.g., "October 1, 2024")',
-    endDate: 'Enter end date (e.g., "February 15, 2024")'
+    startDate: 'Enter start date (e.g., "01.05.2025")',
+    endDate: 'Enter end date (e.g., "01.06.2025")'
   }
 } 

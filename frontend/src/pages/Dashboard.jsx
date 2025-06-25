@@ -11,6 +11,9 @@ import {
   Plus 
 } from 'lucide-react'
 
+// Helper: snake_case -> camelCase
+const toCamel = (str) => str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+
 const Dashboard = () => {
   const [recentDrafts, setRecentDrafts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -18,17 +21,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!isInitialized) return
-    
-    try {
-      // Get recent drafts from localStorage
-      const savedDrafts = JSON.parse(localStorage.getItem('drafts') || '[]')
-      setRecentDrafts(savedDrafts.slice(0, 5)) // Only show last 5
-    } catch (error) {
-      console.warn('Failed to load drafts from localStorage:', error)
-      setRecentDrafts([])
-    } finally {
-      setIsLoading(false)
-    }
+    setIsLoading(true)
+    fetch('/api/drafts')
+      .then(res => res.json())
+      .then(data => setRecentDrafts(data.slice(0, 5)))
+      .catch(() => setRecentDrafts([]))
+      .finally(() => setIsLoading(false))
   }, [isInitialized])
 
   const handleCopy = (content) => {
@@ -36,10 +34,22 @@ const Dashboard = () => {
     // Could add copy success notification here
   }
 
-  const handleDelete = (id) => {
-    const updatedDrafts = recentDrafts.filter(draft => draft.id !== id)
-    setRecentDrafts(updatedDrafts)
-    localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
+  const handleDelete = async (id) => {
+    // Optimistically update UI
+    const updatedDrafts = recentDrafts.filter(draft => draft.id !== id);
+    setRecentDrafts(updatedDrafts);
+    
+    // Call API to delete on server
+    try {
+      await fetch(`/api/drafts/${id}`, { method: 'DELETE' });
+    } catch (error) {
+      console.error('Failed to delete draft:', error);
+      // If API call fails, revert UI change
+      // (This part can be improved with a more robust state management)
+      fetch('/api/drafts')
+        .then(res => res.json())
+        .then(data => setRecentDrafts(data.slice(0, 5)))
+    }
   }
 
   return (
@@ -101,18 +111,19 @@ const Dashboard = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-tum-blue-100 text-tum-blue-800">
-                        {draft.type}
+                        {t(`documentTypes.${toCamel(draft.type || '')}`) || draft.type || 'N/A'}
                       </span>
                       <span className="text-sm text-tum-gray-500">
-                        {new Date(draft.createdAt).toLocaleDateString()}
+                        {draft.createdAt ? new Date(draft.createdAt).toLocaleDateString() : ''}
                       </span>
                     </div>
                     <h3 className="font-medium text-tum-gray-900 mb-2">
-                      {draft.title}
+                      {draft.title || 'Untitled Draft'}
                     </h3>
-                    <p className="text-sm text-tum-gray-600 line-clamp-2">
-                      {draft.content.substring(0, 150)}...
-                    </p>
+                    <div 
+                      className="text-sm text-tum-gray-600 line-clamp-2"
+                      dangerouslySetInnerHTML={{ __html: (draft.content || '').substring(0, 150) + '...' }}
+                    />
                   </div>
                   <div className="flex items-center gap-2 ml-4">
                     <button
@@ -169,7 +180,7 @@ const Dashboard = () => {
               <p className="text-sm font-medium text-tum-gray-600">{t('dashboard.stats.todayGenerated')}</p>
               <p className="text-2xl font-bold text-tum-gray-900">
                 {recentDrafts.filter(draft => 
-                  new Date(draft.createdAt).toDateString() === new Date().toDateString()
+                  draft.createdAt && new Date(draft.createdAt).toDateString() === new Date().toDateString()
                 ).length}
               </p>
             </div>
