@@ -1,6 +1,106 @@
 [
   {
     "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/27",
+    "content": "<p>**Liebe Lehrkräfte und Studierende,**<br>**Heute ist Drachenbootfest!**<br>**Zur Feier des Tages bieten wir in unserer Mensa kostenlos Zongzi an.**<br>**Die Menge ist begrenzt, nur für unsere speisenden Gäste.**<br>**Greifen Sie zu, solange der Vorrat reicht!**<br><br>---<br><br>**Dear Staff and Students,**<br>**Happy Dragon Boat Festival!**<br>**To celebrate, our canteen is offering free zongzi today.**<br>**These are available in limited quantities for all our dining guests.**<br>**Please feel free to pick one up while supplies last!**</p>",
+    "tone": "friendly",
+    "prompt": "今天是端午节，食堂有粽子限量提供，就餐师生可以免费领取",
+    "createdAt": "2025-06-27T16:34:59.422Z",
+    "id": "3d6251fb-5f7d-438f-b466-d3d711c88efd",
+    "updatedAt": "2025-06-27T16:35:36.376Z"
+  },
+  {
+    "type": "event_notice",
+    "title": "documentTypes.event_notice - 2025届毕业生",
+    "content": "<p>📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Mitglieder der Absolventen des Jahrgangs 2025,<br><br>Abschlussfeier<br><br>Wir laden Sie herzlich zur Veranstaltung Abschlussfeier ein, die am **30. Juni 2025** am TUM Hauptcampus München stattfinden wird.<br><br>Hier finden Sie die wichtigsten Informationen zur Veranstaltung:<br><br>🔹 Datum: **30. Juni 2025**<br>🔹 Ort: TUM Hauptcampus München<br>🔹 Sprache: Englisch und Deutsch<br>🔹 Anmeldung: Nicht erforderlich<br><br>Mit freundlichen Grüßen<br>TUM<br><br>[English]<br><br>Dear members of the graduates of the Class of 2025,<br><br>Graduation Party<br><br>We warmly invite you to attend Graduation Party, taking place on **30. June 2025** at TUM Munich Main Campus.<br><br>Below are the key details for the event:<br><br>🔹 Date: **30. June 2025**<br>🔹 Location: TUM Munich Main Campus<br>🔹 Language: English and German<br>🔹 Registration: Not required<br><br>Best regards,<br>TUM</p>",
+    "createdAt": "2025-06-27T16:28:14.847Z",
+    "source": {
+      "documentType": "event_notice",
+      "courseName": "毕业派对",
+      "additionalNote": "2025届毕业派对",
+      "eventTime": "2025年6月30日",
+      "location": "TUM慕尼黑主校区",
+      "targetAudience": "2025届毕业生",
+      "language": "英语和德语",
+      "name": "TUM",
+      "registration": "无需"
+    },
+    "id": "7482e389-bc66-4b39-afd8-0461ccffd151",
+    "updatedAt": "2025-06-27T16:28:25.474Z"
+  },
+  {
+    "type": "event_notice",
+    "title": "documentTypes.event_notice - 毕业生",
+    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Mitglieder der Absolventen,<br><br>Abschlussparty<br><br>Wir laden Sie herzlich zur Veranstaltung Party ein, die am **30. Juni 2024** am Gebäude B stattfinden wird.<br><br>Hier finden Sie die wichtigsten Informationen zur Veranstaltung:<br><br>🔹 Datum: **30. Juni 2024**<br>🔹 Ort: Gebäude B<br>🔹 Sprache: Englisch<br>🔹 Anmeldung: Eine Anmeldung über die offizielle Webseite ist erforderlich.<br><br>Mit freundlichen Grüßen<br>TUM<br><br>[English]<br><br>Dear members of the Graduates,<br><br>Graduation Party<br><br>We warmly invite you to attend Party, taking place on **30. June 2024** at Building B.<br><br>Below are the key details for the event:<br><br>🔹 Date: **30. June 2024**<br>🔹 Location: Building B<br>🔹 Language: English<br>🔹 Registration: Registration is required via the official website.<br><br>Best regards,<br>TUM",
+    "createdAt": "2025-06-27T16:11:29.267Z",
+    "source": {
+      "documentType": "event_notice",
+      "courseName": "Party",
+      "additionalNote": "毕业派对",
+      "eventTime": "6月30号",
+      "location": "Building B",
+      "targetAudience": "毕业生",
+      "language": "英语",
+      "name": "TUM",
+      "registration": "需要通过官网预约"
+    },
+    "id": "316bb380-836a-4a52-b32c-7875c585a3f0"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r Yiting,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>TUM<br><br>---<br><br>[English]<br><br>Dear Yiting,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>TUM<br>",
+    "createdAt": "2025-06-27T16:03:40.267Z",
+    "source": {
+      "documentType": "student_reply",
+      "studentName": "Yiting",
+      "name": "TUM"
+    },
+    "id": "a06539a8-0b4f-4aa6-b779-aa42b85abf55"
+  },
+  {
+    "type": "course_registration",
+    "title": "documentTypes.course_registration - Students in Heilbronn",
+    "content": "📩 Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>**Zielgruppe: Students in Heilbronn**<br><br>Liebe*r Studierende*r,<br><br>bitte beachten Sie, dass die Prüfungsanmeldung für Ihre Prüfungen ab **01. Oktober 2025** möglich ist. Die Anmeldefrist endet am **16. Oktober 2025**.<br><br>Alle oben genannten Studierenden werden gebeten, sich rechtzeitig über TUMonline für die entsprechenden Prüfungen anzumelden. Eine nachträgliche Anmeldung ist nicht möglich.<br><br>Bitte stellen Sie sicher, dass Sie alle relevanten Informationen zu Ihren Prüfungen frühzeitig überprüfen.<br><br>Bei Fragen wenden Sie sich bitte an das Prüfungsamt oder Ihre Studienkoordination.<br><br>**Hinweis: {note}**<br><br>Mit freundlichen Grüßen<br>TUM<br><br>---<br><br>[English]<br><br>**Target group: Students in Heilbronn**<br><br>Dear Student,<br><br>Please note that exam registration will be open from **01. October 2025** and will close on **16. October 2025**.<br><br>All students in the above-mentioned group are required to register for their exams in TUMonline within the given period. Late registration is not possible.<br><br>Make sure to review all relevant exam information in advance.<br><br>If you have any questions, please contact the Examination Office or your program coordinator.<br><br>**Note: {note}**<br><br>Best regards,<br>TUM",
+    "createdAt": "2025-06-27T15:56:01.613Z",
+    "source": {
+      "documentType": "course_registration",
+      "startDate": "2025年10月1日",
+      "endDate": "2025.10.16",
+      "targetAudience": "Students in Heilbronn",
+      "name": "TUM"
+    },
+    "id": "f73c476e-041c-47c1-a412-3780be64a245"
+  },
+  {
+    "type": "holiday_notice",
+    "title": "documentTypes.holiday_notice",
+    "content": "<p>📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **Monday** bleibt die Universität am **2025年10月1日** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen <br>TUM<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **Monday**, the university will be closed on **2025年10月1日**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards, <br>TUM<br></p>",
+    "createdAt": "2025-06-27T15:44:51.682Z",
+    "source": {
+      "documentType": "holiday_notice",
+      "holidayName": "Monday",
+      "holidayDate": "2025年10月1日",
+      "name": "TUM"
+    },
+    "id": "eb5410f9-ff73-40e6-9895-ecbb6e80f407",
+    "updatedAt": "2025-06-27T15:44:59.805Z"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "<p>📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r Yiting,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen <br>TUM<br><br>---<br><br>[English]<br><br>Dear Yiting,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards, <br>TUM<br></p>",
+    "createdAt": "2025-06-27T15:43:08.025Z",
+    "source": {
+      "documentType": "student_reply",
+      "studentName": "Yiting",
+      "name": "TUM"
+    },
+    "id": "01e34be3-2bd4-4fea-a72c-e5877282f972",
+    "updatedAt": "2025-06-27T15:43:13.448Z"
+  },
+  {
+    "type": "freeTextGeneration",
     "title": "Free Text Generation - 2025/6/25",
     "content": "**Bekanntmachung: Änderungen des Prüfungsplans**<br><br>Sehr geehrte Studierende,<br><br>hiermit möchten wir Sie über Änderungen im Prüfungsplan informieren.<br><br>Wir bitten Sie, den aktualisierten Prüfungsplan auf der offiziellen Universitätswebseite zu konsultieren. Bitte überprüfen Sie die für Sie relevanten Termine sorgfältig.<br><br>Mit freundlichen Grüßen,<br><br>Die Universitätsverwaltung<br><br>---<br><br>**Notice: Exam Schedule Changes**<br><br>Dear Students,<br><br>Please be advised of adjustments to the examination schedule.<br><br>We request all students to consult the updated examination schedule available on the official university website. Kindly review the dates and times relevant to your exams.<br><br>Sincerely,<br><br>The University Administration",
     "tone": "neutral",

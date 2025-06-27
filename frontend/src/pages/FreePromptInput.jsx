@@ -7,7 +7,8 @@ import {
   Copy, 
   Save,
   Loader2,
-  Sparkles 
+  Sparkles,
+  Check
 } from 'lucide-react'
 import ToneSelector from '../components/ToneSelector'
 
@@ -19,12 +20,13 @@ const FreePromptInput = () => {
   const [generatedDraft, setGeneratedDraft] = useState(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState('')
+  const [showCopySuccess, setShowCopySuccess] = useState(false)
 
   const examplePrompts = [
     'Write a notice to inform students about exam schedule changes',
-    'Generate meeting minutes for department regular meeting discussions',
-    'Draft an announcement for new campus management regulations',
-    'Write a formal letter to invite experts to academic lectures'
+    'Create a formal letter to faculty members about upcoming meeting',
+    'Generate a holiday announcement for the university',
+    'Write a course registration reminder for students'
   ]
 
   const generateDraft = async () => {
@@ -44,7 +46,9 @@ const FreePromptInput = () => {
       })
       if (!response.ok) throw new Error(t('freePrompt.generationError'))
       const data = await response.json()
-      const newDraft = {
+      
+      // 只保存到本地状态，不保存到后端
+      const localDraft = {
         type: 'freeTextGeneration',
         title: `${t('freePrompt.title')} - ${new Date().toLocaleDateString()}`,
         content: data.content,
@@ -52,35 +56,52 @@ const FreePromptInput = () => {
         prompt,
         createdAt: new Date().toISOString()
       }
-      // 保存到后端
-      const saveRes = await fetch('/api/drafts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newDraft)
-      })
-      if (!saveRes.ok) {
-        const errorData = await saveRes.json().catch(() => ({}))
-        throw new Error(errorData.detail || t('draftEditor.saveError'))
-      }
-      const savedDraft = await saveRes.json()
-      setGeneratedDraft(savedDraft)
+      
+      setGeneratedDraft(localDraft)
     } catch (err) {
-      console.error('Free prompt generation/save error:', err)
+      console.error('Free prompt generation error:', err)
       setError(err.message || t('freePrompt.generationError'))
     } finally {
       setIsGenerating(false)
     }
   }
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (generatedDraft) {
-      navigator.clipboard.writeText(generatedDraft.content)
+      try {
+        await navigator.clipboard.writeText(generatedDraft.content)
+        setShowCopySuccess(true)
+        setTimeout(() => {
+          setShowCopySuccess(false)
+        }, 3000)
+      } catch (err) {
+        setError('Copy failed. Please try again.')
+      }
     }
   }
 
-  const handleSave = () => {
-    if (generatedDraft) {
-      navigate(`/draft/${generatedDraft.id}`)
+  const handleSave = async () => {
+    if (!generatedDraft) return;
+    
+    try {
+      // 保存到后端
+      const saveRes = await fetch('/api/drafts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(generatedDraft)
+      })
+      
+      if (!saveRes.ok) {
+        const errorData = await saveRes.json().catch(() => ({}))
+        throw new Error(errorData.detail || t('draftEditor.saveError'))
+      }
+      
+      const savedDraft = await saveRes.json()
+      // 导航到编辑页面
+      navigate(`/draft/${savedDraft.id}`)
+    } catch (err) {
+      console.error('Save error:', err)
+      setError(err.message || t('draftEditor.saveError'))
     }
   }
 
@@ -169,7 +190,7 @@ const FreePromptInput = () => {
               <button
                 onClick={generateDraft}
                 disabled={isGenerating}
-                className="btn-primary w-full"
+                className="btn-primary w-full flex items-center justify-center"
               >
                 {isGenerating ? (
                   <>
@@ -219,10 +240,29 @@ const FreePromptInput = () => {
               )}
             </div>
             {/* 按钮栏 */}
-            <div className="flex gap-3 p-4 border-t border-neutral-200 bg-white shrink-0">
-              <button onClick={handleCopy} className="btn-outline flex-1"> <Copy className="h-5 w-5 mr-2" /> {t('freePrompt.output.copyContent')} </button>
-              <button onClick={handleSave} className="btn-primary flex-1"> <Save className="h-5 w-5 mr-2" /> {t('freePrompt.output.saveEdit')} </button>
-              <button onClick={handleRegenerate} className="btn-secondary" title={t('freePrompt.output.regenerate')}> <RotateCcw className="h-5 w-5" /> </button>
+            <div className="flex gap-3 p-4 border-t border-neutral-200 bg-white shrink-0 relative">
+              {/* Copy Success Toast */}
+              {showCopySuccess && (
+                <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-[9999]">
+                  <Check className="h-4 w-4" />
+                  <span>{t('messages.copySuccess')}</span>
+                </div>
+              )}
+              <button 
+                onClick={handleCopy} 
+                disabled={!generatedDraft}
+                className="btn-outline flex-1 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+              >
+                <Copy className="h-5 w-5 mr-2" />
+                {t('freePrompt.output.copyContent')}
+              </button>
+              <button onClick={handleSave} className="btn-primary flex-1 flex items-center justify-center">
+                <Save className="h-5 w-5 mr-2" />
+                {t('freePrompt.output.saveEdit')}
+              </button>
+              <button onClick={handleRegenerate} className="btn-secondary flex items-center justify-center" title={t('freePrompt.output.regenerate')}>
+                <RotateCcw className="h-5 w-5" />
+              </button>
             </div>
           </div>
         </div>

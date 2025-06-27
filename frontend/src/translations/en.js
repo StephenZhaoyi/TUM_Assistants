@@ -106,7 +106,13 @@ export const en = {
     edited: '(Edited)',
     copy: 'Copy',
     edit: 'Edit',
-    delete: 'Delete'
+    delete: 'Delete',
+    timeAgo: {
+      justNow: 'Just now',
+      minutesAgo: '{minutes} minutes ago',
+      hourAgo: '1 hour ago',
+      hoursAgo: '{hours} hours ago'
+    }
   },
 
   // Draft Editor

@@ -9,7 +9,8 @@ import {
   Edit, 
   Trash2,
   FileText,
-  Loader2
+  Loader2,
+  Check
 } from 'lucide-react'
 
 const DraftHistory = () => {
@@ -20,6 +21,7 @@ const DraftHistory = () => {
   const [selectedType, setSelectedType] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
   const [isLoading, setIsLoading] = useState(true)
+  const [showCopySuccess, setShowCopySuccess] = useState(false)
 
   useEffect(() => {
     if (!isInitialized) return
@@ -74,16 +76,257 @@ const DraftHistory = () => {
     { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
     { value: 'student_reply', label: t('documentTypes.studentReply') },
     { value: 'holiday_notice', label: t('documentTypes.holidayNotice') },
-    { value: 'free_prompt', label: t('documentTypes.freeTextGeneration') }
+    { value: 'freeTextGeneration', label: t('documentTypes.freeTextGeneration') }
   ];
 
   // Helper: snake_case -> camelCase
   const toCamel = (str) => str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
 
-  const handleCopy = (content) => {
-    const div = document.createElement('div');
-    div.innerHTML = content.replace(/<br>/g, '\n');
-    navigator.clipboard.writeText(div.innerText);
+  // Helper: Get document type label
+  const getDocumentTypeLabel = (type) => {
+    if (!type) return 'N/A';
+    
+    // First try with toCamel conversion
+    const camelCase = toCamel(type);
+    const translated = t(`documentTypes.${camelCase}`);
+    
+    // If translation exists and is not the key itself, use it
+    if (translated && translated !== `documentTypes.${camelCase}`) {
+      return translated;
+    }
+    
+    // Fallback: try direct type mapping
+    const directMapping = {
+      'course_registration': t('documentTypes.courseRegistration'),
+      'event_notice': t('documentTypes.eventNotice'),
+      'schedule_request': t('documentTypes.scheduleRequest'),
+      'schedule_announcement': t('documentTypes.scheduleAnnouncement'),
+      'schedule_change': t('documentTypes.scheduleChange'),
+      'student_reply': t('documentTypes.studentReply'),
+      'holiday_notice': t('documentTypes.holidayNotice'),
+      'free_prompt': t('documentTypes.freeTextGeneration'),
+      'freeTextGeneration': t('documentTypes.freeTextGeneration'),
+      'announcement': t('documentTypes.announcement'),
+      'student_notice': t('documentTypes.studentNotice'),
+      'meeting_minutes': t('documentTypes.meetingMinutes'),
+      'formal_letter': t('documentTypes.formalLetter'),
+      'notification': t('documentTypes.notification'),
+      'report': t('documentTypes.report'),
+      'letter': t('documentTypes.letter'),
+      'memo': t('documentTypes.memo'),
+      'policy': t('documentTypes.policy'),
+      'guideline': t('documentTypes.guideline')
+    };
+    
+    return directMapping[type] || type || 'N/A';
+  };
+
+  // Helper: Generate title from content and source data
+  const generateTitleFromContent = (draft) => {
+    if (!draft) return 'Untitled Draft';
+    
+    // If draft has source data, use it to generate meaningful title
+    if (draft.source) {
+      const source = draft.source;
+      
+      switch (draft.type) {
+        case 'student_reply':
+          return source.studentName ? `Reply to ${source.studentName}` : 'Student Reply';
+          
+        case 'holiday_notice':
+          if (source.holidayName && source.holidayDate) {
+            return `${source.holidayName} - ${source.holidayDate}`;
+          } else if (source.holidayName) {
+            return source.holidayName;
+          } else if (source.holidayDate) {
+            return `Holiday - ${source.holidayDate}`;
+          }
+          return 'Holiday Notice';
+          
+        case 'course_registration':
+          const audience = source.targetAudience || 'Students';
+          const startDate = source.startDate || '';
+          const endDate = source.endDate || '';
+          if (startDate && endDate) {
+            return `${audience} - ${startDate} to ${endDate}`;
+          } else if (startDate) {
+            return `${audience} - From ${startDate}`;
+          }
+          return `${audience} Registration`;
+          
+        case 'event_notice':
+          const eventName = source.courseName || source.eventName || '';
+          const eventTime = source.eventTime || '';
+          if (eventName && eventTime) {
+            return `${eventName} - ${eventTime}`;
+          } else if (eventName) {
+            return eventName;
+          }
+          return 'Event Notice';
+          
+        case 'schedule_request':
+          const courseName = source.courseName || '';
+          const courseCode = source.courseCode || '';
+          if (courseName && courseCode) {
+            return `${courseName} (${courseCode}) - Schedule Request`;
+          } else if (courseName) {
+            return `${courseName} - Schedule Request`;
+          }
+          return 'Schedule Request';
+          
+        case 'schedule_announcement':
+          const annCourseName = source.courseName || '';
+          const annCourseCode = source.courseCode || '';
+          const weeklyTime = source.weeklyTime || '';
+          if (annCourseName && weeklyTime) {
+            return `${annCourseName} - ${weeklyTime}`;
+          } else if (annCourseName) {
+            return `${annCourseName} - Schedule Announcement`;
+          }
+          return 'Schedule Announcement';
+          
+        case 'schedule_change':
+          const changeCourseName = source.courseName || '';
+          const oldTime = source.oldTime || '';
+          const newTime = source.newTime || '';
+          if (changeCourseName && oldTime && newTime) {
+            return `${changeCourseName} - ${oldTime} → ${newTime}`;
+          } else if (changeCourseName) {
+            return `${changeCourseName} - Schedule Change`;
+          }
+          return 'Schedule Change';
+          
+        default:
+          break;
+      }
+    }
+    
+    // For free text generation, summarize content into a title
+    if (draft.type === 'freeTextGeneration' && draft.content) {
+      // Remove HTML tags and get plain text
+      const plainText = draft.content.replace(/<[^>]*>/g, '').replace(/<br>/g, ' ');
+      
+      // Try to extract meaningful information from content
+      const lines = plainText.split('\n').filter(line => line.trim().length > 0);
+      
+      // Look for common patterns in administrative documents
+      for (const line of lines) {
+        const trimmedLine = line.trim();
+        
+        // Look for titles/headings (usually in ** or all caps)
+        if (trimmedLine.includes('**') || /^[A-Z\s]+$/.test(trimmedLine)) {
+          const title = trimmedLine.replace(/\*\*/g, '').trim();
+          if (title.length > 5 && title.length < 80) {
+            return title;
+          }
+        }
+        
+        // Look for "Dear" or "Sehr geehrte" (letter openings)
+        if (trimmedLine.startsWith('Dear ') || trimmedLine.startsWith('Sehr geehrte ')) {
+          const match = trimmedLine.match(/(?:Dear|Sehr geehrte)\s+([^,]+)/);
+          if (match && match[1]) {
+            return `Letter to ${match[1].trim()}`;
+          }
+        }
+        
+        // Look for specific document types in content
+        if (trimmedLine.toLowerCase().includes('notice') || trimmedLine.toLowerCase().includes('bekanntmachung')) {
+          return 'Notice';
+        }
+        if (trimmedLine.toLowerCase().includes('announcement') || trimmedLine.toLowerCase().includes('ankündigung')) {
+          return 'Announcement';
+        }
+        if (trimmedLine.toLowerCase().includes('schedule') || trimmedLine.toLowerCase().includes('termin')) {
+          return 'Schedule Information';
+        }
+        if (trimmedLine.toLowerCase().includes('exam') || trimmedLine.toLowerCase().includes('prüfung')) {
+          return 'Exam Information';
+        }
+        if (trimmedLine.toLowerCase().includes('course') || trimmedLine.toLowerCase().includes('kurs')) {
+          return 'Course Information';
+        }
+        if (trimmedLine.toLowerCase().includes('holiday') || trimmedLine.toLowerCase().includes('feiertag')) {
+          return 'Holiday Notice';
+        }
+        if (trimmedLine.toLowerCase().includes('meeting') || trimmedLine.toLowerCase().includes('sitzung')) {
+          return 'Meeting Information';
+        }
+      }
+      
+      // If no specific pattern found, extract first meaningful sentence
+      const sentences = plainText.split(/[.!?。！？]/).filter(s => s.trim().length > 10);
+      if (sentences.length > 0) {
+        const firstSentence = sentences[0].trim();
+        // Clean up the sentence and limit length
+        const cleanSentence = firstSentence.replace(/^\s*[A-Z\s]+\s*/, ''); // Remove leading caps
+        if (cleanSentence.length > 5) {
+          return cleanSentence.length > 60 ? cleanSentence.substring(0, 60) + '...' : cleanSentence;
+        }
+      }
+      
+      // Fallback: use prompt if available
+      if (draft.prompt) {
+        const prompt = draft.prompt.trim();
+        if (prompt.length > 0) {
+          return prompt.length > 60 ? prompt.substring(0, 60) + '...' : prompt;
+        }
+      }
+    }
+    
+    // Fallback: extract from content
+    if (draft.content) {
+      // Remove HTML tags and get plain text
+      const plainText = draft.content.replace(/<[^>]*>/g, '').replace(/<br>/g, ' ');
+      
+      // Get first meaningful sentence or first 50 characters
+      const sentences = plainText.split(/[.!?。！？]/).filter(s => s.trim().length > 0);
+      if (sentences.length > 0) {
+        const firstSentence = sentences[0].trim();
+        if (firstSentence.length > 10) {
+          return firstSentence.length > 60 ? firstSentence.substring(0, 60) + '...' : firstSentence;
+        }
+      }
+      
+      // Fallback to first 50 characters
+      return plainText.length > 50 ? plainText.substring(0, 50) + '...' : plainText || 'Untitled Draft';
+    }
+    
+    return 'Untitled Draft';
+  };
+
+  // Helper: Format date with minutes
+  const formatDateWithMinutes = (dateString) => {
+    if (!dateString || isNaN(Date.parse(dateString))) return '-';
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now - date;
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    if (diffInMinutes < 30) {
+      return diffInMinutes < 1 ? t('draftHistory.timeAgo.justNow') : t('draftHistory.timeAgo.minutesAgo', { minutes: diffInMinutes });
+    }
+    // 否则显示日月年时分
+    return date.toLocaleString(t('language') === 'de' ? 'de-DE' : 'en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const handleCopy = async (content) => {
+    try {
+      const div = document.createElement('div');
+      div.innerHTML = content.replace(/<br>/g, '\n');
+      await navigator.clipboard.writeText(div.innerText);
+      setShowCopySuccess(true);
+      // 3秒后自动隐藏提示
+      setTimeout(() => {
+        setShowCopySuccess(false);
+      }, 3000);
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
   }
 
   const handleDelete = async (id) => {
@@ -94,6 +337,14 @@ const DraftHistory = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
+      {/* Copy Success Toast */}
+      {showCopySuccess && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
+          <Check className="h-4 w-4" />
+          <span>{t('messages.copySuccess')}</span>
+        </div>
+      )}
+      
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -189,12 +440,10 @@ const DraftHistory = () => {
                   <div className="flex items-center gap-3 mb-3">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
                       <FileText className="h-4 w-4 mr-1.5" />
-                      {t(`documentTypes.${toCamel(draft.type || '')}`) || draft.type || 'N/A'}
+                      {getDocumentTypeLabel(draft.type)}
                     </span>
                     <span className="text-sm text-neutral-500">
-                      {draft.createdAt && !isNaN(Date.parse(draft.createdAt))
-                        ? new Date(draft.createdAt).toLocaleDateString()
-                        : '-'}
+                      {formatDateWithMinutes(draft.createdAt)}
                     </span>
                     {draft.updatedAt && (
                       <span className="text-xs text-neutral-400">
@@ -203,7 +452,7 @@ const DraftHistory = () => {
                     )}
                   </div>
                   <h3 className="font-medium text-neutral-900 mb-2">
-                    {draft.title || 'Untitled Draft'}
+                    {generateTitleFromContent(draft)}
                   </h3>
                   <div 
                     className="text-sm text-neutral-600 line-clamp-2 prose prose-sm max-w-none"

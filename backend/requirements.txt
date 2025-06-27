@@ -1,4 +1,4 @@
-google-genai
+google-genai==1.22.0
 python-dotenv==1.0.0
 fastapi==0.109.2
 uvicorn==0.27.1

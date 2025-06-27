@@ -5,6 +5,7 @@ import {
   Copy, 
   Save,
   Loader2,
+  Check
 } from 'lucide-react'
 
 const StructuredInput = () => {
@@ -16,6 +17,7 @@ const StructuredInput = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
   const [lastGenerationData, setLastGenerationData] = useState(null)
+  const [showCopySuccess, setShowCopySuccess] = useState(false)
 
   if (!isInitialized) {
     return null
@@ -201,7 +203,8 @@ const StructuredInput = () => {
     const div = document.createElement('div');
     div.innerHTML = generatedContent.replace(/<br>/g, '\n');
     navigator.clipboard.writeText(div.innerText);
-    // You can add a toast notification for copy success here
+    setShowCopySuccess(true);
+    setTimeout(() => setShowCopySuccess(false), 3000);
   }
 
   return (
@@ -320,6 +323,13 @@ const StructuredInput = () => {
           )}
         </div>
       </div>
+
+      {showCopySuccess && (
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-[9999]">
+          <Check className="h-4 w-4" />
+          <span>{t('messages.copySuccess')}</span>
+        </div>
+      )}
     </div>
   )
 }

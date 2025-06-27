@@ -141,7 +141,13 @@ export const de = {
     edited: '(Bearbeitet)',
     copy: 'Kopieren',
     edit: 'Bearbeiten',
-    delete: 'Löschen'
+    delete: 'Löschen',
+    timeAgo: {
+      justNow: 'Gerade eben',
+      minutesAgo: 'vor {minutes} Minuten',
+      hourAgo: 'vor 1 Stunde',
+      hoursAgo: 'vor {hours} Stunden'
+    }
   },
 
   // Draft Editor
