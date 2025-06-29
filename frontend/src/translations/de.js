@@ -196,6 +196,13 @@ export const de = {
     holidayNotice: 'Feiertagsmitteilung'
   },
 
+  // Document categories
+  documentCategories: {
+    staff: 'Für Mitarbeiter',
+    student: 'Für Studierende',
+    all: 'Für Alle'
+  },
+
   // Audience options
   audience: {
     students: 'Studenten',
@@ -242,6 +249,8 @@ export const de = {
     title: 'Titel',
     content: 'Inhalt',
     type: 'Dokumenttyp',
+    types: 'Dokumenttypen',
+    category: 'Dokumentkategorie',
     tone: 'Ton',
     date: 'Datum',
     author: 'Autor',

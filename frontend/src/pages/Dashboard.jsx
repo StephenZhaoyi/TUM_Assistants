@@ -108,11 +108,11 @@ const Dashboard = () => {
           const courseName = source.courseName || '';
           const courseCode = source.courseCode || '';
           if (courseName && courseCode) {
-            return `${courseName} (${courseCode}) - Schedule Request`;
+            return `${courseName} (${courseCode}) - Schedule Coordination Request`;
           } else if (courseName) {
-            return `${courseName} - Schedule Request`;
+            return `${courseName} - Schedule Coordination Request`;
           }
-          return 'Schedule Request';
+          return 'Schedule Coordination Request';
           
         case 'schedule_announcement':
           const annCourseName = source.courseName || '';

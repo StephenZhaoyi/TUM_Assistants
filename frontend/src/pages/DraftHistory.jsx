@@ -69,14 +69,27 @@ const DraftHistory = () => {
   
   const documentTypes = [
     { value: 'all', label: t('draftHistory.allTypes') },
-    { value: 'course_registration', label: t('documentTypes.courseRegistration') },
-    { value: 'event_notice', label: t('documentTypes.eventNotice') },
-    { value: 'schedule_request', label: t('documentTypes.scheduleRequest') },
-    { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
-    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
-    { value: 'student_reply', label: t('documentTypes.studentReply') },
-    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') },
+    { value: 'course_registration', label: t('documentTypes.courseRegistration'), category: 'student' },
+    { value: 'event_notice', label: t('documentTypes.eventNotice'), category: 'student' },
+    { value: 'schedule_request', label: t('documentTypes.scheduleRequest'), category: 'staff' },
+    { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement'), category: 'student' },
+    { value: 'schedule_change', label: t('documentTypes.scheduleChange'), category: 'all' },
+    { value: 'student_reply', label: t('documentTypes.studentReply'), category: 'student' },
+    { value: 'holiday_notice', label: t('documentTypes.holidayNotice'), category: 'all' },
     { value: 'freeTextGeneration', label: t('documentTypes.freeTextGeneration') }
+  ];
+
+  // Group document types by category for the select dropdown
+  const groupedDocumentTypes = [
+    { value: 'all', label: t('draftHistory.allTypes') },
+    ...Object.entries({
+      staff: documentTypes.filter(dt => dt.category === 'staff'),
+      student: documentTypes.filter(dt => dt.category === 'student'),
+      all: documentTypes.filter(dt => dt.category === 'all')
+    }).map(([category, types]) => ({
+      label: t(`documentCategories.${category}`),
+      options: types
+    }))
   ];
 
   // Helper: snake_case -> camelCase
@@ -168,11 +181,11 @@ const DraftHistory = () => {
           const courseName = source.courseName || '';
           const courseCode = source.courseCode || '';
           if (courseName && courseCode) {
-            return `${courseName} (${courseCode}) - Schedule Request`;
+            return `${courseName} (${courseCode}) - Schedule Coordination Request`;
           } else if (courseName) {
-            return `${courseName} - Schedule Request`;
+            return `${courseName} - Schedule Coordination Request`;
           }
-          return 'Schedule Request';
+          return 'Schedule Coordination Request';
           
         case 'schedule_announcement':
           const annCourseName = source.courseName || '';
@@ -385,11 +398,29 @@ const DraftHistory = () => {
               onChange={(e) => setSelectedType(e.target.value)}
               className="select pl-10 w-full"
             >
-              {documentTypes.map(type => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
-                </option>
-              ))}
+              <option value="all">{t('draftHistory.allTypes')}</option>
+              <optgroup label={t('documentCategories.staff')}>
+                {documentTypes.filter(dt => dt.category === 'staff').map(type => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label={t('documentCategories.student')}>
+                {documentTypes.filter(dt => dt.category === 'student').map(type => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label={t('documentCategories.all')}>
+                {documentTypes.filter(dt => dt.category === 'all').map(type => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </optgroup>
+              <option value="freeTextGeneration">{t('documentTypes.freeTextGeneration')}</option>
             </select>
           </div>
 

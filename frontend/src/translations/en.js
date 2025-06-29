@@ -154,11 +154,18 @@ export const en = {
     courseRegistration: 'Course Registration Notice',
     freeTextGeneration: 'Free Text Generation',
     eventNotice: 'Event Notice',
-    scheduleRequest: 'Schedule Request',
+    scheduleRequest: 'Schedule Coordination Request',
     scheduleAnnouncement: 'Schedule Announcement',
     scheduleChange: 'Schedule Change',
     studentReply: 'Student Reply',
     holidayNotice: 'Holiday Notice'
+  },
+
+  // Document categories
+  documentCategories: {
+    staff: 'For Staff',
+    student: 'For Students',
+    all: 'For All'
   },
 
   // Audience options
@@ -207,6 +214,8 @@ export const en = {
     title: 'Title',
     content: 'Content',
     type: 'Document Type',
+    types: 'Document Types',
+    category: 'Document Category',
     tone: 'Tone',
     date: 'Date',
     author: 'Author',

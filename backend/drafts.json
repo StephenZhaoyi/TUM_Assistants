@@ -1,6 +1,29 @@
 [
   {
     "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/28",
+    "content": "**Heute findet eine Absolventenfeier statt.**<br>---<br>**A graduation party will be held today.**",
+    "tone": "neutral",
+    "prompt": "今天有毕业派对",
+    "createdAt": "2025-06-28T09:52:24.607Z",
+    "id": "1544eed3-37b8-410e-84c5-7c6ba049ae4f"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r fff,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>zzz<br><br>---<br><br>[English]<br><br>Dear fff,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>zzz<br>",
+    "createdAt": "2025-06-28T09:49:01.104Z",
+    "source": {
+      "documentType": "student_reply",
+      "startDate": "01.05.2025",
+      "endDate": "01.06.",
+      "studentName": "fff",
+      "name": "zzz"
+    },
+    "id": "8161e8ec-b770-422a-880b-230b97edac21"
+  },
+  {
+    "type": "freeTextGeneration",
     "title": "Free Text Generation - 2025/6/27",
     "content": "<p>**Liebe Lehrkräfte und Studierende,**<br>**Heute ist Drachenbootfest!**<br>**Zur Feier des Tages bieten wir in unserer Mensa kostenlos Zongzi an.**<br>**Die Menge ist begrenzt, nur für unsere speisenden Gäste.**<br>**Greifen Sie zu, solange der Vorrat reicht!**<br><br>---<br><br>**Dear Staff and Students,**<br>**Happy Dragon Boat Festival!**<br>**To celebrate, our canteen is offering free zongzi today.**<br>**These are available in limited quantities for all our dining guests.**<br>**Please feel free to pick one up while supplies last!**</p>",
     "tone": "friendly",

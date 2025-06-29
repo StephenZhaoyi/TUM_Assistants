@@ -23,15 +23,27 @@ const StructuredInput = () => {
     return null
   }
 
-  const documentTypes = [
-    { value: 'course_registration', label: t('documentTypes.courseRegistration') },
-    { value: 'event_notice', label: t('documentTypes.eventNotice') },
-    { value: 'schedule_request', label: t('documentTypes.scheduleRequest') },
-    { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
-    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
-    { value: 'student_reply', label: t('documentTypes.studentReply') },
-    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
-  ]
+  // Document categories with their respective document types
+  const documentCategories = {
+    staff: [
+      { value: 'schedule_request', label: t('documentTypes.scheduleRequest') }
+    ],
+    student: [
+      { value: 'course_registration', label: t('documentTypes.courseRegistration') },
+      { value: 'event_notice', label: t('documentTypes.eventNotice') },
+      { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
+      { value: 'student_reply', label: t('documentTypes.studentReply') }
+    ],
+    all: [
+      { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
+      { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
+    ]
+  }
+
+  // Get available document types based on selected category
+  const getDocumentTypesForCategory = (category) => {
+    return documentCategories[category] || []
+  }
 
   const fieldsByType = {
     course_registration: [
@@ -99,6 +111,15 @@ const StructuredInput = () => {
     setFormData(prev => ({
       ...prev,
       [field]: value
+    }))
+  }
+
+  // Handle category selection
+  const handleCategoryChange = (category) => {
+    setFormData(prev => ({
+      ...prev,
+      category: category,
+      documentType: '' // Reset document type when category changes
     }))
   }
 
@@ -223,24 +244,51 @@ const StructuredInput = () => {
         {/* Left Column: Form */}
         <div className="card p-6">
           <div className="space-y-6">
-            {/* Document Type Select */}
+            {/* Category Selection */}
             <div>
               <label className="block text-sm font-medium text-tum-gray-700 mb-2">
-                {t('form.type')}
+                {t('form.category')}
               </label>
-              <select
-                value={formData.documentType || ''}
-                onChange={(e) => handleInputChange('documentType', e.target.value)}
-                className="select w-full"
-              >
-                <option value="">{t('structuredInput.form.selectType')}</option>
-                {documentTypes.map(type => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {Object.entries(documentCategories).map(([categoryKey, documentTypes]) => (
+                  <button
+                    key={categoryKey}
+                    onClick={() => handleCategoryChange(categoryKey)}
+                    className={`p-4 rounded-lg border-2 text-left transition-all ${
+                      formData.category === categoryKey
+                        ? 'border-tum-blue bg-tum-blue/5 text-tum-blue'
+                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                    }`}
+                  >
+                    <div className="font-medium">{t(`documentCategories.${categoryKey}`)}</div>
+                    <div className="text-sm text-gray-500 mt-1">
+                      {documentTypes.length} {documentTypes.length === 1 ? t('form.type') : t('form.types')}
+                    </div>
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
+
+            {/* Document Type Select - Only show if category is selected */}
+            {formData.category && (
+              <div>
+                <label className="block text-sm font-medium text-tum-gray-700 mb-2">
+                  {t('form.type')}
+                </label>
+                <select
+                  value={formData.documentType || ''}
+                  onChange={(e) => handleInputChange('documentType', e.target.value)}
+                  className="select w-full"
+                >
+                  <option value="">{t('structuredInput.form.selectType')}</option>
+                  {getDocumentTypesForCategory(formData.category).map(type => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {/* Dynamic Fields */}
             {currentFields.map(field => (
