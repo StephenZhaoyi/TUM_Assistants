@@ -1,5 +1,63 @@
 [
   {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r YI,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>Students Center<br><br>---<br><br>[English]<br><br>Dear YI,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>Students Center<br>",
+    "createdAt": "2025-06-30T18:49:22.460Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "YI",
+      "name": "Students Center"
+    },
+    "id": "ebb03db2-75bc-4876-bf97-8769d342c3bb"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/30",
+    "content": "Gerne, 这是您请求的行政文档：<br><br>**Ankündigung einer bevorstehenden Fakultätsbesprechung**<br><br>[Datum]<br><br>An alle Fakultätsmitglieder<br>[Absender Name/Abteilung]<br>[Absender Adresse]<br><br>Sehr geehrte Fakultätsmitglieder,<br><br>dieses Schreiben dient zur Ankündigung einer bevorstehenden Fakultätsbesprechung.<br><br>Die Details der Besprechung sind wie folgt:<br><br>**Datum:** [Datum der Besprechung, z.B. Donnerstag, 18. April 2024]<br>**Uhrzeit:** [Uhrzeit, z.B. 10:00 - 11:30 Uhr]<br>**Ort:** [Raum/Gebäude, z.B. Konferenzraum A, Gebäude B]<br><br>Auf der Tagesordnung stehen wichtige aktuelle Angelegenheiten und Planungen für das kommende Semester.<br><br>Ihre Anwesenheit ist von großer Bedeutung.<br><br>Mit freundlichen Grüßen,<br><br>[Ihr Name]<br>[Ihre Position]<br>[Ihre Abteilung/Institution]<br><br>---<br><br>**Announcement of an Upcoming Faculty Meeting**<br><br>[Date]<br><br>To All Faculty Members<br>[Sender Name/Department]<br>[Sender Address]<br><br>Dear Faculty Members,<br><br>This letter serves to inform you of an upcoming faculty meeting.<br><br>The details for the meeting are as follows:<br><br>**Date:** [Meeting Date, e.g., Thursday, April 18, 2024]<br>**Time:** [Time, e.g., 10:00 AM - 11:30 AM]<br>**Location:** [Room/Building, e.g., Conference Room A, Building B]<br><br>The agenda will include important current matters and planning for the upcoming semester.<br><br>Your attendance is highly valued.<br><br>Sincerely,<br><br>[Your Name]<br>[Your Position]<br>[Your Department/Institution]",
+    "tone": "neutral",
+    "prompt": "Create a formal letter to faculty members about upcoming meeting",
+    "createdAt": "2025-06-30T18:43:42.208Z",
+    "id": "0d5a3533-94bb-4da2-bfae-f0bc8fbe857b"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/30",
+    "content": "**Ankündigung eines bevorstehenden Fakultätstreffens**<br><br>Sehr geehrte Mitglieder der Fakultät,<br><br>hiermit möchten wir Sie über ein bevorstehendes Treffen informieren.<br><br>**Das Treffen findet statt am:**<br><br>**Datum:** [Bitte Datum einfügen]<br>**Uhrzeit:** [Bitte Uhrzeit einfügen]<br>**Ort:** [Bitte Ort einfügen]<br><br>Im Rahmen dieses Treffens werden wichtige administrative Angelegenheiten besprochen.<br><br>Ihre pünktliche Anwesenheit wird erbeten.<br><br>Mit freundlichen Grüßen,<br><br>[Name der Universität/Verwaltung]<br><br>---<br><br>**Announcement of an Upcoming Faculty Meeting**<br><br>Dear Faculty Members,<br><br>We wish to inform you of an upcoming meeting.<br><br>**The meeting is scheduled for:**<br><br>**Date:** [Please insert Date]<br>**Time:** [Please insert Time]<br>**Location:** [Please insert Location]<br><br>During this meeting, important administrative matters will be discussed.<br><br>Your punctual attendance is requested.<br><br>Sincerely,<br><br>[University Name/Administration]",
+    "tone": "neutral",
+    "prompt": "Create a formal letter to faculty members about upcoming meeting",
+    "createdAt": "2025-06-30T18:41:28.934Z",
+    "id": "588a5065-dc42-4158-8600-7b800ec5cfbc"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/30",
+    "content": "**Wichtige Information: Änderungen im Prüfungsplan**<br><br>Liebe Studierende,<br><br>wir möchten Sie hiermit über kurzfristige Änderungen im Prüfungsplan informieren.<br><br>Bitte überprüfen Sie den **aktualisierten Prüfungsplan** so bald wie möglich. Dieser ist ab sofort auf unserer Webseite und Ihrer jeweiligen Kursplattform verfügbar.<br><br>Wir bitten um Ihr Verständnis für diese notwendigen Anpassungen und entschuldigen uns für eventuelle Unannehmlichkeiten.<br><br>Viel Erfolg bei Ihren Prüfungen!<br><br>Mit freundlichen Grüßen,<br><br>Das Prüfungsamt<br>Ihre Universitätsverwaltung<br><br>---<br><br>**Important Information: Exam Schedule Changes**<br><br>Dear Students,<br><br>We would like to inform you about some last-minute changes to the exam schedule.<br><br>Please review the **updated exam schedule** as soon as possible. The revised schedule is now available on our website and your respective course platforms.<br><br>We kindly ask for your understanding regarding these necessary adjustments and apologize for any inconvenience this may cause.<br><br>We wish you the best of luck with your exams!<br><br>Sincerely,<br><br>The Examinations Office<br>Your University Administration",
+    "tone": "friendly",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-06-30T18:38:57.863Z",
+    "id": "a69f5940-042d-42ce-9d70-1e7d71f40daf"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/30",
+    "content": "---德语版本---<br><br>**Betreff: Wichtige Besprechung des Lehrkörpers**<br><br>Sehr geehrte Mitglieder des Lehrkörpers,<br><br>wir möchten Sie hiermit über eine **anstehende, wichtige Besprechung** informieren.<br><br>Die Besprechung findet statt am:<br>**Datum:** [Datum]<br>**Uhrzeit:** [Uhrzeit]<br>**Ort:** [Raum]<br><br>Während dieser Zusammenkunft werden **entscheidende Angelegenheiten** besprochen, die für unsere gemeinsame Arbeit und zukünftige Planungen von großer Bedeutung sind.<br><br>Ihre **pünktliche und vollzählige Anwesenheit** ist für den Erfolg dieser Besprechung von größter Bedeutung und wird erwartet.<br><br>Wir danken Ihnen im Voraus für Ihr Verständnis und Ihre Kooperation.<br><br>Mit freundlichen Grüßen,<br><br>[Ihr Name/Abteilung]<br>[Ihr Titel]<br><br>---<br><br>---英语版本---<br><br>**Subject: Important Faculty Meeting**<br><br>Dear Faculty Members,<br><br>We wish to inform you about an **upcoming, important meeting**.<br><br>The meeting will take place on:<br>**Date:** [Date]<br>**Time:** [Time]<br>**Location:** [Location]<br><br>During this gathering, **crucial matters** concerning our collaborative work and future planning will be discussed.<br><br>Your **prompt and full attendance** is of utmost importance for the success of this meeting and is expected.<br><br>We thank you in advance for your understanding and cooperation.<br><br>Sincerely,<br><br>[Your Name/Department]<br>[Your Title]",
+    "tone": "firm",
+    "prompt": "Create a formal letter to faculty members about upcoming meeting",
+    "createdAt": "2025-06-30T18:31:24.072Z",
+    "id": "23e977c2-aa40-4c4c-99d5-77e3ae04a173"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/6/30",
+    "content": "**Wichtige Information zu Prüfungsplanänderungen**<br><br>Liebe Studierende,<br><br>bitte beachtet, dass es Änderungen in Eurem Prüfungsplan gibt.<br><br>Den aktualisierten Prüfungsplan findet Ihr ab sofort **im Studierendenportal** auf unserer Webseite.<br><br>Bitte überprüft diesen Plan so bald wie möglich, um Euch über die neuen Termine und Räume zu informieren.<br><br>Vielen Dank für Euer Verständnis und viel Erfolg bei Euren bevorstehenden Prüfungen!<br><br>Mit freundlichen Grüßen,<br>Euer Prüfungsamt<br><br>---<br><br>**Important Information Regarding Exam Schedule Changes**<br><br>Dear Students,<br><br>Please be advised that there have been changes to your exam schedule.<br><br>The updated exam schedule is now available **on our website** in the student portal.<br><br>Kindly review this schedule as soon as possible to ensure you have the most current information regarding dates and locations.<br><br>Thank you for your understanding, and we wish you good luck with your upcoming exams!<br><br>Best regards,<br>Your Examinations Office",
+    "tone": "friendly",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-06-30T18:29:30.580Z",
+    "id": "12f8d846-cc70-4cfd-bc67-ccfe4973d1e5"
+  },
+  {
     "type": "freeTextGeneration",
     "title": "Free Text Generation - 2025/6/28",
     "content": "**Heute findet eine Absolventenfeier statt.**<br>---<br>**A graduation party will be held today.**",
