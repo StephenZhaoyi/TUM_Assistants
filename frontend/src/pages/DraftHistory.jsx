@@ -23,6 +23,7 @@ const DraftHistory = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [showCopySuccess, setShowCopySuccess] = useState(false)
 
+
   useEffect(() => {
     if (!isInitialized) return
     setIsLoading(true)
@@ -348,6 +349,7 @@ const DraftHistory = () => {
     setDrafts(newDrafts)
   }
 
+
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Copy Success Toast */}
@@ -359,20 +361,9 @@ const DraftHistory = () => {
       )}
       
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-            {t('draftHistory.title')}
-          </h1>
-          <p className="text-lg text-neutral-600">
-            {t('draftHistory.subtitle')}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-neutral-500">
-            {t('draftHistory.totalDrafts', { count: filteredDrafts.length })}
-          </span>
-        </div>
+      <div className="flex items-center justify-between mb-6 text-center flex-col">
+        <h1 className="text-3xl font-bold text-neutral-900 mb-2">{t('draftHistory.title')}</h1>
+        <p className="text-lg text-neutral-600">{t('draftHistory.subtitle')}</p>
       </div>
 
       {/* Filters */}

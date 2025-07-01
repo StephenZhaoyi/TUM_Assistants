@@ -337,21 +337,15 @@ const Dashboard = () => {
         <p className="text-lg text-tum-gray-600 mb-8 max-w-2xl mx-auto">
           {t('dashboard.welcome.subtitle')}
         </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            to="/generate/structured"
-            className="btn-primary inline-flex items-center"
-          >
-            <FileText className="h-6 w-6 mr-2" />
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link to="/structured-input" className="btn-primary">
             {t('dashboard.welcome.structuredButton')}
           </Link>
-          <Link
-            to="/generate/free"
-            className="btn-outline inline-flex items-center"
-          >
-            <MessageSquare className="h-6 w-6 mr-2" />
+          <Link to="/free-prompt" className="btn-outline">
             {t('dashboard.welcome.freeButton')}
+          </Link>
+          <Link to="/self-customizing-templates" className="btn-outline">
+            {t('nav.selfCustomizingTemplates')}
           </Link>
         </div>
       </div>
@@ -363,7 +357,7 @@ const Dashboard = () => {
             {t('dashboard.recentDrafts.title')}
           </h2>
           <Link
-            to="/history"
+            to="/draft-history"
             className="text-tum-blue-600 hover:text-tum-blue-700 text-sm font-medium"
           >
             {t('dashboard.recentDrafts.viewAll')}

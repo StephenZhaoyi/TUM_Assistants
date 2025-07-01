@@ -17,9 +17,10 @@ const Layout = ({ children }) => {
 
   const navItems = [
     { path: '/', label: t('nav.home'), icon: Home },
-    { path: '/generate/structured', label: t('nav.structuredInput'), icon: FileText },
-    { path: '/generate/free', label: t('nav.freePrompt'), icon: MessageSquare },
-    { path: '/history', label: t('nav.history'), icon: History },
+    { path: '/structured-input', label: t('nav.structuredInput'), icon: FileText },
+    { path: '/free-prompt', label: t('nav.freePrompt'), icon: MessageSquare },
+    { path: '/draft-history', label: t('nav.history'), icon: History },
+    { path: '/self-customizing-templates', label: t('nav.selfCustomizingTemplates'), icon: FileText }
   ]
 
   // Show loading state while initializing

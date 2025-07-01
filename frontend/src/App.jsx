@@ -6,6 +6,7 @@ import StructuredInput from './pages/StructuredInput'
 import FreePromptInput from './pages/FreePromptInput'
 import DraftEditor from './pages/DraftEditor'
 import DraftHistory from './pages/DraftHistory'
+import SelfCustomizingTemplates from './pages/SelfCustomizingTemplates'
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -64,10 +65,12 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/generate/structured" element={<StructuredInput />} />
-            <Route path="/generate/free" element={<FreePromptInput />} />
             <Route path="/draft/:id" element={<DraftEditor />} />
-            <Route path="/history" element={<DraftHistory />} />
+            <Route path="/draft/template-edit" element={<DraftEditor />} />
+            <Route path="/draft-history" element={<DraftHistory />} />
+            <Route path="/structured-input" element={<StructuredInput />} />
+            <Route path="/free-prompt" element={<FreePromptInput />} />
+            <Route path="/self-customizing-templates" element={<SelfCustomizingTemplates />} />
           </Routes>
         </Layout>
       </Suspense>

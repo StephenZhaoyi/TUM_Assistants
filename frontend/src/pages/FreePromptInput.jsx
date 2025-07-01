@@ -233,9 +233,10 @@ const FreePromptInput = () => {
                       {t('documentTypes.freeTextGeneration')}
                     </span>
                   </div>
-                  <div className="bg-neutral-50 rounded-lg p-6 font-arial text-base leading-relaxed whitespace-pre-wrap">
-                    {generatedDraft.content}
-                  </div>
+                  <div
+                    className="bg-neutral-50 rounded-lg p-6 font-arial text-base leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: generatedDraft.content }}
+                  />
                 </div>
               )}
             </div>

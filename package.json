@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@tiptap/extension-bullet-list": "^2.23.1",
+    "@tiptap/extension-ordered-list": "^2.23.1",
+    "@tiptap/extension-text-align": "^2.23.1",
+    "@tiptap/extension-underline": "^2.23.1"
+  }
+}

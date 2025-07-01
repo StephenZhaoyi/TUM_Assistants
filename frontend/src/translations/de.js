@@ -4,7 +4,8 @@ export const de = {
     home: 'Startseite',
     structuredInput: 'Strukturierte Eingabe',
     freePrompt: 'Freitext',
-    history: 'Verlauf'
+    history: 'Verlauf',
+    selfCustomizingTemplates: 'Selbstanpassbare Vorlagen'
   },
 
   // Header
@@ -171,7 +172,10 @@ export const de = {
     moreFormal: 'Formellere Ausdrucksweise',
     moreDetailed: 'Detailliertere Beschreibung',
     morePolite: 'Höflichere Ausdrucksweise',
-    noSuggestions: 'Keine Vorschläge verfügbar'
+    noSuggestions: 'Keine Vorschläge verfügbar',
+    geminiEditPrompt: 'Geben Sie Ihre Änderungsanweisung ein (z.B. Ton formeller machen, ein Fazit hinzufügen usw.)',
+    geminiEditButton: 'Mit Gemini überarbeiten',
+    geminiEditProcessing: 'Wird bearbeitet...'
   },
 
   // Document types
@@ -317,5 +321,10 @@ export const de = {
     additionalNote: 'Geben Sie zusätzliche Hinweise oder Anforderungen ein...',
     startDate: 'Startdatum eingeben (z.B. "1. Oktober 2024")',
     endDate: 'Enddatum eingeben (z.B. "15. Februar 2024")'
+  },
+
+  selfCustomizingTemplates: {
+    title: 'Selbstanpassbare Vorlagen',
+    subtitle: 'Verwalten und nutzen Sie Ihre selbst angepassten Vorlagen für eine schnelle Dokumentenerstellung.'
   }
 } 

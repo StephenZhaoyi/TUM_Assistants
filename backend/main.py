@@ -86,6 +86,10 @@ class HolidayNoticeRequest(BaseModel):
     holiday_date: str
     name: Optional[str] = None
 
+class GeminiEditRequest(BaseModel):
+    content: str
+    instruction: str
+
 @app.post("/api/generate")
 async def generate_document(request: TemplateRequest):
     try:
@@ -204,6 +208,30 @@ async def delete_draft(draft_id: str):
     drafts = [d for d in drafts if d['id'] != draft_id]
     save_drafts(drafts)
     return {"status": "success"}
+
+@app.post("/api/gemini_edit")
+async def gemini_edit_api(req: GeminiEditRequest):
+    """使用 Gemini 对草稿进行二次编辑"""
+    from core import client
+    prompt = f"""
+你是一个行政文档写作助手。请根据用户的修改要求对以下草稿内容进行修改：
+
+【用户要求】：{req.instruction}
+
+【原始草稿】：
+{req.content}
+
+请严格保留原有文档的结构、格式（如加粗、换行、列表等），只做必要的内容调整。输出格式为 HTML，换行请用<br>，加粗请用<strong>，不要添加解释。
+"""
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        content = response.text.replace("\n", "<br>")
+        return {"content": content}
+    except Exception as e:
+        return {"content": f"[Gemini API error] {str(e)}"}
 
 if __name__ == "__main__":
     import uvicorn

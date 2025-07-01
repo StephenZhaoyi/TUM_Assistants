@@ -4,7 +4,8 @@ export const en = {
     home: 'Home',
     structuredInput: 'Structured Input',
     freePrompt: 'Free Text',
-    history: 'History'
+    history: 'History',
+    selfCustomizingTemplates: 'Self-customizing Templates'
   },
 
   // Header
@@ -136,7 +137,10 @@ export const en = {
     moreFormal: 'More formal expression',
     moreDetailed: 'More detailed description',
     morePolite: 'More polite expression',
-    noSuggestions: 'No suggestions available'
+    noSuggestions: 'No suggestions available',
+    geminiEditPrompt: 'Enter your revision instruction (e.g., make the tone more formal, add a conclusion, etc.)',
+    geminiEditButton: 'Revise with Gemini',
+    geminiEditProcessing: 'Processing...'
   },
 
   // Document types
@@ -282,5 +286,10 @@ export const en = {
     additionalNote: 'Enter any additional notes or requirements...',
     startDate: 'Enter start date (e.g., "01.05.2025")',
     endDate: 'Enter end date (e.g., "01.06.2025")'
+  },
+
+  selfCustomizingTemplates: {
+    title: 'Self-customizing Templates',
+    subtitle: 'View and manage all your self-customized templates for quick document generation.'
   }
 } 

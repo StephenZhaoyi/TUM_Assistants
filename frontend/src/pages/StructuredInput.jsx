@@ -231,13 +231,9 @@ const StructuredInput = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-          {t('structuredInput.title')}
-        </h1>
-        <p className="text-lg text-neutral-600">
-          {t('structuredInput.subtitle')}
-        </p>
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-neutral-900 mb-2">{t('structuredInput.title')}</h1>
+        <p className="text-lg text-neutral-600">{t('structuredInput.subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
