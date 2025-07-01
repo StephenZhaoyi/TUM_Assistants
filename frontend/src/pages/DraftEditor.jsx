@@ -26,6 +26,10 @@ import BulletList from '@tiptap/extension-bullet-list'
 import OrderedList from '@tiptap/extension-ordered-list'
 import TextAlign from '@tiptap/extension-text-align'
 import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import Color from '@tiptap/extension-color'
+import { FontSize } from '../extensions/FontSize'
+import { CustomHighlight } from '../extensions/Highlight'
 
 const DraftEditor = () => {
   const { id } = useParams()
@@ -37,12 +41,10 @@ const DraftEditor = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
   const [showCopySuccess, setShowCopySuccess] = useState(false)
-  const [showTemplateModal, setShowTemplateModal] = useState(false)
-  const [removeFields, setRemoveFields] = useState('')
-  const [templateName, setTemplateName] = useState('')
-  const [templateSuccess, setTemplateSuccess] = useState(false)
   const [geminiPrompt, setGeminiPrompt] = useState('')
   const [isGeminiLoading, setIsGeminiLoading] = useState(false)
+  const [showTemplateModal, setShowTemplateModal] = useState(false)
+  const [templateName, setTemplateName] = useState('')
 
   // Memoize placeholder to avoid editor recreation
   const placeholder = useMemo(() => t('draftEditor.placeholder'), [t])
@@ -57,7 +59,11 @@ const DraftEditor = () => {
       BulletList,
       OrderedList,
       ListItem,
-      TextAlign.configure({ types: ['heading', 'paragraph'] })
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextStyle,
+      Color,
+      CustomHighlight,
+      FontSize
     ],
     content: '',
     onUpdate: ({ editor }) => {
@@ -163,16 +169,30 @@ const DraftEditor = () => {
         type: draft.type || 'announcement',
       }
       setDraft(updatedDraft)
-      // 模板编辑模式下，保存到 localStorage
-      if (isTemplateEdit && location.state && typeof location.state.templateIdx === 'number') {
-        const prev = JSON.parse(localStorage.getItem('selfCustomizingTemplates') || '[]')
-        prev[location.state.templateIdx] = {
-          ...prev[location.state.templateIdx],
+      // 模板编辑模式下，保存到后端API
+      if (isTemplateEdit && location.state && location.state.template) {
+        const updatedTemplate = {
+          ...location.state.template,
           content: updatedDraft.content,
-          title: updatedDraft.title || prev[location.state.templateIdx].title,
+          title: updatedDraft.title || location.state.template.title,
           date: updatedDraft.updatedAt
         }
-        localStorage.setItem('selfCustomizingTemplates', JSON.stringify(prev))
+        
+        // 如果是新模板，使用POST创建
+        if (location.state.isNewTemplate) {
+          await fetch('/api/templates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedTemplate)
+          })
+        } else {
+          // 如果是编辑现有模板，使用PUT更新
+          await fetch(`/api/templates/${location.state.template.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedTemplate)
+          })
+        }
         setIsSaving(false)
         // 返回模板页
         navigate('/self-customizing-templates')
@@ -219,22 +239,32 @@ const DraftEditor = () => {
     setShowTemplateModal(true)
   }
 
-  const handleTemplateConfirm = () => {
-    if (!editor || !templateName.trim()) return
-    let html = editor.getHTML()
-    removeFields.split(',').map(f => f.trim()).forEach(field => {
-      if (field) {
-        html = html.replaceAll(field, '[关键内容]')
-      }
-    })
-    const prev = JSON.parse(localStorage.getItem('selfCustomizingTemplates') || '[]')
-    prev.push({ content: html, date: new Date().toISOString(), title: templateName.trim() })
-    localStorage.setItem('selfCustomizingTemplates', JSON.stringify(prev))
+  const handleTemplateModalConfirm = () => {
+    if (!templateName.trim()) {
+      alert(t('draftEditor.templateNameRequired'))
+      return
+    }
+    
     setShowTemplateModal(false)
-    setRemoveFields('')
     setTemplateName('')
-    setTemplateSuccess(true)
-    setTimeout(() => setTemplateSuccess(false), 2000)
+    
+    // 跳转到模板编辑界面
+    navigate('/draft/template-edit', { 
+      state: { 
+        template: {
+          id: 'new-template',
+          content: editor.getHTML(),
+          title: templateName.trim(),
+          date: new Date().toISOString()
+        },
+        isNewTemplate: true
+      } 
+    })
+  }
+
+  const handleTemplateModalCancel = () => {
+    setShowTemplateModal(false)
+    setTemplateName('')
   }
 
   // 渲染标题时用 type key 动态翻译
@@ -271,6 +301,40 @@ const DraftEditor = () => {
     }
   }
 
+  function getDocumentTypeLabel(type) {
+    if (!type) return '';
+    // 支持snake_case和camelCase
+    const camelCase = type.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+    const translated = t(`documentTypes.${camelCase}`);
+    if (translated && translated !== `documentTypes.${camelCase}`) {
+      return translated;
+    }
+    // 兼容snake_case
+    const mapping = {
+      'course_registration': t('documentTypes.courseRegistration'),
+      'event_notice': t('documentTypes.eventNotice'),
+      'schedule_request': t('documentTypes.scheduleRequest'),
+      'schedule_announcement': t('documentTypes.scheduleAnnouncement'),
+      'schedule_change': t('documentTypes.scheduleChange'),
+      'student_reply': t('documentTypes.studentReply'),
+      'holiday_notice': t('documentTypes.holidayNotice'),
+      'free_prompt': t('documentTypes.freeTextGeneration'),
+      'freeTextGeneration': t('documentTypes.freeTextGeneration'),
+      'announcement': t('documentTypes.announcement'),
+      'student_notice': t('documentTypes.studentNotice'),
+      'meeting_minutes': t('documentTypes.meetingMinutes'),
+      'formal_letter': t('documentTypes.formalLetter'),
+      'notification': t('documentTypes.notification'),
+      'report': t('documentTypes.report'),
+      'letter': t('documentTypes.letter'),
+      'memo': t('documentTypes.memo'),
+      'policy': t('documentTypes.policy'),
+      'guideline': t('documentTypes.guideline'),
+      'template': t('documentTypes.template'),
+    };
+    return mapping[type] || type;
+  }
+
   if (isLoading || !editor || !draft) {
     return (
       <div className="flex items-center justify-center min-h-64">
@@ -292,11 +356,16 @@ const DraftEditor = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-            {t('draftEditor.title')}
+            {isTemplateEdit ? t('draftEditor.editTemplate') : t('draftEditor.title')}
           </h1>
-          <p className="text-lg text-neutral-600">
+          {/* <p className="text-lg text-neutral-600">
             {draft.title}
-          </p>
+          </p> */}
+          {draft.type && !isTemplateEdit && (
+            <p className="text-base text-neutral-500 mt-1">
+              {getDocumentTypeLabel ? getDocumentTypeLabel(draft.type) : (t(`documentTypes.${draft.type}`) !== `documentTypes.${draft.type}` ? t(`documentTypes.${draft.type}`) : draft.type)}
+            </p>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -317,14 +386,16 @@ const DraftEditor = () => {
             className="btn-primary"
             disabled={isSaving}
           >
-            {isSaving ? t('draftEditor.saving') : t('draftEditor.save')}
+            {isSaving ? t('draftEditor.saving') : (isTemplateEdit ? t('draftEditor.saveChanges') : t('draftEditor.save'))}
           </button>
-          <button
-            onClick={handleSaveAsTemplate}
-            className="btn-outline"
-          >
-            去除关键信息并保存为模板
-          </button>
+          {!isTemplateEdit && (
+            <button
+              onClick={handleSaveAsTemplate}
+              className="btn-outline"
+            >
+              {t('draftEditor.saveAsTemplate')}
+            </button>
+          )}
         </div>
       </div>
 
@@ -347,6 +418,19 @@ const DraftEditor = () => {
             >
               {isGeminiLoading ? t('draftEditor.geminiEditProcessing') : t('draftEditor.geminiEditButton')}
             </button>
+            {isTemplateEdit && (
+              <>
+                <div className="text-base font-semibold text-neutral-900 mt-4 mb-2">{t('freePrompt.form.examples')}</div>
+                <button
+                  onClick={() => {
+                    setGeminiPrompt(t('draftEditor.removeSpecificInfoPrompt'))
+                  }}
+                  className="btn-outline"
+                >
+                  {t('draftEditor.removeSpecificInfo')}
+                </button>
+              </>
+            )}
           </div>
         </div>
         {/* 编辑器主体 */}
@@ -424,28 +508,55 @@ const DraftEditor = () => {
               >
                 <span className="font-bold">←</span>
               </button>
-              <div className="w-px h-6 bg-neutral-300 mx-2"></div>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().setTextAlign('left').run(); }}
-                className={`p-2 rounded ${editor.isActive({ textAlign: 'left' }) ? 'bg-blue-100 text-blue-600' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}
-                title="Align Left"
+              {/* 字体颜色选择器 */}
+              <select
+                className="text-sm border rounded px-1 py-0.5"
+                title="Font Color"
+                value={editor.getAttributes('textStyle').color || '#000000'}
+                onChange={e => editor.chain().focus().setColor(e.target.value).run()}
+                style={{ width: 80 }}
               >
-                <span className="font-bold">L</span>
-              </button>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().setTextAlign('center').run(); }}
-                className={`p-2 rounded ${editor.isActive({ textAlign: 'center' }) ? 'bg-blue-100 text-blue-600' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}
-                title="Align Center"
+                <option value="#000000">Black</option>
+                <option value="#ffffff">White</option>
+                <option value="#e53935">Red</option>
+                <option value="#3070b3">TUM Blue</option>
+              </select>
+              {/* 字体大小选择器 */}
+              <select
+                className="text-sm border rounded px-1 py-0.5"
+                title="Font Size"
+                value={editor.getAttributes('textStyle').fontSize || '16px'}
+                onChange={e => editor.chain().focus().setFontSize(e.target.value).run()}
+                style={{ width: 70 }}
               >
-                <span className="font-bold">C</span>
-              </button>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().setTextAlign('right').run(); }}
-                className={`p-2 rounded ${editor.isActive({ textAlign: 'right' }) ? 'bg-blue-100 text-blue-600' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}
-                title="Align Right"
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+                <option value="24px">24px</option>
+                <option value="28px">28px</option>
+                <option value="32px">32px</option>
+              </select>
+              {/* 高亮选择器 */}
+              <select
+                className="text-sm border rounded px-1 py-0.5"
+                title="Highlight Color"
+                value={editor.isActive('highlight') ? (editor.getAttributes('highlight').color || '#ffff00') : ''}
+                onChange={e => {
+                  if (e.target.value) {
+                    editor.chain().focus().setHighlight({ color: e.target.value }).run()
+                  } else {
+                    editor.chain().focus().unsetHighlight().run()
+                  }
+                }}
+                style={{ width: 100 }}
               >
-                <span className="font-bold">R</span>
-              </button>
+                <option value="" disabled>Highlight</option>
+                <option value="">No Highlight</option>
+                <option value="#ffff00">Yellow</option>
+                <option value="#ff0000">Red</option>
+              </select>
             </div>
             
             {/* Editor Content */}
@@ -456,35 +567,42 @@ const DraftEditor = () => {
         </div>
       </div>
 
+      {/* Template Name Modal */}
       {showTemplateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96">
-            <h2 className="text-lg font-bold mb-2">去除关键信息并命名模板</h2>
-            <p className="mb-2 text-sm text-neutral-600">请输入要去除的关键信息（如学生名字、地点），多个用逗号分隔：</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">
+              {t('draftEditor.enterTemplateName')}
+            </h3>
             <input
               type="text"
-              className="w-full border rounded px-2 py-1 mb-2"
-              value={removeFields}
-              onChange={e => setRemoveFields(e.target.value)}
-              placeholder="如：张三, 北京"
-            />
-            <p className="mb-2 text-sm text-neutral-600">请输入模板名称：</p>
-            <input
-              type="text"
-              className="w-full border rounded px-2 py-1 mb-4"
+              className="input w-full mb-4"
+              placeholder={t('draftEditor.templateNamePlaceholder')}
               value={templateName}
               onChange={e => setTemplateName(e.target.value)}
-              placeholder="模板名称"
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  handleTemplateModalConfirm()
+                }
+              }}
+              autoFocus
             />
             <div className="flex justify-end gap-2">
-              <button onClick={() => setShowTemplateModal(false)} className="btn-outline">取消</button>
-              <button onClick={handleTemplateConfirm} className="btn-primary" disabled={!templateName.trim()}>确认并保存</button>
+              <button
+                onClick={handleTemplateModalCancel}
+                className="btn-outline"
+              >
+                {t('common.cancel')}
+              </button>
+              <button
+                onClick={handleTemplateModalConfirm}
+                className="btn-primary"
+              >
+                {t('draftEditor.saveAsTemplate')}
+              </button>
             </div>
           </div>
         </div>
-      )}
-      {templateSuccess && (
-        <div className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50">模板保存成功！</div>
       )}
     </div>
   )

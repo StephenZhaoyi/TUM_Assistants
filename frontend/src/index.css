@@ -126,4 +126,13 @@
   display: block;
   content: "";
   margin: 8px 0;
+}
+
+/* Highlight styles - ensure text color is preserved */
+.ProseMirror mark {
+  color: inherit !important;
+}
+
+.ProseMirror mark[style*="background-color"] {
+  color: inherit !important;
 } 

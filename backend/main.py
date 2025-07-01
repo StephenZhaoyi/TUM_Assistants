@@ -59,6 +59,7 @@ class TemplateRequest(BaseModel):
 
 # 草稿存储文件
 DRAFTS_FILE = './drafts.json'
+TEMPLATES_FILE = './templates.json'
 
 def load_drafts():
     if not os.path.exists(DRAFTS_FILE) or os.path.getsize(DRAFTS_FILE) == 0:
@@ -72,6 +73,19 @@ def load_drafts():
 def save_drafts(drafts):
     with open(DRAFTS_FILE, 'w', encoding='utf-8') as f:
         json.dump(drafts, f, ensure_ascii=False, indent=2)
+
+def load_templates():
+    if not os.path.exists(TEMPLATES_FILE) or os.path.getsize(TEMPLATES_FILE) == 0:
+        return []
+    with open(TEMPLATES_FILE, 'r', encoding='utf-8') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+def save_templates(templates):
+    with open(TEMPLATES_FILE, 'w', encoding='utf-8') as f:
+        json.dump(templates, f, ensure_ascii=False, indent=2)
 
 class FreePromptRequest(BaseModel):
     prompt: str
@@ -232,6 +246,35 @@ async def gemini_edit_api(req: GeminiEditRequest):
         return {"content": content}
     except Exception as e:
         return {"content": f"[Gemini API error] {str(e)}"}
+
+@app.get("/api/templates")
+async def get_templates():
+    return load_templates()
+
+@app.post("/api/templates")
+async def create_template(template: dict = Body(...)):
+    templates = load_templates()
+    template['id'] = str(uuid4())
+    templates.insert(0, template)
+    save_templates(templates)
+    return template
+
+@app.put("/api/templates/{template_id}")
+async def update_template(template_id: str, template: dict = Body(...)):
+    templates = load_templates()
+    for i, t in enumerate(templates):
+        if t['id'] == template_id:
+            templates[i] = {**t, **template, 'id': template_id}
+            save_templates(templates)
+            return templates[i]
+    raise HTTPException(status_code=404, detail="Template not found")
+
+@app.delete("/api/templates/{template_id}")
+async def delete_template(template_id: str):
+    templates = load_templates()
+    templates = [t for t in templates if t['id'] != template_id]
+    save_templates(templates)
+    return {"success": True}
 
 if __name__ == "__main__":
     import uvicorn

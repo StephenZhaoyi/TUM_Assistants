@@ -140,7 +140,15 @@ export const en = {
     noSuggestions: 'No suggestions available',
     geminiEditPrompt: 'Enter your revision instruction (e.g., make the tone more formal, add a conclusion, etc.)',
     geminiEditButton: 'Revise with Gemini',
-    geminiEditProcessing: 'Processing...'
+    geminiEditProcessing: 'Processing...',
+    editTemplate: 'Edit Template',
+    saveChanges: 'Save Changes',
+    saveAsTemplate: 'Save as Template',
+    enterTemplateName: 'Enter Template Name',
+    templateNamePlaceholder: 'Enter template name...',
+    templateNameRequired: 'Template name is required',
+    removeSpecificInfo: 'Remove specific information',
+    removeSpecificInfoPrompt: 'Please remove specific information such as dates, times, locations, names, and other identifiable details from this template. Replace them with placeholder text like [Date], [Time], [Location], [Name], etc. to make this a reusable template.'
   },
 
   // Document types
@@ -192,6 +200,19 @@ export const en = {
     download: 'Download',
     upload: 'Upload',
     submit: 'Submit',
+    back: 'Back',
+    next: 'Next',
+    previous: 'Previous'
+  },
+
+  // Common
+  common: {
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete',
+    copy: 'Copy',
     back: 'Back',
     next: 'Next',
     previous: 'Previous'
@@ -290,6 +311,15 @@ export const en = {
 
   selfCustomizingTemplates: {
     title: 'Self-customizing Templates',
-    subtitle: 'View and manage all your self-customized templates for quick document generation.'
-  }
+    subtitle: 'View and manage all your self-customized templates for quick document generation.',
+    searchPlaceholder: 'Search templates...',
+    noTemplates: 'No templates saved yet.',
+    noSearchResults: 'No templates found matching your search.'
+  },
+
+  editTemplate: 'Edit Template',
+  saveChanges: 'Save Changes',
+  saveAsTemplate: 'Save as Template',
+  removeSpecificInfo: 'Remove specific information',
+  removeSpecificInfoPrompt: 'Please remove specific information such as dates, times, locations, names, and other identifiable details from this template. Replace them with placeholder text like [Date], [Time], [Location], [Name], etc. to make this a reusable template.'
 } 

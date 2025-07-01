@@ -25,6 +25,26 @@ function formatDate(dateString) {
   return date.toLocaleString();
 }
 
+// Helper: Format date with minutes (仿照DraftHistory)
+const formatDateWithMinutes = (dateString) => {
+  if (!dateString || isNaN(Date.parse(dateString))) return '-';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInMs = now - date;
+  const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+  if (diffInMinutes < 30) {
+    return diffInMinutes < 1 ? 'Just now' : `${diffInMinutes} minutes ago`;
+  }
+  // 否则显示日月年时分
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
 const SelfCustomizingTemplates = () => {
   const [templates, setTemplates] = useState([]);
   const [openIdx, setOpenIdx] = useState(null);
@@ -32,15 +52,15 @@ const SelfCustomizingTemplates = () => {
   const [editIdx, setEditIdx] = useState(null);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const { t } = useTranslation()
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = localStorage.getItem('selfCustomizingTemplates');
-    if (stored) {
-      setTemplates(JSON.parse(stored));
-    }
-  }, []);
+    fetch('/api/templates')
+      .then(res => res.json())
+      .then(data => setTemplates(data))
+  }, [])
 
   // 复制富文本内容
   const handleCopy = async (html) => {
@@ -77,28 +97,46 @@ const SelfCustomizingTemplates = () => {
   }
 
   // 删除模板
-  const handleDelete = (idx) => {
-    const newTemplates = templates.filter((_, i) => i !== idx);
-    setTemplates(newTemplates);
-    localStorage.setItem('selfCustomizingTemplates', JSON.stringify(newTemplates));
-    if (openIdx === idx) setOpenIdx(null);
+  const handleDelete = async (idx) => {
+    const tpl = templates[idx]
+    if (!tpl.id) return
+    await fetch(`/api/templates/${tpl.id}`, { method: 'DELETE' })
+    setTemplates(templates.filter((_, i) => i !== idx))
+    if (openIdx === idx) setOpenIdx(null)
   }
 
   // 编辑模板，跳转到 DraftEditor 并传递内容
   const handleEdit = (idx) => {
-    const tpl = templates[idx];
-    navigate('/draft/template-edit', { state: { templateIdx: idx, template: tpl } });
+    const tpl = templates[idx]
+    navigate('/draft/template-edit', { state: { templateIdx: idx, template: tpl } })
   }
-  const handleEditSave = () => {
-    if (!editTitle.trim()) return;
-    const newTemplates = templates.map((tpl, i) => i === editIdx ? { ...tpl, title: editTitle.trim(), content: editContent } : tpl);
-    setTemplates(newTemplates);
-    localStorage.setItem('selfCustomizingTemplates', JSON.stringify(newTemplates));
-    setEditIdx(null);
+  const handleEditSave = async () => {
+    if (!editTitle.trim()) return
+    const tpl = templates[editIdx]
+    const updated = { ...tpl, title: editTitle.trim(), content: editContent }
+    await fetch(`/api/templates/${tpl.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updated)
+    })
+    const newTemplates = templates.map((tpl, i) => i === editIdx ? updated : tpl)
+    setTemplates(newTemplates)
+    setEditIdx(null)
   }
   const handleEditCancel = () => {
     setEditIdx(null);
   }
+
+  // 搜索过滤逻辑
+  const filteredTemplates = templates.filter(tpl => {
+    if (!searchTerm.trim()) return true;
+    
+    const title = tpl.title || extractTitleFromHtml(tpl.content);
+    const content = extractFirstLine(tpl.content);
+    
+    return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           content.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -106,11 +144,39 @@ const SelfCustomizingTemplates = () => {
         <h1 className="text-3xl font-bold text-neutral-900 mb-2">{t('selfCustomizingTemplates.title')}</h1>
         <p className="text-lg text-neutral-600">{t('selfCustomizingTemplates.subtitle')}</p>
       </div>
-      {templates.length === 0 ? (
-        <p className="text-neutral-500">No templates saved yet.</p>
+      
+      {/* 搜索框 */}
+      <div className="flex justify-center mb-6">
+        <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            className="input w-full pl-10"
+            placeholder={t('selfCustomizingTemplates.searchPlaceholder')}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          <svg
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </div>
+      {filteredTemplates.length === 0 ? (
+        <p className="text-neutral-500">
+          {searchTerm.trim() ? t('selfCustomizingTemplates.noSearchResults') : t('selfCustomizingTemplates.noTemplates')}
+        </p>
       ) : (
         <ul className="space-y-4">
-          {templates.map((tpl, idx) => {
+          {filteredTemplates.map((tpl, idx) => {
             const isOpen = openIdx === idx;
             const title = tpl.title || extractTitleFromHtml(tpl.content);
             const firstLine = extractFirstLine(tpl.content);
@@ -123,6 +189,9 @@ const SelfCustomizingTemplates = () => {
                   >
                     <span className="font-medium text-neutral-900">{title}</span>
                     <span className="text-xs text-neutral-500 mt-1 line-clamp-1">{firstLine}</span>
+                    <span className="text-xs text-neutral-400 mt-1">
+                      {formatDateWithMinutes(tpl.date)}
+                    </span>
                   </button>
                   <div className="flex items-center gap-2 ml-2">
                     <button

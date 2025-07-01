@@ -1,115 +1,50 @@
 [
   {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **2** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>3<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **2**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>3<br>",
-    "createdAt": "2025-07-01T08:11:22.634Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "2",
-      "name": "3"
-    },
-    "id": "88af492b-acd0-46bd-835a-8a0986c0420d"
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/1",
+    "content": "<p><span style=\"font-size: 20px\"><mark data-preserve-color=\"true\" style=\"background-color: #ffff00; color: inherit !important;\">**Mitteilung zur Schließung über die Feiertage**</mark></span><br><br>Sehr geehrte Mitglieder der Universitätsgemeinschaft,<br><br>hiermit möchten wir Sie über die bevorstehende Schließung der Universität während der Feiertage zum Jahreswechsel informieren.<br><br>Die Universität wird vom **[Datum des letzten Arbeitstages vor den Feiertagen]** bis einschließlich **[Datum des letzten Feiertagstags]** geschlossen bleiben.<br><br>Der reguläre Betrieb wird am **[Datum der Wiedereröffnung]** wieder aufgenommen.<br><br>Wir wünschen Ihnen erholsame Feiertage und einen guten Start ins neue Jahr.<br><br>Mit freundlichen Grüßen,<br><br>Die Universitätsleitung<br><br>---<br><br>**Holiday Closure Announcement**<br><br>Dear Members of the University Community,<br><br>please be informed of the upcoming university closure during the year-end holidays.<br><br>The university will be closed from **[Date of last working day before holidays]** until and including **[Date of last holiday]**.<br><br>Regular operations will resume on **[Date of reopening]**.<br><br>We wish you a restful holiday season and a good start to the New Year.<br><br>Sincerely,<br><br>The University Management</p>",
+    "tone": "neutral",
+    "prompt": "Generate a holiday announcement for the university",
+    "createdAt": "2025-07-01T19:39:01.314Z",
+    "id": "5bb205da-7142-4aa0-a635-e6831c57bf7c",
+    "updatedAt": "2025-07-01T20:08:56.757Z"
   },
   {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **1** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>1<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **1**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>1<br>",
-    "createdAt": "2025-07-01T08:10:17.009Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "1",
-      "name": "1"
-    },
-    "id": "94e208d5-a31d-4d0d-afb2-ae7418ea5e1a"
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/1",
+    "content": "**[Aktuelles Datum]**<br><br>**An die Fakultätsmitglieder**<br><br>**Betreff: Einladung zur Fakultätsbesprechung**<br><br>Sehr geehrte Damen und Herren,<br><br>wir möchten Sie hiermit zu einer wichtigen Fakultätsbesprechung einladen.<br><br>**Ort**: Konferenzraum 301<br>**Zeit**: Dienstag, 15. Oktober 2024, 10:00 Uhr<br>**Themen**: Die Agenda wird Ihnen in Kürze gesondert zugesandt.<br><br>Ihre Teilnahme an dieser Besprechung ist von großer Bedeutung.<br><br>Mit freundlichen Grüßen<br><br>**[Ihr Name/Ihre Position]**<br>**[Abteilung/Institution]**<br><br>---<br><br>**[Current Date]**<br><br>**To Faculty Members**<br><br>**Subject: Invitation to Faculty Meeting**<br><br>Dear Faculty Members,<br><br>We would like to formally invite you to an important upcoming faculty meeting.<br><br>**Location**: Conference Room 301<br>**Time**: Tuesday, October 15, 2024, 10:00 AM<br>**Agenda**: The agenda will be circulated separately in due course.<br><br>Your participation in this meeting is highly valued.<br><br>Sincerely,<br><br>**[Your Name/Your Position]**<br>**[Department/Institution]**",
+    "tone": "neutral",
+    "prompt": "Create a formal letter to faculty members about upcoming meeting",
+    "createdAt": "2025-07-01T19:25:26.295Z",
+    "id": "c0579e82-5ced-4082-ae5d-bc52fa9de7a7"
   },
   {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **2** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>3<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **2**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>3<br>",
-    "createdAt": "2025-07-01T08:06:06.253Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "2",
-      "name": "3"
-    },
-    "id": "3d571a95-8a3c-4eaa-82e3-a9b65c5ac0f1"
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/1",
+    "content": "**Wichtige Mitteilung**<br><br>An die gesamte Schulgemeinschaft,<br><br>Aufgrund der extrem hohen Temperaturen werden **diese Woche alle Kurse online stattfinden**. Die **Schuleinrichtungen bleiben geschlossen** und sind nicht zugänglich.<br><br>Wir bitten um Ihr Verständnis.<br><br>---<br><br>**Important Announcement**<br><br>To the entire school community,<br><br>Due to extreme heat, **all classes will be conducted online this week**. **All school facilities will remain closed** and inaccessible.<br><br>Your understanding is appreciated.",
+    "tone": "neutral",
+    "prompt": "通知所有师生本周由于极端高温，所有课程改为线上，学校所有设施不开放。",
+    "createdAt": "2025-07-01T19:22:46.502Z",
+    "id": "b7bdb9a5-a063-4fcd-bb9b-57c624a52114"
   },
   {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **1** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>1<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **1**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>1<br>",
-    "createdAt": "2025-07-01T08:01:35.602Z",
+    "type": "event_notice",
+    "title": "documentTypes.event_notice - MMDT",
+    "content": "<p>📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Mitglieder der MMDT,<br><br>Ab nächster Woche<br><br>Wir laden Sie herzlich zur Veranstaltung Prüfung ein, die am **30. Juni 2025** im Gebäude D stattfinden wird.<br><br>Hier finden Sie die wichtigsten Informationen zur Veranstaltung:<br><br>🔹 Datum: **30. Juni 2025**<br>🔹 Ort: Gebäude D<br>🔹 Sprache: Englisch<br>🔹 Anmeldung: Keine Anmeldung erforderlich.<br><br>Mit freundlichen Grüßen<br>TUM<br><br>[English]<br><br>Dear members of the MMDT,<br><br>start from next week<br><br>We warmly invite you to attend exam, taking place on **30. June 2025** at Building D.<br><br>Below are the key details for the event:<br><br>🔹 Date: **30. June 2025**<br>🔹 Location: Building D<br>🔹 Language: English<br>🔹 Registration: Registration is not required.<br><br>Best regards,<br>TUM</p>",
+    "createdAt": "2025-07-01T18:49:11.170Z",
     "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "1",
-      "name": "1"
+      "category": "student",
+      "documentType": "event_notice",
+      "courseName": "exam",
+      "additionalNote": "start from next week",
+      "eventTime": "2025年6月30日",
+      "location": "D楼",
+      "targetAudience": "MMDT",
+      "language": "英语",
+      "name": "TUM"
     },
-    "id": "3fd5de98-b467-4fd5-a027-e904f42447e1"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **cipants of the semin** bleibt die Universität am **cipants of the semin** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>cipants of the semin<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **cipants of the semin**, the university will be closed on **cipants of the semin**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>cipants of the semin<br>",
-    "createdAt": "2025-07-01T08:00:41.847Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "cipants of the semin",
-      "holidayDate": "cipants of the semin",
-      "name": "cipants of the semin"
-    },
-    "id": "1c6a140f-1718-4952-b708-c57e17abec03"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **1** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>1<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **1**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>1<br>",
-    "createdAt": "2025-07-01T07:50:32.771Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "1",
-      "name": "1"
-    },
-    "id": "f88f6a98-2814-4f5a-805a-9d0fe5b068aa"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **2** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>3<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **2**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>3<br>",
-    "createdAt": "2025-07-01T07:28:28.335Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "2",
-      "name": "3"
-    },
-    "id": "19bba719-9404-4c80-8e37-f49d42b9c7fd"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **3** bleibt die Universität am **3** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>3<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **3**, the university will be closed on **3**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>3<br>",
-    "createdAt": "2025-07-01T07:21:36.268Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "3",
-      "holidayDate": "3",
-      "name": "3"
-    },
-    "id": "f8d9b557-d5cd-4729-806b-88045547f446"
+    "id": "d15347d0-05f4-403c-b39b-23e213801f83",
+    "updatedAt": "2025-07-01T18:49:16.287Z"
   },
   {
     "type": "freeTextGeneration",
@@ -133,61 +68,6 @@
       "name": "2"
     },
     "id": "734678d8-c13b-456b-abca-06a7f18e8263"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **1** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>1<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **1**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>1<br>",
-    "createdAt": "2025-07-01T06:55:48.811Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "1",
-      "name": "1"
-    },
-    "id": "ada5fdba-2ee6-462a-aa2c-a6374592e178"
-  },
-  {
-    "type": "holiday_notice",
-    "title": "documentTypes.holiday_notice",
-    "content": "📩 Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags **1** bleibt die Universität am **1** geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>1<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday **1**, the university will be closed on **1**.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>1<br>",
-    "createdAt": "2025-07-01T06:53:34.456Z",
-    "source": {
-      "category": "all",
-      "documentType": "holiday_notice",
-      "holidayName": "1",
-      "holidayDate": "1",
-      "name": "1"
-    },
-    "id": "599339c0-8bfb-4e29-9a12-ba1f01f920a8"
-  },
-  {
-    "type": "freeTextGeneration",
-    "title": "Free Text Generation - 7/1/2025",
-    "content": "**Einladung zur Fakultätssitzung**<br><br>Liebe Kolleginnen und Kollegen,<br><br>wir möchten Sie herzlich zu unserer bevorstehenden Fakultätssitzung einladen.<br><br>Dieses Treffen dient dem wichtigen Informationsaustausch und der gemeinsamen Planung für die kommende Zeit.<br><br>Bitte merken Sie sich folgende Details vor:<br><br>*   **Datum:** Donnerstag, 25. April 2024<br>*   **Uhrzeit:** 10:00 Uhr<br>*   **Ort:** Konferenzraum 201<br><br>Ihre Teilnahme ist uns sehr wichtig und wird geschätzt.<br><br>Wir freuen uns auf Ihre Anwesenheit.<br><br>Mit freundlichen Grüßen,<br><br>[Name der Leitung/Abteilung]<br><br>---<br><br>**Invitation to Faculty Meeting**<br><br>Dear Faculty Members,<br><br>We would like to cordially invite you to an upcoming faculty meeting.<br><br>This meeting will serve as an important opportunity for information exchange and collaborative planning for the upcoming period.<br><br>Please note the following details:<br><br>*   **Date:** Thursday, April 25, 2024<br>*   **Time:** 10:00 AM<br>*   **Location:** Conference Room 201<br><br>Your presence is highly valued and important to us.<br><br>We look forward to seeing you there.<br><br>Best regards,<br><br>[Name of Management/Department]",
-    "tone": "friendly",
-    "prompt": "Create a formal letter to faculty members about upcoming meeting",
-    "createdAt": "2025-07-01T06:38:10.128Z",
-    "id": "ab6a11da-b61c-415f-a3b2-0abe0ed5944b"
-  },
-  {
-    "type": "freeTextGeneration",
-    "title": "Free Text Generation - 7/1/2025",
-    "content": "**Liebe Universitätsgemeinschaft,**<br><br>Die Feiertage stehen vor der Tür und das Jahr neigt sich dem Ende zu.<br><br>Wir wünschen Ihnen **erholsame Feiertage** und eine **schöne Zeit** mit Ihren Lieben.<br><br>Kommen Sie gut ins neue Jahr und starten Sie **voller Energie** ins nächste Semester!<br><br>**Herzliche Grüße,**<br>**Ihre Universität**<br><br>---<br><br>**Dear University Community,**<br><br>As the holiday season approaches and the year draws to a close,<br><br>We wish you **relaxing holidays** and a **wonderful time** with your loved ones.<br><br>Have a great start to the New Year and return **full of energy** for the next semester!<br><br>**Warm regards,**<br>**Your University**",
-    "tone": "friendly",
-    "prompt": "Generate a holiday announcement for the university",
-    "createdAt": "2025-07-01T06:36:42.745Z",
-    "id": "e0acf5e4-e0ad-4364-81c8-f001bef0d930"
-  },
-  {
-    "type": "freeTextGeneration",
-    "title": "Free Text Generation - 7/1/2025",
-    "content": "**Hinweis zur Anpassung des Prüfungszeitplans**<br><br>**Sehr geehrte Studierende,**<br><br>Wir möchten Sie darüber informieren, dass der Prüfungszeitplan Anpassungen erfahren hat.<br><br>Die aktualisierte Version ist ab sofort auf [Plattform/Ort] einzusehen.<br><br>Bitte überprüfen Sie den aktualisierten Plan umgehend auf Ihre individuellen Termine.<br><br>**Mit freundlichen Grüßen,**<br>**[Name der Institution/Verwaltung/Prüfungsamt]**<br><br>---<br><br>**Notice Regarding Exam Schedule Adjustments**<br><br>**Dear Students,**<br><br>Please be informed that the exam schedule has undergone adjustments.<br><br>The updated version is now available for viewing on [Platform/Location].<br><br>Kindly review the updated schedule immediately to verify your individual exam dates.<br><br>**Sincerely,**<br>**[Name of Institution/Administration/Examinations Office]**",
-    "tone": "neutral",
-    "prompt": "Write a notice to inform students about exam schedule changes",
-    "createdAt": "2025-06-30T23:02:45.935Z",
-    "id": "a7b48c7c-3aed-4307-8d9a-50dab89033f4"
   },
   {
     "type": "freeTextGeneration",

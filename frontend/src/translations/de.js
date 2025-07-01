@@ -175,7 +175,15 @@ export const de = {
     noSuggestions: 'Keine Vorschläge verfügbar',
     geminiEditPrompt: 'Geben Sie Ihre Änderungsanweisung ein (z.B. Ton formeller machen, ein Fazit hinzufügen usw.)',
     geminiEditButton: 'Mit Gemini überarbeiten',
-    geminiEditProcessing: 'Wird bearbeitet...'
+    geminiEditProcessing: 'Wird bearbeitet...',
+    editTemplate: 'Vorlage bearbeiten',
+    saveChanges: 'Änderungen speichern',
+    saveAsTemplate: 'Als Vorlage speichern',
+    enterTemplateName: 'Vorlagenname eingeben',
+    templateNamePlaceholder: 'Vorlagenname eingeben...',
+    templateNameRequired: 'Vorlagenname ist erforderlich',
+    removeSpecificInfo: 'Sensible Informationen entfernen',
+    removeSpecificInfoPrompt: 'Bitte entfernen Sie spezifische Informationen wie Datum, Uhrzeit, Ort, Namen und andere identifizierende Details aus dieser Vorlage. Ersetzen Sie diese durch Platzhalter wie [Datum], [Uhrzeit], [Ort], [Name] usw., um eine wiederverwendbare Vorlage zu erstellen.'
   },
 
   // Document types
@@ -227,6 +235,19 @@ export const de = {
     download: 'Herunterladen',
     upload: 'Hochladen',
     submit: 'Absenden',
+    back: 'Zurück',
+    next: 'Weiter',
+    previous: 'Zurück'
+  },
+
+  // Common
+  common: {
+    cancel: 'Abbrechen',
+    confirm: 'Bestätigen',
+    save: 'Speichern',
+    edit: 'Bearbeiten',
+    delete: 'Löschen',
+    copy: 'Kopieren',
     back: 'Zurück',
     next: 'Weiter',
     previous: 'Zurück'
@@ -325,6 +346,15 @@ export const de = {
 
   selfCustomizingTemplates: {
     title: 'Selbstanpassbare Vorlagen',
-    subtitle: 'Verwalten und nutzen Sie Ihre selbst angepassten Vorlagen für eine schnelle Dokumentenerstellung.'
-  }
+    subtitle: 'Verwalten und nutzen Sie Ihre selbst angepassten Vorlagen für eine schnelle Dokumentenerstellung.',
+    searchPlaceholder: 'Vorlagen durchsuchen...',
+    noTemplates: 'Noch keine Vorlagen gespeichert.',
+    noSearchResults: 'Keine Vorlagen gefunden, die Ihrer Suche entsprechen.'
+  },
+
+  editTemplate: 'Vorlage bearbeiten',
+  saveChanges: 'Änderungen speichern',
+  saveAsTemplate: 'Als Vorlage speichern',
+  removeSpecificInfo: 'Sensible Informationen entfernen',
+  removeSpecificInfoPrompt: 'Bitte entfernen Sie spezifische Informationen wie Datum, Uhrzeit, Ort, Namen und andere identifizierende Details aus dieser Vorlage. Ersetzen Sie diese durch Platzhalter wie [Datum], [Uhrzeit], [Ort], [Name] usw., um eine wiederverwendbare Vorlage zu erstellen.'
 } 
