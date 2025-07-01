@@ -239,27 +239,35 @@ const DraftEditor = () => {
     setShowTemplateModal(true)
   }
 
-  const handleTemplateModalConfirm = () => {
+  const handleTemplateModalConfirm = async () => {
     if (!templateName.trim()) {
       alert(t('draftEditor.templateNameRequired'))
       return
     }
-    
     setShowTemplateModal(false)
     setTemplateName('')
-    
-    // 跳转到模板编辑界面
-    navigate('/draft/template-edit', { 
-      state: { 
-        template: {
-          id: 'new-template',
-          content: editor.getHTML(),
+    try {
+      const res = await fetch('/api/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           title: templateName.trim(),
+          content: editor.getHTML(),
           date: new Date().toISOString()
-        },
-        isNewTemplate: true
-      } 
-    })
+        })
+      })
+      if (!res.ok) throw new Error('Failed to save template')
+      const savedTemplate = await res.json()
+      // 跳转到模板编辑界面，带上新建的模板
+      navigate('/draft/template-edit', {
+        state: {
+          template: savedTemplate,
+          isNewTemplate: false
+        }
+      })
+    } catch (err) {
+      alert(t('draftEditor.saveError') + ': ' + (err.message || err))
+    }
   }
 
   const handleTemplateModalCancel = () => {
