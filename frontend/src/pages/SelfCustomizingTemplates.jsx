@@ -130,12 +130,8 @@ const SelfCustomizingTemplates = () => {
   // 搜索过滤逻辑
   const filteredTemplates = templates.filter(tpl => {
     if (!searchTerm.trim()) return true;
-    
     const title = tpl.title || extractTitleFromHtml(tpl.content);
-    const content = extractFirstLine(tpl.content);
-    
-    return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           content.toLowerCase().includes(searchTerm.toLowerCase());
+    return title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   return (
