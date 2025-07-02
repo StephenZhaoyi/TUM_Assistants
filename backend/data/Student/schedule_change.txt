@@ -1,0 +1,41 @@
+📩 Scroll down for English version
+
+---
+
+[Deutsch]
+
+Liebe Mitglieder der {target_group},
+
+bitte beachten Sie, dass es eine Änderung bei der Veranstaltung **{course_name}({course_code})** gibt.  
+**Grund der Änderung:** {change_reason}
+
+🕓 Ursprünglicher Termin: {original_time}  
+🏛️ Ursprünglicher Raum: {original_location}  
+
+➡️ Neuer Termin: {new_time}  
+➡️ Neuer Raum: {new_location}
+
+Bitte passen Sie Ihre Planung entsprechend an. Bei Rückfragen stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen  
+{name}
+
+---
+
+[English]
+
+Dear members of the {target_group},
+
+Please note that there has been a change regarding the course **{course_name}({course_code})**.  
+**Reason for change:** {change_reason}
+
+🕓 Original time: {original_time}  
+🏛️ Original room: {original_location}  
+
+➡️ New time: {new_time}  
+➡️ New room: {new_location}
+
+Please adjust your schedule accordingly. If you have any questions, feel free to contact us.
+
+Best regards,  
+{name}

@@ -25,25 +25,30 @@ const StructuredInput = () => {
 
   // Document categories with their respective document types
   const documentCategories = {
-    staff: [
-      { value: 'schedule_request', label: t('documentTypes.scheduleRequest') }
-    ],
-    student: [
-      { value: 'course_registration', label: t('documentTypes.courseRegistration') },
-      { value: 'event_notice', label: t('documentTypes.eventNotice') },
-      { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
-      { value: 'student_reply', label: t('documentTypes.studentReply') }
-    ],
-    all: [
-      { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
-      { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
-    ]
-  }
+  staff: [
+    { value: 'schedule_request', label: t('documentTypes.scheduleRequest') },
+    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
+    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
+  ],
+  student: [
+    { value: 'course_registration', label: t('documentTypes.courseRegistration') },
+    { value: 'event_notice', label: t('documentTypes.eventNotice') },
+    { value: 'schedule_announcement', label: t('documentTypes.scheduleAnnouncement') },
+    { value: 'student_reply', label: t('documentTypes.studentReply') },
+    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
+    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
+  ],
+  all: [
+    { value: 'schedule_change', label: t('documentTypes.scheduleChange') },
+    { value: 'holiday_notice', label: t('documentTypes.holidayNotice') }
+  ]
+   }
 
   // Get available document types based on selected category
   const getDocumentTypesForCategory = (category) => {
     return documentCategories[category] || []
   }
+
 
   const fieldsByType = {
     course_registration: [
