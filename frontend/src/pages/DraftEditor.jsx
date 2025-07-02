@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from '../translations'
 import { 
@@ -30,6 +30,16 @@ import TextStyle from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
 import { FontSize } from '../extensions/FontSize'
 import { CustomHighlight } from '../extensions/Highlight'
+
+function autoParagraph(html) {
+  if (/<p[\s>]/.test(html)) return html;
+  let text = html.replace(/<br\s*\/?>(\s*)/g, '\n');
+  return text
+    .split(/([。！？!?]\s*|[\r\n]+)/)
+    .filter(Boolean)
+    .map(s => s.trim() ? `<p>${s.trim()}</p>` : '')
+    .join('');
+}
 
 const DraftEditor = () => {
   const { id } = useParams()
@@ -94,14 +104,14 @@ const DraftEditor = () => {
     if (location.pathname === '/draft/template-edit') return;
     if (editor && draft) {
       try {
-        editor.commands.setContent(draft.content || '')
+        editor.commands.setContent(autoParagraph(draft.content || ''))
         setIsLoading(false)
       } catch (error) {
         console.error('Error setting editor content:', error)
         setIsLoading(false)
       }
     }
-  }, [editor, draft, location.pathname])
+  }, [editor, draft, location.pathname, autoParagraph])
 
   // Reset loading state when id changes
   useEffect(() => {
@@ -114,7 +124,7 @@ const DraftEditor = () => {
   // 初始化模板编辑内容
   useEffect(() => {
     if (isTemplateEdit && editor) {
-      editor.commands.setContent(location.state.template.content || '')
+      editor.commands.setContent(autoParagraph(location.state.template.content || ''))
       setDraft({
         id: 'template-edit',
         content: location.state.template.content,
@@ -124,7 +134,7 @@ const DraftEditor = () => {
       })
       setIsLoading(false)
     }
-  }, [isTemplateEdit, editor])
+  }, [isTemplateEdit, editor, autoParagraph])
 
   // 页面顶部加防御性跳转，防止 location.state 丢失时报错
   useEffect(() => {
@@ -143,7 +153,7 @@ const DraftEditor = () => {
         template = templates[templateIdx];
       }
       if (template && editor) {
-        editor.commands.setContent(template.content || '')
+        editor.commands.setContent(autoParagraph(template.content || ''))
         setDraft({
           id: 'template-edit',
           content: template.content,
@@ -156,7 +166,7 @@ const DraftEditor = () => {
         navigate('/self-customizing-templates');
       }
     }
-  }, [location, editor, navigate]);
+  }, [location, editor, navigate, autoParagraph]);
 
   const handleSave = async () => {
     if (!editor) return
@@ -300,7 +310,7 @@ const DraftEditor = () => {
       })
       const data = await res.json()
       if (data.content) {
-        editor.commands.setContent(data.content)
+        editor.commands.setContent(autoParagraph(data.content))
       }
     } catch (e) {
       alert('Gemini API 调用失败')
