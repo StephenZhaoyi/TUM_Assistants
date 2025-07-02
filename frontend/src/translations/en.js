@@ -215,7 +215,9 @@ export const en = {
     copy: 'Copy',
     back: 'Back',
     next: 'Next',
-    previous: 'Previous'
+    previous: 'Previous',
+    prev: 'Previous',
+    next: 'Next'
   },
 
   // Tone selector

@@ -250,7 +250,8 @@ export const de = {
     copy: 'Kopieren',
     back: 'Zurück',
     next: 'Weiter',
-    previous: 'Zurück'
+    previous: 'Zurück',
+    prev: 'Zurück'
   },
 
   // Tone selector
