@@ -22,7 +22,9 @@ const DraftHistory = () => {
   const [sortBy, setSortBy] = useState('newest')
   const [isLoading, setIsLoading] = useState(true)
   const [showCopySuccess, setShowCopySuccess] = useState(false)
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const totalPages = Math.max(1, Math.ceil(filteredDrafts.length / pageSize));
 
   useEffect(() => {
     if (!isInitialized) return
@@ -68,6 +70,9 @@ const DraftHistory = () => {
     setFilteredDrafts(filtered)
   }, [drafts, searchTerm, selectedType, sortBy])
   
+  useEffect(() => { setCurrentPage(1); }, [searchTerm, selectedType, sortBy]);
+  const pagedDrafts = filteredDrafts.slice((currentPage-1)*pageSize, currentPage*pageSize);
+
   const documentTypes = [
     { value: 'all', label: t('draftHistory.allTypes') },
     { value: 'course_registration', label: t('documentTypes.courseRegistration'), category: 'student' },
@@ -433,82 +438,77 @@ const DraftHistory = () => {
       {/* Drafts List */}
       <div className="space-y-4">
         {isLoading ? (
-          <div className="card p-12 text-center">
-             <Loader2 className="h-12 w-12 text-neutral-400 mx-auto mb-4 animate-spin" />
+          <div className="flex items-center justify-center min-h-64">
+            <Loader2 className="h-10 w-10 animate-spin text-primary-600" />
           </div>
-        ) : filteredDrafts.length === 0 ? (
-          <div className="card p-12 text-center">
-            <History className="h-12 w-12 text-neutral-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-neutral-900 mb-2">
-              {t('draftHistory.empty.title')}
-            </h3>
-            <p className="text-neutral-500 mb-4">
-              {searchTerm || selectedType !== 'all' 
-                ? t('draftHistory.empty.noResults')
-                : t('draftHistory.empty.subtitle')
-              }
-            </p>
-            {!searchTerm && selectedType === 'all' && (
-              <Link to="/generate/structured" className="btn-primary">
-                {t('draftHistory.empty.startGenerating')}
-              </Link>
-            )}
-          </div>
+        ) : pagedDrafts.length === 0 ? (
+          <p className="text-neutral-500 text-center py-8">{t('draftHistory.noDrafts')}</p>
         ) : (
-          filteredDrafts.map((draft) => (
-            <div key={draft.id} className="card p-6 hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
-                      <FileText className="h-4 w-4 mr-1.5" />
-                      {getDocumentTypeLabel(draft.type)}
-                    </span>
-                    <span className="text-sm text-neutral-500">
-                      {formatDateWithMinutes(draft.createdAt)}
-                    </span>
-                    {draft.updatedAt && (
-                      <span className="text-xs text-neutral-400">
-                        {t('draftHistory.edited')}
+          <ul className="space-y-4">
+            {pagedDrafts.map((draft, idx) => (
+              <li key={draft.id} className="card p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
+                        <FileText className="h-4 w-4 mr-1.5" />
+                        {getDocumentTypeLabel(draft.type)}
                       </span>
-                    )}
+                      <span className="text-sm text-neutral-500">
+                        {formatDateWithMinutes(draft.createdAt)}
+                      </span>
+                      {draft.updatedAt && (
+                        <span className="text-xs text-neutral-400">
+                          {t('draftHistory.edited')}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-medium text-neutral-900 mb-2">
+                      {generateTitleFromContent(draft)}
+                    </h3>
+                    <div 
+                      className="text-sm text-neutral-600 line-clamp-2 prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: (draft.content || '').substring(0, 200) + '...' }}
+                    />
                   </div>
-                  <h3 className="font-medium text-neutral-900 mb-2">
-                    {generateTitleFromContent(draft)}
-                  </h3>
-                  <div 
-                    className="text-sm text-neutral-600 line-clamp-2 prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: (draft.content || '').substring(0, 200) + '...' }}
-                  />
+                  <div className="flex items-center gap-2 ml-4">
+                    <button
+                      onClick={() => handleCopy(draft.content)}
+                      className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
+                      title={t('actions.copy')}
+                    >
+                      <Copy className="h-5 w-5" />
+                    </button>
+                    <Link
+                      to={`/draft/${draft.id}`}
+                      className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
+                      title={t('actions.edit')}
+                    >
+                      <Edit className="h-5 w-5" />
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(draft.id)}
+                      className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded"
+                      title={t('actions.delete')}
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 ml-4">
-                  <button
-                    onClick={() => handleCopy(draft.content)}
-                    className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                    title={t('actions.copy')}
-                  >
-                    <Copy className="h-5 w-5" />
-                  </button>
-                  <Link
-                    to={`/draft/${draft.id}`}
-                    className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                    title={t('actions.edit')}
-                  >
-                    <Edit className="h-5 w-5" />
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(draft.id)}
-                    className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded"
-                    title={t('actions.delete')}
-                  >
-                    <Trash2 className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))
+              </li>
+            ))}
+          </ul>
         )}
       </div>
+
+      {/* 分页控件 */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2 items-center">
+          <button className="btn-outline px-3" disabled={currentPage===1} onClick={()=>{setCurrentPage(p=>p-1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.prev')}</button>
+          <span className="mx-2">{currentPage} / {totalPages}</span>
+          <button className="btn-outline px-3" disabled={currentPage===totalPages} onClick={()=>{setCurrentPage(p=>p+1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.next')}</button>
+        </div>
+      )}
     </div>
   );
 }

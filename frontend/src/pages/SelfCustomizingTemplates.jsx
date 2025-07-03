@@ -55,6 +55,16 @@ const SelfCustomizingTemplates = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { t } = useTranslation()
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const filteredTemplates = templates.filter(tpl => {
+    if (!searchTerm.trim()) return true;
+    const title = tpl.title || extractTitleFromHtml(tpl.content);
+    return title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+  const totalPages = Math.max(1, Math.ceil(filteredTemplates.length / pageSize));
+  useEffect(() => { setCurrentPage(1); }, [searchTerm]);
+  const pagedTemplates = filteredTemplates.slice((currentPage-1)*pageSize, currentPage*pageSize);
 
   useEffect(() => {
     fetch('/api/templates')
@@ -127,17 +137,6 @@ const SelfCustomizingTemplates = () => {
     setEditIdx(null);
   }
 
-  // 搜索过滤逻辑
-  const filteredTemplates = templates.filter(tpl => {
-    if (!searchTerm.trim()) return true;
-    
-    const title = tpl.title || extractTitleFromHtml(tpl.content);
-    const content = extractFirstLine(tpl.content);
-    
-    return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           content.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6 text-center flex-col">
@@ -170,13 +169,13 @@ const SelfCustomizingTemplates = () => {
           </svg>
         </div>
       </div>
-      {filteredTemplates.length === 0 ? (
+      {pagedTemplates.length === 0 ? (
         <p className="text-neutral-500">
           {searchTerm.trim() ? t('selfCustomizingTemplates.noSearchResults') : t('selfCustomizingTemplates.noTemplates')}
         </p>
       ) : (
         <ul className="space-y-4">
-          {filteredTemplates.map((tpl, idx) => {
+          {pagedTemplates.map((tpl, idx) => {
             const isOpen = openIdx === idx;
             const title = tpl.title || extractTitleFromHtml(tpl.content);
             const firstLine = extractFirstLine(tpl.content);
@@ -224,6 +223,14 @@ const SelfCustomizingTemplates = () => {
             );
           })}
         </ul>
+      )}
+      {/* 分页控件 */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2 items-center">
+          <button className="btn-outline px-3" disabled={currentPage===1} onClick={()=>{setCurrentPage(p=>p-1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.prev')}</button>
+          <span className="mx-2">{currentPage} / {totalPages}</span>
+          <button className="btn-outline px-3" disabled={currentPage===totalPages} onClick={()=>{setCurrentPage(p=>p+1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.next')}</button>
+        </div>
       )}
       {showCopySuccess && (
         <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
