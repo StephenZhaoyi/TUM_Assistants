@@ -4,7 +4,7 @@ Scroll down for English version
 
 Liebe Studierende,
 
-anlässlich des Feiertags {holiday_name} bleibt die Universität am **{holiday_date}** geschlossen.
+anlässlich des Feiertags {holiday_name} bleibt die Universität am {holiday_date} geschlossen.
 
 Wir wünschen Ihnen einen erholsamen Feiertag.
 
@@ -17,7 +17,7 @@ Mit freundlichen Grüßen
 
 Dear Students,
 
-Due to the public holiday {holiday_name}, the university will be closed on **{holiday_date}**.
+Due to the public holiday {holiday_name}, the university will be closed on {holiday_date}.
 
 We wish you a restful and enjoyable holiday.
 
