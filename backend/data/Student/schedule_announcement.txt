@@ -1,4 +1,4 @@
-📩 Scroll down for English version
+Scroll down for English version
 
 ---
 
@@ -6,12 +6,12 @@
 
 Liebe Mitglieder der {target_group},
 
-wir freuen uns, Ihnen die Details zur bevorstehenden Lehrveranstaltung **{course_name} ({course_code})** mitzuteilen.
+wir freuen uns, Ihnen die Details zur bevorstehenden Lehrveranstaltung {course_name} ({course_code}) mitzuteilen.
 
-🔹 Dozent*in: {instructor_name}  
-🔹 Beginn der Veranstaltung: {course_start_date}  
-🔹 Wöchentlicher Termin: {weekly_time}  
-🔹 Raum: {weekly_location}  
+Dozent*in: {instructor_name}  
+Beginn der Veranstaltung: {course_start_date}  
+Wöchentlicher Termin: {weekly_time}  
+Raum: {weekly_location}  
 
 Bei Fragen zur Kursorganisation wenden Sie sich bitte an das Studienbüro.  
 Falls Sie nicht an der Veranstaltung teilnehmen möchten, melden Sie sich bitte rechtzeitig über TUMonline ab.
@@ -25,12 +25,12 @@ Mit freundlichen Grüßen
 
 Dear members of the {target_group},
 
-We are pleased to share the details of the upcoming course **{course_name} ({course_code})**.
+We are pleased to share the details of the upcoming course {course_name} ({course_code}).
 
-🔹 Instructor: {instructor_name}  
-🔹 Course start date: {course_start_date}  
-🔹 Weekly schedule: {weekly_time}  
-🔹 Room: {weekly_location}  
+Instructor: {instructor_name}  
+Course start date: {course_start_date}  
+Weekly schedule: {weekly_time}  
+Room: {weekly_location}  
 
 For any organizational questions regarding the course, please contact your program office.  
 If you do not plan to attend the course, make sure to deregister via TUMonline in time.
