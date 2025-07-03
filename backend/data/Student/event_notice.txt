@@ -1,4 +1,4 @@
-📩 Scroll down for English version
+Scroll down for English version
 
 [Deutsch]
 
@@ -10,10 +10,10 @@ Wir laden Sie herzlich zur Veranstaltung {event_name} ein, die am {event_time} a
 
 Hier finden Sie die wichtigsten Informationen zur Veranstaltung:
 
-🔹 Datum: {event_time}
-🔹 Ort: {event_location}
-🔹 Sprache: {language}
-🔹 Anmeldung: {registration}
+Datum: {event_time}
+Ort: {event_location}
+Sprache: {language}
+Anmeldung: {registration}
 
 Mit freundlichen Grüßen
 {name}
@@ -28,10 +28,10 @@ We warmly invite you to attend {event_name}, taking place on {event_time} at {ev
 
 Below are the key details for the event:
 
-🔹 Date: {event_time}
-🔹 Location: {event_location}
-🔹 Language: {language}
-🔹 Registration: {registration}
+Date: {event_time}
+Location: {event_location}
+Language: {language}
+Registration: {registration}
 
 Best regards,
 {name}
