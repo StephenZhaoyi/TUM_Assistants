@@ -67,10 +67,19 @@ const SelfCustomizingTemplates = () => {
   const pagedTemplates = filteredTemplates.slice((currentPage-1)*pageSize, currentPage*pageSize);
 
   useEffect(() => {
-    fetch('/api/templates')
-      .then(res => res.json())
-      .then(data => setTemplates(data))
-  }, [])
+  fetch('/api/self_templates')
+    .then(res => res.json())
+    .then(data => {
+      const withDefaults = data.map(tpl => ({
+        ...tpl,
+        title: tpl.name || extractTitleFromHtml(tpl.content),
+        date: new Date().toISOString()  // 当前时间作为占位
+      }));
+      setTemplates(withDefaults);
+    });
+  }, []);
+
+
 
   // 复制富文本内容
   const handleCopy = async (html) => {
