@@ -1,0 +1,47 @@
+Scroll down for English version
+
+[Deutsch]
+
+Liebe Studierende,
+
+wenn Sie Fragen zu unserem Studienprogramm haben, sind Sie herzlich eingeladen, uns während der Sprechzeiten zu besuchen – entweder vor Ort oder virtuell.
+
+Vor-Ort-Sprechstunde: {on_site_time}  
+Bildungscampus 2, 74076 Heilbronn, Raum D.1.01
+
+Virtuelle Sprechstunde (Zoom): {virtual_time}  
+Meeting-ID: {meeting_id}  
+Kenncode: {passcode}  
+Bitte bleiben Sie im Warteraum, bis ein Platz frei wird.
+
+Bei weiteren Fragen erreichen Sie uns unter:  
+{email_address} 
++49 7131 26418612  
+http://www.mgt.tum.de/
+
+Mit freundlichen Grüßen  
+{name}
+
+---
+
+[English]
+
+Dear Students,
+
+If you have any questions regarding our program, you are warmly welcome to visit us during our consultation hours – either on-site or virtually.
+
+On-site consultation hour: {on_site_time}  
+Bildungscampus 2, 74076 Heilbronn, Room D.1.01
+
+Virtual consultation hour (Zoom): {virtual_time}  
+Meeting-ID: {meeting_id}  
+Passcode: {passcode}  
+Please remain in the waiting room until a slot is available.
+
+For further questions, feel free to contact us:  
+{email_address}  
++49 7131 26418612  
+http://www.mgt.tum.de/
+
+Best regards,  
+{name}
