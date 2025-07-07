@@ -11,8 +11,6 @@ import {
   Check,
   Bold,
   Italic,
-  List,
-  ListOrdered,
   Quote,
   Undo,
   Redo,
@@ -22,10 +20,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Underline from '@tiptap/extension-underline'
-import BulletList from '@tiptap/extension-bullet-list'
-import OrderedList from '@tiptap/extension-ordered-list'
 import TextAlign from '@tiptap/extension-text-align'
-import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
 import { FontSize } from '../extensions/FontSize'
@@ -66,9 +61,6 @@ const DraftEditor = () => {
         placeholder: placeholder,
       }),
       Underline,
-      BulletList,
-      OrderedList,
-      ListItem,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
       Color,
@@ -498,34 +490,6 @@ const DraftEditor = () => {
               
               <div className="w-px h-6 bg-neutral-300 mx-2"></div>
               
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().toggleBulletList().run(); }}
-                className={`p-2 rounded ${editor.isActive('bulletList') ? 'bg-blue-100 text-blue-600' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}
-                title="Bullet List"
-              >
-                <List className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().toggleOrderedList().run(); }}
-                className={`p-2 rounded ${editor.isActive('orderedList') ? 'bg-blue-100 text-blue-600' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'}`}
-                title="Numbered List"
-              >
-                <ListOrdered className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().sinkListItem('listItem').run(); }}
-                className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded"
-                title="Indent"
-              >
-                <span className="font-bold">→</span>
-              </button>
-              <button
-                onClick={() => { editor.view.focus(); editor.chain().focus().liftListItem('listItem').run(); }}
-                className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded"
-                title="Outdent"
-              >
-                <span className="font-bold">←</span>
-              </button>
               {/* 字体颜色选择器 */}
               <select
                 className="text-sm border rounded px-1 py-0.5"
