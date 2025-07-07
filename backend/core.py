@@ -354,13 +354,12 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
     }
     prefix = tone_map.get(tone, tone_map["neutral"])
 
-    full_prompt = f"""
-{prefix}
-
-{prompt}
-请不要添加过多细节，请不要让用户输入更多内容，保持较为简洁。
-请生成德语版本后加横线 '---' 再生成英语版本。保持**加粗**与换行格式。
-"""
+    full_prompt = f"""\
+    {prefix}
+    {prompt}
+    请不要添加过多细节，请不要让用户输入更多内容，保持较为简洁。
+    请生成德语版本后加横线 '——'，再生成英语版本。保持**加粗**与换行格式。
+    """
 
     try:
         response = client.models.generate_content(
@@ -373,6 +372,107 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
         print(f"Gemini free prompt error: {e}")
         # 回退：直接返回带前缀的原始提示
         return f"AI生成内容： {prompt}"
+
+def process_student_consultation(on_site_time=None, virtual_time=None, meeting_id=None, passcode=None, email_address=None, name=None):
+    """
+    读取 student consultation 模板并生成内容
+    """
+    file_path = './data/Student/consultation_info.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取文件时发生错误：{str(e)}")
+        return None
+
+    # 默认值
+    if not name:
+        name = "Student Service Center"
+
+    # 替换变量
+    if on_site_time:
+        template = template.replace("{on_site_time}", on_site_time)
+    if virtual_time:
+        template = template.replace("{virtual_time}", virtual_time)
+    if meeting_id:
+        template = template.replace("{meeting_id}", meeting_id)
+    if passcode:
+        template = template.replace("{passcode}", passcode)
+    if email_address:
+        template = template.replace("{email_address}", email_address)
+    template = template.replace("{name}", name)
+
+    # 构造 prompt
+    prompt = f"""
+    如果 {{}}中的变量为空，请保留原样不要删除
+    请严格按照以下模板格式生成德英双语课程通知,不要添加其他任何额外的内容或解释：
+    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记；不得添加HTML标签。
+    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
+    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语； 
+
+    模板内容如下：
+    {template}
+    """
+
+    print("\n正在生成学生咨询通知...")
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        return response.text.replace('\n', '<br>')
+
+    except Exception as e:
+        print(f"\n发生错误：{str(e)}")
+        return None
+
+def process_student_reply(student_name=None, name=None):
+    """
+    读取 student_reply.txt 模板并替换 {student_name} 和 {name} 变量
+    请严格按照以下模板格式生成学生邮件问题回复,不要添加其他任何额外的内容或解释；
+    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    """
+    file_path = './data/Student/student_reply.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取 student_reply 模板失败: {str(e)}")
+        return None
+
+    # 替换模板变量
+    if student_name:
+        template = template.replace("{student_name}", student_name)
+    if name:
+        template = template.replace("{name}", name)
+
+    return template.replace('\n', '<br>')
+
+def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
+    """
+    节假日放假通知
+    """
+    file_path = './data/All/holiday_notice.txt'
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            template = file.read()
+    except Exception as e:
+        print(f"读取 holiday_notice 模板失败: {str(e)}")
+        return None
+
+    if holiday_name:
+        template = template.replace("{holiday_name}", holiday_name)
+    if holiday_date:
+        template = template.replace("{holiday_date}", holiday_date)
+    if name:
+        template = template.replace("{name}", name)
+    else:
+        template = template.replace("{name}", "Student Service Center")
+
+    return template.replace('\n', '<br>')
+
+
 
 if __name__ == "__main__":
     # 示例：可以传入参数来替换变量
@@ -401,7 +501,6 @@ if __name__ == "__main__":
         name="TUM Campus Heilbronn Coordination Team",
         target_group="Professoren der Fakultät für Informatik"
     )
-
     result_schedule_announcement = process_schedule_announcement(
         course_name="Data-Driven Business Models",
         course_code="DDBM-301",
@@ -412,7 +511,6 @@ if __name__ == "__main__":
         target_group="Bachelor in Management and Technology",
         name="Student Service Center Heilbronn"
     )
-
     result_schedule_change = process_schedule_change(
         course_name="Innovation Management",
         course_code="INNO-501",
@@ -424,104 +522,49 @@ if __name__ == "__main__":
         target_group="MSc Management",
         name="Program Coordination MSc Management"
     )
+    result_holiday = process_holiday_notice(
+        holiday_name="Tag der Deutschen Einheit",
+        holiday_date="03.10.2025",
+        name="TUM Helpdesk"
+    )
+    result_consultation = process_student_consultation(
+        on_site_time="every Tuesday, 11:00–12:00",
+        virtual_time="every Friday, 13:00–14:00",
+        meeting_id="123 4567 8910",
+        passcode="tum2025",
+        email_address="studentcenter@tum.de",
+        name="TUM Heilbronn Office"
+    )
 
     if result_course:
         print("\n=== 课程注册通知 ===\n")
         print(result_course)
-    
+
     if result_event:
         print("\n=== 活动通知 ===\n")
         print(result_event)
-    
+
     if result_schedule:
         print("\n=== 排课协调通知 ===\n")
         print(result_schedule)
-    
+
     if result_schedule_announcement:
         print("\n=== 课程安排通知 ===\n")
         print(result_schedule_announcement)
-    
+
     if result_schedule_change:
         print("\n=== 课程时间变更通知 ===\n")
         print(result_schedule_change)
+
+    if result_holiday:
+        print("\n=== 节假日放假通知 ===\n")
+        print(result_holiday)
+
+    if result_consultation:
+        print("\n=== 学生咨询通知 ===\n")
+        print(result_consultation)
 
 
 
 #学生邮件问题回复
 
-def process_student_reply(student_name=None, name=None):
-    """
-    读取 student_reply.txt 模板并替换 {student_name} 和 {name} 变量
-    请严格按照以下模板格式生成学生邮件问题回复,不要添加其他任何额外的内容或解释；
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    """
-    file_path = './data/Student/student_reply.txt'
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            template = file.read()
-    except Exception as e:
-        print(f"读取 student_reply 模板失败: {str(e)}")
-        return None
-
-    # 替换模板变量
-    if student_name:
-        template = template.replace("{student_name}", student_name)
-    if name:
-        template = template.replace("{name}", name)
-
-    return template.replace('\n', '<br>')
-
-if __name__ == "__main__":
-    # 示例：生成学生问题回复模板
-    result_student_reply = process_student_reply(
-        student_name="Max Mustermann",
-        name="TUM Helpdesk"
-    )
-
-    if result_student_reply:
-        print("\n=== 学生回复模板 ===\n")
-        print(result_student_reply)
-
-
-#节假日放假通知
-
-
-def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
-    """
-    节假日放假通知
-    """
-    file_path = './data/All/holiday_notice.txt'
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            template = file.read()
-    except Exception as e:
-        print(f"读取 holiday_notice 模板失败: {str(e)}")
-        return None
-
-    if holiday_name:
-        template = template.replace("{holiday_name}", holiday_name)
-    if holiday_date:
-        template = template.replace("{holiday_date}", holiday_date)
-    if name:
-        template = template.replace("{name}", name)
-    else:
-        template = template.replace("{name}", "Student Service Center")
-
-    return template.replace('\n', '<br>')
-
-result_holiday = process_holiday_notice(
-    holiday_name="Tag der Deutschen Einheit",
-    holiday_date="03.10.2025",
-    name="TUM Helpdesk"
-)
-
-if result_holiday:
-    print("\n=== 节假日放假通知 ===\n")
-    print(result_holiday)
-
-    
-    
-
-
-
-    

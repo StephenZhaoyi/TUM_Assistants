@@ -186,6 +186,24 @@ async def free_prompt_api(req: FreePromptRequest):
     content = process_free_prompt(prompt=req.prompt, tone=req.tone)
     return {"content": content}
 
+@app.get("/api/self_templates")
+async def get_self_customizing_templates():
+    base_path = "./data/Student"
+    template_files = ["student_reply.txt", "language_course.txt", "study_abroad.txt"]
+    templates = []
+
+    for filename in template_files:
+        path = os.path.join(base_path, filename)
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                templates.append({
+                    "name": filename.replace(".txt", "").replace("_", " ").title(),
+                    "content": f.read()
+                })
+
+    return templates
+
+
 @app.get("/api/drafts")
 async def get_drafts():
     return load_drafts()

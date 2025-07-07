@@ -1,4 +1,4 @@
-📩 Scroll down for English version
+Scroll down for English version
 
 ---
 
@@ -6,14 +6,14 @@
 
 Liebe Mitglieder der {target_group},
 
-bitte beachten Sie, dass es eine Änderung bei der Veranstaltung **{course_name}({course_code})** gibt.  
-**Grund der Änderung:** {change_reason}
+bitte beachten Sie, dass es eine Änderung bei der Veranstaltung {course_name}({course_code}) gibt.  
+Grund der Änderung: {change_reason}
 
-🕓 Ursprünglicher Termin: {original_time}  
-🏛️ Ursprünglicher Raum: {original_location}  
+Ursprünglicher Termin: {original_time}  
+Ursprünglicher Raum: {original_location}  
 
-➡️ Neuer Termin: {new_time}  
-➡️ Neuer Raum: {new_location}
+Neuer Termin: {new_time}  
+Neuer Raum: {new_location}
 
 Bitte passen Sie Ihre Planung entsprechend an. Bei Rückfragen stehen wir Ihnen gerne zur Verfügung.
 
@@ -26,14 +26,14 @@ Mit freundlichen Grüßen
 
 Dear members of the {target_group},
 
-Please note that there has been a change regarding the course **{course_name}({course_code})**.  
-**Reason for change:** {change_reason}
+Please note that there has been a change regarding the course {course_name}({course_code}).  
+Reason for change: {change_reason}
 
-🕓 Original time: {original_time}  
-🏛️ Original room: {original_location}  
+Original time: {original_time}  
+Original room: {original_location}  
 
-➡️ New time: {new_time}  
-➡️ New room: {new_location}
+New time: {new_time}  
+New room: {new_location}
 
 Please adjust your schedule accordingly. If you have any questions, feel free to contact us.
 
