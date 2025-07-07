@@ -59,14 +59,22 @@ def process_course_registration(time_start=None, time_end=None, target_group=Non
     如果note_content内容为空，则**Hinweis:**和**Note:**应该不显示。
     否则请将note_content内容添加在**Hinweis:**或者**Note:**后。
     无论note_content是什么语言，你都应该转化成信件相应的德语和英语，并使用相应的信件语言。
-    保持所有格式标记（如 **、换行等）不变。
+    保持换行等格式不变，但不要使用星号（*）作为格式标记。
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     如果模板中有未替换的变量（如 {{time_start}}），请保持原样。
     如果模板中{{time_start}}或者{{time_end}}未被添加，请添加为今天的日期。如果用户写入until + 日期，或者 bis + 日期，或者日期写成其他格式，你也应该识别出来。
     如果模板中{{target_group}}未被添加，请添加为所有人。
     如果模板中{{name}}未被添加，请添加为Student Service Center。
     确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM应为德语或英语月份（在德语版本为德语，在英语版本为英语），而不是数字。
     请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
 
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：注册开始时间、注册结束时间、目标群体
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容：
     {template}
@@ -134,7 +142,9 @@ def process_event_notice(event_name=None, event_intro=None, event_time=None, eve
     # 构造 prompt 交给 Gemini
     prompt = f"""
     请严格按照以下模板格式生成通知,不要添加其他任何额外的内容或解释：
-    保持所有格式和标记（如 **、换行等）不变。
+    保持换行等格式不变，但不要使用星号（*）作为格式标记。
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     如果模板中有未替换的变量（如 {{event_name}}），请保持原样。
     如果模板中{{event_time}}为空，请替换为"待定"，翻译为德英版本对应语言，不要简写。
     如果用户写入until + 日期，或者 bis + 日期，或者其他格式的日期，请识别并添加。
@@ -142,7 +152,13 @@ def process_event_notice(event_name=None, event_intro=None, event_time=None, eve
     如果模板中{{name}}未被添加，默认添加为Student Service Center。
     确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字。
     请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
 
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：活动名称、活动时间、活动地点、目标群体
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容：
     {template}
@@ -203,8 +219,17 @@ def process_schedule_request(course_name=None, course_code=None, semester=None, 
     如果用户写入until + 日期，或者 bis + 日期，或者其他格式的日期，请识别并添加在{reply_deadline};
     确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
     请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    输出必须严格保留原有格式，包括称呼、空行、加粗标记（**）及段落结构；
+    输出必须严格保留原有格式，包括称呼、空行、加粗标记及段落结构，但不要使用星号（*）作为格式标记；
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     输出应为纯文本格式，德英两部分之间以横线 `---` 分隔；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：课程名称、学期、回复截止日期、目标群体
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容：
     {template}
@@ -254,11 +279,20 @@ def process_schedule_announcement(course_name=None, course_code=None, instructor
 
     prompt = f"""
     请严格按照以下模板格式生成德英双语课程通知,不要添加其他任何额外的内容或解释：
-    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记；不得添加HTML标签。
+    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记，但不要使用星号（*）作为格式标记；
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
     德语版本翻译为德语，英语版本翻译为英语；
     如果{name}为空，默认为"Student Service Center";
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；    
+    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：课程名称、课程开始日期、每周时间、地点、目标群体
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容：
     {template}
@@ -292,7 +326,7 @@ def process_schedule_change(course_name=None, reason=None, original_time=None, o
     if course_code:
         template = template.replace("{course_code}", course_code)
     if reason:
-        template = template.replace("{reason}", reason)
+        template = template.replace("{change_reason}", reason)
     if original_time:
         template = template.replace("{original_time}", original_time)
     if original_location:
@@ -312,11 +346,20 @@ def process_schedule_change(course_name=None, reason=None, original_time=None, o
     请严格按照以下模板格式生成课程时间变更通知,不要添加其他任何额外的内容或解释：
     德语和英语双语格式：
     所有变量均需替换；
-    格式保持原样，不得添加解释或HTML；
+    格式保持原样，但不要使用星号（*）作为格式标记，不得添加解释；
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     日期统一使用DD.MM.YYYY格式，并翻译月份；
     如果{new_location}或者{new_time}为空，替换为"没有变化"，并翻译为不同版本的对应语言；
     如果{name}为空，默认为"Student Service Center";
     请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：课程名称、变更原因、新时间、新地点
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容：
     {template}
@@ -355,11 +398,19 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
     prefix = tone_map.get(tone, tone_map["neutral"])
 
     full_prompt = f"""\
-    {prefix}
-    {prompt}
-    请不要添加过多细节，请不要让用户输入更多内容，保持较为简洁。
-    请生成德语版本后加横线 '——'，再生成英语版本。保持**加粗**与换行格式。
-    """
+{prefix}
+{prompt}
+
+请直接生成邮件内容，不要添加任何解释、说明或格式描述。
+请生成德语版本后加横线 '——'，再生成英语版本。
+
+格式要求：
+- 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+- 如果邮件中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>
+- 不要过度使用加粗，只在真正需要强调的地方使用
+- 不要使用Markdown格式的**加粗**标记
+- 直接开始邮件正文内容，不要添加任何前缀或说明文字
+"""
 
     try:
         response = client.models.generate_content(
@@ -367,6 +418,15 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
             contents=full_prompt
         )
         content = response.text.replace("\n", "<br>")
+        
+        # 后处理：添加与 structured input 相同的格式
+        if "——" in content:
+            parts = content.split("——")
+            if len(parts) == 2:
+                german_part = parts[0].strip()
+                english_part = parts[1].strip()
+                content = f"Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>{german_part}<br><br>---<br><br>[English]<br><br>{english_part}"
+        
         return content
     except Exception as e:
         print(f"Gemini free prompt error: {e}")
@@ -377,7 +437,7 @@ def process_student_consultation(on_site_time=None, virtual_time=None, meeting_i
     """
     读取 student consultation 模板并生成内容
     """
-    file_path = './data/Student/consultation_info.txt'
+    file_path = './data/Student/consultation.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
@@ -406,9 +466,18 @@ def process_student_consultation(on_site_time=None, virtual_time=None, meeting_i
     prompt = f"""
     如果 {{}}中的变量为空，请保留原样不要删除
     请严格按照以下模板格式生成德英双语课程通知,不要添加其他任何额外的内容或解释：
-    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记；不得添加HTML标签。
+    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记，但不要使用星号（*）作为格式标记；
+    如果模板中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>。
+    直接开始邮件正文内容。
     确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语； 
+    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+
+    格式要求：
+    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
+    - 必须加粗的内容：现场咨询时间、虚拟咨询时间、会议ID、邮箱地址
+    - 不要过度使用加粗，只在真正需要强调的地方使用
+    - 不要使用Markdown格式的**加粗**标记
 
     模板内容如下：
     {template}
@@ -462,9 +531,9 @@ def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
         return None
 
     if holiday_name:
-        template = template.replace("{holiday_name}", holiday_name)
+        template = template.replace("{holiday_name}", f"<strong>{holiday_name}</strong>")
     if holiday_date:
-        template = template.replace("{holiday_date}", holiday_date)
+        template = template.replace("{holiday_date}", f"<strong>{holiday_date}</strong>")
     if name:
         template = template.replace("{name}", name)
     else:
