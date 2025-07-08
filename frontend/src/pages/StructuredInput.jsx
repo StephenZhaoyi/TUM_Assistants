@@ -257,8 +257,8 @@ const StructuredInput = () => {
                     onClick={() => handleCategoryChange(categoryKey)}
                     className={`p-4 rounded-lg border-2 text-left transition-all ${
                       formData.category === categoryKey
-                        ? 'border-tum-blue bg-tum-blue/5 text-tum-blue'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                        ? 'bg-white text-black border-tum-blue-600'
+                        : 'bg-white text-black border-gray-200 hover:border-gray-300'
                     }`}
                   >
                     <div className="font-medium">{t(`documentCategories.${categoryKey}`)}</div>

@@ -23,6 +23,7 @@ const DraftHistory = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [showCopySuccess, setShowCopySuccess] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
+  const [openIdx, setOpenIdx] = useState(null);
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(filteredDrafts.length / pageSize));
 
@@ -445,58 +446,65 @@ const DraftHistory = () => {
           <p className="text-neutral-500 text-center py-8">{t('draftHistory.noDrafts')}</p>
         ) : (
           <ul className="space-y-4">
-            {pagedDrafts.map((draft, idx) => (
-              <li key={draft.id} className="card p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
-                        <FileText className="h-4 w-4 mr-1.5" />
-                        {getDocumentTypeLabel(draft.type)}
-                      </span>
-                      <span className="text-sm text-neutral-500">
-                        {formatDateWithMinutes(draft.createdAt)}
-                      </span>
-                      {draft.updatedAt && (
-                        <span className="text-xs text-neutral-400">
-                          {t('draftHistory.edited')}
+            {pagedDrafts.map((draft, idx) => {
+              const isOpen = openIdx === idx;
+              return (
+                <li key={draft.id} className="card p-6 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <button
+                      className="flex-1 text-left focus:outline-none hover:bg-neutral-50"
+                      onClick={() => setOpenIdx(isOpen ? null : idx)}
+                      title={isOpen ? t('draftHistory.collapse') : t('draftHistory.expand')}
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
+                          <FileText className="h-4 w-4 mr-1.5" />
+                          {getDocumentTypeLabel(draft.type)}
                         </span>
-                      )}
+                        <span className="text-sm text-neutral-500">
+                          {formatDateWithMinutes(draft.createdAt)}
+                        </span>
+                        {draft.updatedAt && (
+                          <span className="text-xs text-neutral-400">
+                            {t('draftHistory.edited')}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-medium text-neutral-900 mb-2">
+                        {generateTitleFromContent(draft)}
+                      </h3>
+                      <div 
+                        className={`text-sm text-neutral-600 ${isOpen ? '' : 'line-clamp-2'} prose prose-sm max-w-none`}
+                        dangerouslySetInnerHTML={{ __html: isOpen ? (draft.content || '') : (draft.content || '').substring(0, 200) + '...' }}
+                      />
+                    </button>
+                    <div className="flex items-center gap-2 ml-4">
+                      <button
+                        onClick={() => handleCopy(draft.content)}
+                        className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
+                        title={t('actions.copy')}
+                      >
+                        <Copy className="h-5 w-5" />
+                      </button>
+                      <Link
+                        to={`/draft/${draft.id}`}
+                        className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
+                        title={t('actions.edit')}
+                      >
+                        <Edit className="h-5 w-5" />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(draft.id)}
+                        className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded"
+                        title={t('actions.delete')}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
                     </div>
-                    <h3 className="font-medium text-neutral-900 mb-2">
-                      {generateTitleFromContent(draft)}
-                    </h3>
-                    <div 
-                      className="text-sm text-neutral-600 line-clamp-2 prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: (draft.content || '').substring(0, 200) + '...' }}
-                    />
                   </div>
-                  <div className="flex items-center gap-2 ml-4">
-                    <button
-                      onClick={() => handleCopy(draft.content)}
-                      className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                      title={t('actions.copy')}
-                    >
-                      <Copy className="h-5 w-5" />
-                    </button>
-                    <Link
-                      to={`/draft/${draft.id}`}
-                      className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded"
-                      title={t('actions.edit')}
-                    >
-                      <Edit className="h-5 w-5" />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(draft.id)}
-                      className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded"
-                      title={t('actions.delete')}
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
