@@ -4,45 +4,45 @@ from google import genai
 from dotenv import load_dotenv
 import re
 
-# 加载 .env 文件中的环境变量
+# Load environment variables from .env file
 load_dotenv()
 
-# 配置 Gemini API
-# 确保您的 .env 文件中有 GOOGLE_API_KEY
+# Configure Gemini API
+# Make sure your .env file contains GOOGLE_API_KEY
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 if not GOOGLE_API_KEY:
-    raise ValueError("请在 .env 文件中设置 GOOGLE_API_KEY")
+    raise ValueError("Please set GOOGLE_API_KEY in your .env file")
 
-# 创建客户端实例
+# Create Gemini client instance
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
 def read_note():
-    """读取笔记文件内容"""
+    """Read note file content"""
     try:
         with open('./data/All/note.txt', 'r', encoding='utf-8') as file:
             content = file.read().strip()
             return content if content else None
     except Exception as e:
-        print(f"读取笔记文件时发生错误：{str(e)}")
+        print(f"Error reading note file: {str(e)}")
         return None
 
 def process_course_registration(time_start=None, time_end=None, target_group=None, name=None):
     """
-    读取课程注册信息并生成通知
+    Read course registration info and generate notification
     """
-    # 读取文件内容
+    # Read template file
     file_path = './data/Student/course_registration.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取文件时发生错误：{str(e)}")
+        print(f"Error reading file: {str(e)}")
         return None
 
-    # 读取笔记内容
+    # Read note content
     note_content = read_note()
 
-    # 替换变量（如果提供）
+    # Replace variables (if provided)
     if time_start:
         template = template.replace("{time_start}", time_start)
     if time_end:
@@ -54,36 +54,36 @@ def process_course_registration(time_start=None, time_end=None, target_group=Non
     if note_content:
         template = template.replace("{note}", note_content)
 
-    # 构造提示
+    # Construct prompt
     prompt = f"""
-    请严格按照以下模板格式生成通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    如果note_content内容为空，则**Hinweis:**和**Note:**应该不显示。
-    否则请将note_content内容添加在**Hinweis:**或者**Note:**后。
-    无论note_content是什么语言，你都应该转化成信件相应的德语和英语，并使用相应的信件语言。
-    保持换行等格式不变，但不要使用星号（*）作为格式标记。
-    直接开始邮件正文内容。
-    如果模板中有未替换的变量（如 {{time_start}}），请保持原样。
-    如果模板中{{time_start}}或者{{time_end}}未被添加，请添加为今天的日期。如果用户写入until + 日期，或者 bis + 日期，或者日期写成其他格式，你也应该识别出来。
-    如果模板中{{target_group}}未被添加，请添加为所有人。
-    如果模板中{{name}}未被添加，请添加为Student Service Center。
-    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM应为德语或英语月份（在德语版本为德语，在英语版本为英语），而不是数字。
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate the notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    If note_content is empty, **Hinweis:** and **Note:** should not be shown.
+    Otherwise, add note_content after **Hinweis:** or **Note:**.
+    Regardless of the language of note_content, you should convert it to the corresponding German and English for the letter, and use the appropriate letter language.
+    Keep line breaks and other formatting unchanged, but do not use asterisks (*) as formatting marks.
+    Start the email body content directly.
+    If there are unreplaced variables in the template (such as {{time_start}}), keep them as is.
+    If {{time_start}} or {{time_end}} is not added in the template, add today's date. If the user writes 'until + date', or 'bis + date', or the date is written in another format, you should also recognize it.
+    If {{target_group}} is not added in the template, add 'everyone'.
+    If {{name}} is not added in the template, add 'Student Service Center'.
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be the German or English month (German in the German version, English in the English version), not a number.
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：注册开始时间、注册结束时间、目标群体
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: registration start time, registration end time, target group
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容：
+    Template content:
     {template}
     """
     
-    print("\n正在生成通知...")
+    print("\nGenerating notification...")
     try:
-        # 生成内容
+        # Generate content
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt
@@ -91,33 +91,33 @@ def process_course_registration(time_start=None, time_end=None, target_group=Non
         
         generated_content = response.text
         
-        # 确保内容保持格式
+        # Ensure content retains formatting
         generated_content = generated_content.replace('\n', '<br>')
         
-        # 清空note.txt文件
+        # Clear note.txt file
         with open('data/All/note.txt', 'w', encoding='utf-8') as f:
             f.write('')
             
         return extract_and_prepend_titles(generated_content)
 
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_event_notice(event_name=None, event_intro=None, event_time=None, event_location=None, target_group=None, registration=None, language=None, name=None):
     """
-    读取campus活动信息并生成通知
+    Read campus activity info and generate notification
     """
-    # 读取文件内容
+    # Read template file
     file_path = './data/Student/event_notice.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取文件时发生错误：{str(e)}")
+        print(f"Error reading file: {str(e)}")
         return None
 
-    # 替换模板变量
+    # Replace template variables
     if not registration:
         registration = "Registration is not required."
         
@@ -140,32 +140,32 @@ def process_event_notice(event_name=None, event_intro=None, event_time=None, eve
     else:
         template = template.replace("{name}", "Student Service Center")
 
-    # 构造提示
+    # Construct prompt
     prompt = f"""
-    请严格按照以下模板格式生成通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    称呼（收件人）和署名（发件人）部分不要加粗，不要用<strong>或**等任何加粗标记。
-    保持换行等格式不变，但不要使用星号（*）作为格式标记。
-    直接开始邮件正文内容。
-    如果模板中有未替换的变量（如 {{event_name}}），请保持原样。
-    如果模板中{{event_time}}为空，请替换为"待定"，翻译为德英版本对应语言，不要简写。
-    如果用户写入until + 日期，或者 bis + 日期，或者其他格式的日期，请识别并添加。
-    如果模板中{{target_group}}未被添加，默认添加为所有人。
-    如果模板中{{name}}未被添加，默认添加为Student Service Center。
-    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字。
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate the notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    The salutation (recipient) and signature (sender) sections should not be bolded, do not use <strong> or ** or any bold marks.
+    Keep line breaks and other formatting unchanged, but do not use asterisks (*) as formatting marks.
+    Start the email body content directly.
+    If there are unreplaced variables in the template (such as {{event_name}}), keep them as is.
+    If {{event_time}} is empty in the template, replace it with 'To be determined', translate to the corresponding language in German and English versions, do not abbreviate.
+    If the user writes 'until + date', or 'bis + date', or other date formats, recognize and add them.
+    If {{target_group}} is not added in the template, default to 'everyone'.
+    If {{name}} is not added in the template, default to 'Student Service Center'.
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be translated to the corresponding language's month expression, not a number.
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：活动名称、活动时间、活动地点、目标群体
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: event name, event time, event location, target group
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容：
+    Template content:
     {template}
     """
-    print("\n正在生成活动通知...")
+    print("\nGenerating event notice...")
 
     try:
         response = client.models.generate_content(
@@ -176,22 +176,22 @@ def process_event_notice(event_name=None, event_intro=None, event_time=None, eve
         return extract_and_prepend_titles(content)
 
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_schedule_request(course_name=None, course_code=None, semester=None, time_options=None, reply_deadline=None, name=None, target_group=None):
     """
-    读取排课协调模板并生成发送给教职工的邮件
+    Read schedule coordination template and generate email to faculty
     """
     file_path = './data/Staff/schedule_request.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取模板文件时发生错误：{str(e)}")
+        print(f"Error reading template file: {str(e)}")
         return None
 
-    # 替换变量
+    # Replace variables
     if target_group:
         template = template.replace("{target_group}", target_group)
     if course_name:
@@ -215,30 +215,30 @@ def process_schedule_request(course_name=None, course_code=None, semester=None, 
     else:
         template = template.replace("{name}", "Student Service Center")
 
-    # 构造提示
+    # Construct prompt
     prompt = f"""
-    请严格按照以下模板格式生成通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    模板中所有变量（如 {{semester}}, {{course_name}}, {{course_code}}, {{time_options}}, {{reply_deadline}}, {{name}}, {{target_group}}）必须全部替换为提供的参数值，并且翻译为德语和英语；
-    如果用户写入until + 日期，或者 bis + 日期，或者其他格式的日期，请识别并添加在{reply_deadline};
-    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    输出必须严格保留原有格式，包括称呼、空行、加粗标记及段落结构，但不要使用星号（*）作为格式标记；
-    直接开始邮件正文内容。
-    输出应为纯文本格式，德英两部分之间以横线 `---` 分隔；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate the notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    All variables in the template (such as {{semester}}, {{course_name}}, {{course_code}}, {{time_options}}, {{reply_deadline}}, {{name}}, {{target_group}}) must all be replaced with the provided parameter values and translated into German and English;
+    If the user writes 'until + date', or 'bis + date', or other date formats, recognize and add them to {reply_deadline};
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be translated to the corresponding language's month expression, not a number;
+    Please help translate all user input information into English in the English version and into German in the German version;
+    The output must strictly retain the original format, including salutation, blank lines, bold marks, and paragraph structure, but do not use asterisks (*) as formatting marks;
+    Start the email body content directly.
+    The output should be plain text, with German and English parts separated by a horizontal line `---`;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：课程名称、学期、回复截止日期、目标群体
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: course name, semester, reply deadline, target group
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容：
+    Template content:
     {template}
     """
 
-    print("\n正在生成排课协调邮件...")
+    print("\nGenerating schedule coordination email...")
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -247,19 +247,19 @@ def process_schedule_request(course_name=None, course_code=None, semester=None, 
         content = response.text.replace('\n', '<br>')
         return extract_and_prepend_titles(content)
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_schedule_announcement(course_name=None, course_code=None, instructor_name=None, course_start_date=None, weekly_time=None, weekly_location=None, target_group=None, name=None):
     """
-    读取课程安排通知模板并生成邮件内容
+    Read course announcement template and generate email content
     """
     file_path = './data/Student/schedule_announcement.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取模板文件时发生错误：{str(e)}")
+        print(f"Error reading template file: {str(e)}")
         return None
 
     if course_name:
@@ -282,27 +282,27 @@ def process_schedule_announcement(course_name=None, course_code=None, instructor
         template = template.replace("{name}", "Student Service Center")
 
     prompt = f"""
-    请严格按照以下模板格式生成德英双语课程通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记，但不要使用星号（*）作为格式标记；
-    直接开始邮件正文内容。
-    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
-    德语版本翻译为德语，英语版本翻译为英语；
-    如果{name}为空，默认为"Student Service Center";
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate a bilingual (German-English) course announcement according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    All variables should be replaced according to the input parameters; keep line breaks, list symbols, spaces, and bold marks, but do not use asterisks (*) as formatting marks;
+    Start the email body content directly.
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be translated to the corresponding language's month expression, not a number;
+    The German version should be translated into German, the English version into English;
+    If {name} is empty, default to "Student Service Center";
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：课程名称、课程开始日期、每周时间、地点
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: course name, course start date, weekly time, location
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容：
+    Template content:
     {template}
     """
 
-    print("\n正在生成课程安排通知...")
+    print("\nGenerating course announcement...")
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -311,19 +311,19 @@ def process_schedule_announcement(course_name=None, course_code=None, instructor
         content = response.text.replace('\n', '<br>')
         return extract_and_prepend_titles(content)
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_schedule_change(course_name=None, reason=None, original_time=None, original_location=None, new_time=None, new_location=None, target_group=None, name=None, course_code=None):
     """
-    课程变更通知
+    Course change notification
     """
     file_path = './data/All/schedule_change.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取模板文件时发生错误：{str(e)}")
+        print(f"Error reading template file: {str(e)}")
         return None
 
     if course_name:
@@ -348,29 +348,29 @@ def process_schedule_change(course_name=None, reason=None, original_time=None, o
         template = template.replace("{name}", "Student Service Center")
 
     prompt = f"""
-    请严格按照以下模板格式生成课程时间变更通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    德语和英语双语格式：
-    所有变量均需替换；
-    格式保持原样，但不要使用星号（*）作为格式标记，不得添加解释；
-    直接开始邮件正文内容。
-    日期统一使用DD.MM.YYYY格式，并翻译月份；
-    如果{new_location}或者{new_time}为空，替换为"没有变化"，并翻译为不同版本的对应语言；
-    如果{name}为空，默认为"Student Service Center";
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate a course schedule change notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    Bilingual format in German and English:
+    All variables must be replaced;
+    Keep the original format, but do not use asterisks (*) as formatting marks, and do not add explanations;
+    Start the email body content directly.
+    Dates should always use DD.MM.YYYY format, and translate the month;
+    If {new_location} or {new_time} is empty, replace with "No change", and translate to the corresponding language in different versions;
+    If {name} is empty, default to "Student Service Center";
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：课程名称、变更原因、新时间、新地点
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: course name, change reason, new time, new location
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容：
+    Template content:
     {template}
     """
 
-    print("\n正在生成课程时间变更通知...")
+    print("\nGenerating course schedule change notification...")
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -379,27 +379,27 @@ def process_schedule_change(course_name=None, reason=None, original_time=None, o
         content = response.text.replace('\n', '<br>')
         return extract_and_prepend_titles(content)
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_free_prompt(prompt: str, tone: str = "neutral"):
-    """使用 Gemini 根据自由提示生成行政文案。
+    """Use Gemini to generate administrative documents based on free prompts.
 
-    参数:
-        prompt: 用户输入的自由文本需求。
-        tone: 期望的语气，可选值为 neutral | friendly | firm。
+    Parameters:
+        prompt: User input free text requirement.
+        tone: Expected tone, optional values are neutral | friendly | firm.
 
-    返回:
-        str: 生成的 HTML 字符串，换行已转换为 <br>。
+    Returns:
+        str: Generated HTML string, line breaks converted to <br>.
     """
     if not prompt:
         return ""
 
-    # 根据语气添加前缀提示，帮助模型调整风格
+    # Add prefix prompts based on tone to help model adjust style
     tone_map = {
-        "neutral": "以正式且客观的语气撰写以下行政文档：",
-        "friendly": "以亲切友好的语气撰写以下行政文档：",
-        "firm": "以礼貌但坚定的语气撰写以下行政文档：",
+        "neutral": "Write the following administrative document in a formal and objective tone:",
+        "friendly": "Write the following administrative document in a friendly and approachable tone:",
+        "firm": "Write the following administrative document in a polite but firm tone:",
     }
     prefix = tone_map.get(tone, tone_map["neutral"])
 
@@ -407,15 +407,15 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
 {prefix}
 {prompt}
 
-请直接生成邮件内容，不要添加任何解释、说明或格式描述。
-请生成德语版本后加横线 '——'，再生成英语版本。
+Please generate the email content directly. Do not add any explanation, description, or formatting description.
+After generating the German version, add a horizontal line '——', then generate the English version.
 
-格式要求：
-- 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-- 如果邮件中有标题格式如 **Betreff:**、**Subject:** 等，请去除星号并自动加粗，如 <strong>Betreff:</strong>、<strong>Subject:</strong>
-- 不要过度使用加粗，只在真正需要强调的地方使用
-- 不要使用Markdown格式的**加粗**标记
-- 直接开始邮件正文内容，不要添加任何前缀或说明文字
+Formatting requirements:
+- For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+- If there are title formats in the email such as **Betreff:**, **Subject:**, etc., remove the asterisks and automatically bold, e.g. <strong>Betreff:</strong>, <strong>Subject:</strong>
+- Do not overuse bold, only use it where emphasis is truly needed
+- Do not use Markdown **bold** marks
+- Start the email body content directly, do not add any prefix or explanatory text
 """
 
     try:
@@ -425,7 +425,7 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
         )
         content = response.text.replace("\n", "<br>")
         
-        # 后处理：添加与 structured input 相同的格式
+        # Post-processing: Add formatting similar to structured input
         if "——" in content:
             parts = content.split("——")
             if len(parts) == 2:
@@ -436,26 +436,26 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
         return extract_and_prepend_titles(content)
     except Exception as e:
         print(f"Gemini free prompt error: {e}")
-        # 回退：直接返回带前缀的原始提示
-        return f"AI生成内容： {prompt}"
+        # Fallback: Return original prompt with prefix
+        return f"AI generated content: {prompt}"
 
 def process_student_consultation(on_site_time=None, virtual_time=None, meeting_id=None, passcode=None, email_address=None, name=None):
     """
-    读取 student consultation 模板并生成内容
+    Read student consultation template and generate content
     """
     file_path = './data/Student/consultation.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取文件时发生错误：{str(e)}")
+        print(f"Error reading file: {str(e)}")
         return None
 
-    # 默认值
+    # Default values
     if not name:
         name = "Student Service Center"
 
-    # 替换变量
+    # Replace variables
     if on_site_time:
         template = template.replace("{on_site_time}", on_site_time)
     if virtual_time:
@@ -468,27 +468,27 @@ def process_student_consultation(on_site_time=None, virtual_time=None, meeting_i
         template = template.replace("{email_address}", email_address)
     template = template.replace("{name}", name)
 
-    # 构造提示
+    # Construct prompt
     prompt = f"""
-    请严格按照以下模板格式生成德英双语课程通知,不要添加其他任何额外的内容或解释：
-    请在邮件最前面生成德语和英语的标题，格式分别为 <strong>Betreff:</strong> ... 和 <strong>Subject:</strong> ...，标题内容请根据邮件内容自动总结。如果模板中有类似标题格式如 **Betreff:**、**Subject:** 等，请去除星号并用 <strong> 包裹。
-    所有变量应根据传入参数替换；保持换行符、列表符号、空格与加粗标记，但不要使用星号（*）作为格式标记；
-    直接开始邮件正文内容。
-    确保日期格式统一，为DD.MM.YYYY并在输出中突出显示。其中MM翻译为对应语言的月份表达,而不是数字;
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
-    直接输出邮件内容，不要添加任何解释、说明或格式描述。
+    Strictly generate a bilingual (German-English) course consultation notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    All variables should be replaced according to the input parameters; keep line breaks, list symbols, spaces, and bold marks, but do not use asterisks (*) as formatting marks;
+    Start the email body content directly.
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be translated to the corresponding language's month expression, not a number;
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
 
-    格式要求：
-    - 对于需要强调的重要词汇或短语，请使用HTML格式：<strong>重要内容</strong>
-    - 必须加粗的内容：现场咨询时间、虚拟咨询时间、会议ID、邮箱地址
-    - 不要过度使用加粗，只在真正需要强调的地方使用
-    - 不要使用Markdown格式的**加粗**标记
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Required bold content: on-site consultation time, virtual consultation time, meeting ID, email address
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
 
-    模板内容如下：
+    Template content:
     {template}
     """
 
-    print("\n正在生成学生咨询通知...")
+    print("\nGenerating student consultation notification...")
 
     try:
         response = client.models.generate_content(
@@ -499,21 +499,21 @@ def process_student_consultation(on_site_time=None, virtual_time=None, meeting_i
         return extract_and_prepend_titles(content)
 
     except Exception as e:
-        print(f"\n发生错误：{str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
         return None
 
 def process_student_reply(student_name=None, name=None):
     """
-    读取 student_reply.txt 模板并替换 {student_name} 和 {name} 变量
-    请严格按照以下模板格式生成学生邮件问题回复,不要添加其他任何额外的内容或解释；
-    请帮忙将用户输入的所有信息在英语版本中翻译为英文，在德语版本中翻译为德语；
+    Read student_reply.txt template and replace {student_name} and {name} variables
+    Strictly generate student email question reply, do not add any extra content or explanation;
+    Please help translate all user input information into English in the English version and into German in the German version;
     """
     file_path = './data/Student/student_reply.txt'
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取 student_reply 模板失败: {str(e)}")
+        print(f"Failed to read student_reply template: {str(e)}")
         return None
 
     if student_name:
@@ -532,7 +532,7 @@ def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
         with open(file_path, 'r', encoding='utf-8') as file:
             template = file.read()
     except Exception as e:
-        print(f"读取 holiday_notice 模板失败: {str(e)}")
+        print(f"Failed to read holiday_notice template: {str(e)}")
         return None
 
     if holiday_name:
@@ -550,19 +550,19 @@ def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
     return de_title + en_title + content
 
 def extract_and_prepend_titles(content):
-    # 提取德语和英语标题
+    # Extract German and English titles
     de_title_match = re.search(r'(<strong>Betreff:</strong>.*?)(<br>|\n)', content)
     en_title_match = re.search(r'(<strong>Subject:</strong>.*?)(<br>|\n)', content)
     de_title = de_title_match.group(1) + '<br>' if de_title_match else ''
     en_title = en_title_match.group(1) + '<br><br>' if en_title_match else ''
-    # 去除正文中所有标题
+    # Remove all titles from the body
     content = re.sub(r'<strong>Betreff:</strong>.*?(<br>|\n)', '', content)
     content = re.sub(r'<strong>Subject:</strong>.*?(<br>|\n)', '', content)
-    # 拼接
+    # Concatenate
     return de_title + en_title + content
 
 if __name__ == "__main__":
-    # 示例：可以传入参数来替换变量
+    # Example: Pass parameters to replace variables
     result_course = process_course_registration(
         time_start="2024-03-01",
         time_end="2024-05-15",
@@ -624,34 +624,34 @@ if __name__ == "__main__":
     )
 
     if result_course:
-        print("\n=== 课程注册通知 ===\n")
+        print("\n=== Course Registration Notification ===\n")
         print(result_course)
 
     if result_event:
-        print("\n=== 活动通知 ===\n")
+        print("\n=== Event Notice ===\n")
         print(result_event)
 
     if result_schedule:
-        print("\n=== 排课协调通知 ===\n")
+        print("\n=== Schedule Coordination Notification ===\n")
         print(result_schedule)
 
     if result_schedule_announcement:
-        print("\n=== 课程安排通知 ===\n")
+        print("\n=== Course Announcement ===\n")
         print(result_schedule_announcement)
 
     if result_schedule_change:
-        print("\n=== 课程时间变更通知 ===\n")
+        print("\n=== Course Schedule Change Notification ===\n")
         print(result_schedule_change)
 
     if result_holiday:
-        print("\n=== 节假日放假通知 ===\n")
+        print("\n=== Holiday Notice ===\n")
         print(result_holiday)
 
     if result_consultation:
-        print("\n=== 学生咨询通知 ===\n")
+        print("\n=== Student Consultation Notification ===\n")
         print(result_consultation)
 
 
 
-#学生邮件问题回复
+#Student email question reply
 
