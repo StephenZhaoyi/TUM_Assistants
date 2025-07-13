@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "title": "Student Consultation",
+    "content": "Scroll down for English version\n\n[Deutsch]\n\nLiebe Studierende,\n\nwenn Sie Fragen zu unserem Studienprogramm haben, sind Sie herzlich eingeladen, uns während der Sprechzeiten zu besuchen – entweder vor Ort oder virtuell.\n\nVor-Ort-Sprechstunde: {on_site_time}  \nBildungscampus 2, 74076 Heilbronn, Raum D.1.01\n\nVirtuelle Sprechstunde (Zoom): {virtual_time}  \nMeeting-ID: {meeting_id}  \nKenncode: {passcode}  \nBitte bleiben Sie im Warteraum, bis ein Platz frei wird.\n\nBei weiteren Fragen erreichen Sie uns unter:  \n{email_address} \n+49 7131 26418612  \nhttp://www.mgt.tum.de/\n\nMit freundlichen Grüßen  \n{name}\n\n---\n\n[English]\n\nDear Students,\n\nIf you have any questions regarding our program, you are warmly welcome to visit us during our consultation hours – either on-site or virtually.\n\nOn-site consultation hour: {on_site_time}  \nBildungscampus 2, 74076 Heilbronn, Room D.1.01\n\nVirtual consultation hour (Zoom): {virtual_time}  \nMeeting-ID: {meeting_id}  \nPasscode: {passcode}  \nPlease remain in the waiting room until a slot is available.\n\nFor further questions, feel free to contact us:  \n{email_address}  \n+49 7131 26418612  \nhttp://www.mgt.tum.de/\n\nBest regards,  \n{name}\n",
+    "date": "2024-07-09T00:00:00.000Z",
+    "id": "student-consultation-template"
+  },
+  {
+    "title": "Language Course Info",
+    "content": "Scroll down for English version\n\n[Deutsch]\n\nLiebe Studierende,\n\nallgemeine Informationen zu den Sprachkursen des TUM Sprachenzentrums finden Sie auf der folgenden Website:\nhttps://www.sprachenzentrum.tum.de/en/sz/homepage/\n\nFür die Teilnahme an einem Sprachkurs des TUM Sprachenzentrums können Sie maximal 6 ECTS erhalten.\nAusgenommen davon sind Englisch- und Deutschkurse unter dem Niveau B1.\n\nBitte beachten Sie, dass für Sprachkurse der Volkshochschule oder des Goethe-Instituts keine ECTS vergeben werden können.\n\nMit freundlichen Grüßen\nStudent Service Center\n\n[English]\n\nDear Students,\n\nYou can find general information about language courses offered by the TUM Language Center at the following website:\nhttps://www.sprachenzentrum.tum.de/en/sz/homepage/\n\nIf you participate in a language course offered by the TUM Language Center, you can receive up to 6 ECTS.\nEnglish and German courses below level B1 are exempt from ECTS allocation.\n\nPlease note that language courses offered by the Volkshochschule or Goethe-Institut are not eligible for ECTS credits.\n\nBest regards\nStudent Service Center\n",
+    "date": "2024-07-09T00:00:00.000Z",
+    "id": "student-language-course-template"
+  },
+  {
+    "title": "Study Abroad Info",
+    "content": "Scroll down for English version\n\n[Deutsch]\n\nLiebe Studierende,\n\nStudierende der TUM School of Management können von zahlreichen Austauschabkommen – sowohl auf zentraler Ebene als auch im Fachbereich – profitieren und ein bis zwei Semester im Ausland studieren.\n\nBitte wenden Sie sich bei Interesse an die Austauschkoordinator*innen der TUM School of Management:\n\nstudent-exchange(at)in.tum.de\nTel.: +49 89 289 17548\n\nWeitere Informationen finden Sie unter:\nhttps://www.cit.tum.de/en/cit/studies/international/informatics-outgoing/\n\nMit freundlichen Grüßen\nStudent Service Center\n\n[English]\n\nDear Students,\n\nStudents of the TUM School of Management can benefit from a wide range of exchange agreements – both at the central level and within the department – and study abroad for one to two semesters.\n\nIf you are interested, please contact the student exchange coordinators at the TUM School of Management:\n\nstudent-exchange(at)in.tum.de\nTel.: +49 89 289 17548\n\nFurther information is available at:\nhttps://www.cit.tum.de/en/cit/studies/international/informatics-outgoing/\n\nBest regards\nStudent Service Center\n",
+    "date": "2024-07-09T00:00:00.000Z",
+    "id": "student-study-abroad-template"
+  }
+]
