@@ -1,1 +1,302 @@
-[]
+[
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "<strong>Betreff:</strong> Antwort auf Ihre Anfrage<br><strong>Subject:</strong> Reply to Your Inquiry<br><br>Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r Fuz,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>Li<br><br>---<br><br>[English]<br><br>Dear Fuz,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>Li<br>",
+    "createdAt": "2025-07-13T15:26:22.250Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "Fuz",
+      "name": "Li"
+    },
+    "id": "29f575e5-d42c-47db-b1de-ae30d50bf819"
+  },
+  {
+    "type": "holiday_notice",
+    "title": "documentTypes.holiday_notice",
+    "content": "<strong>Betreff:</strong> Feiertagsankündigung<br><strong>Subject:</strong> Holiday Notice<br><br>Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags <strong>mondfest</strong> bleibt die Universität am <strong>01.05</strong> geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>zzz<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday <strong>mondfest</strong>, the university will be closed on <strong>01.05</strong>.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>zzz<br>",
+    "createdAt": "2025-07-08T17:12:52.851Z",
+    "source": {
+      "category": "all",
+      "documentType": "holiday_notice",
+      "holidayName": "mondfest",
+      "holidayDate": "01.05",
+      "name": "zzz"
+    },
+    "id": "4db1a2d7-6ddd-464f-a835-54dcbd82dd78"
+  },
+  {
+    "type": "schedule_announcement",
+    "title": "documentTypes.schedule_announcement - MMDT",
+    "content": "<strong>Betreff:</strong> Details zur Lehrveranstaltung ceo (124557)<br><strong>Subject:</strong> Details of the Course ceo (124557)<br><br><br>Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Liebe Mitglieder der <strong>MMDT</strong>,<br><br>wir freuen uns, Ihnen die Details zur bevorstehenden Lehrveranstaltung <strong>ceo (124557)</strong> mitzuteilen.<br><br>Dozent*in: zzz<br>Beginn der Veranstaltung: <strong>06. Mai 2024</strong><br>Wöchentlicher Termin: <strong>Montag 9:00-11:00</strong><br>Raum: <strong>L</strong><br><br>Bei Fragen zur Kursorganisation wenden Sie sich bitte an das Studienbüro.<br>Falls Sie nicht an der Veranstaltung teilnehmen möchten, melden Sie sich bitte rechtzeitig über TUMonline ab.<br><br>Mit freundlichen Grüßen<br>Student Service Center<br><br>---<br><br>[English]<br><br>Dear members of the <strong>MMDT</strong>,<br><br>We are pleased to share the details of the upcoming course <strong>ceo (124557)</strong>.<br><br>Instructor: zzz<br>Course start date: <strong>06. May 2024</strong><br>Weekly schedule: <strong>Monday 9:00-11:00</strong><br>Room: <strong>L</strong><br><br>For any organizational questions regarding the course, please contact your program office.<br>If you do not plan to attend the course, make sure to deregister via TUMonline in time.<br><br>Best regards,<br>Student Service Center",
+    "createdAt": "2025-07-08T17:03:44.759Z",
+    "source": {
+      "category": "student",
+      "documentType": "schedule_announcement",
+      "courseName": "ceo",
+      "courseCode": "124557",
+      "instructorName": "zzz",
+      "courseStartDate": "06.05",
+      "weeklyTime": "Monday 9:00-11:00",
+      "weeklyLocation": "L",
+      "targetAudience": "MMDT",
+      "name": "ff"
+    },
+    "id": "731121dd-bbf1-4727-afbe-fd38984edc50"
+  },
+  {
+    "type": "holiday_notice",
+    "title": "documentTypes.holiday_notice",
+    "content": "<strong>Betreff:</strong> Feiertagsankündigung<br><strong>Subject:</strong> Holiday Notice<br><br>Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags <strong>mondfest</strong> bleibt die Universität am <strong>09.08</strong> geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>zz<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday <strong>mondfest</strong>, the university will be closed on <strong>09.08</strong>.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>zz<br>",
+    "createdAt": "2025-07-08T17:02:12.712Z",
+    "source": {
+      "category": "all",
+      "documentType": "holiday_notice",
+      "holidayName": "mondfest",
+      "holidayDate": "09.08",
+      "name": "zz"
+    },
+    "id": "78f4d0e8-1be5-4512-b8b3-de21d92d73a7"
+  },
+  {
+    "type": "schedule_change",
+    "title": "documentTypes.schedule_change - MMDT Student",
+    "content": "<strong>Betreff:</strong> Kurszeitplanänderung: ceo(12345)<br><strong>Subject:</strong> Course Schedule Change: ceo(12345)<br><br><br>Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Liebe Mitglieder der MMDT Student,<br><br>bitte beachten Sie, dass es eine Änderung bei der Veranstaltung <strong>ceo(12345)</strong> gibt.<br>Grund der Änderung: <strong>Regen</strong><br><br>Ursprünglicher Termin: 08. Juli<br>Ursprünglicher Raum: D<br><br>Neuer Termin: <strong>09. Juli</strong><br>Neuer Raum: <strong>L</strong><br><br>Bitte passen Sie Ihre Planung entsprechend an. Bei Rückfragen stehen wir Ihnen gerne zur Verfügung.<br><br>Mit freundlichen Grüßen<br>Student Service Center<br><br>---<br><br>[English]<br><br>Dear members of the MMDT Student,<br><br>Please note that there has been a change regarding the course <strong>ceo(12345)</strong>.<br>Reason for change: <strong>rain</strong><br><br>Original time: July 08<br>Original room: D<br><br>New time: <strong>July 09</strong><br>New room: <strong>L</strong><br><br>Please adjust your schedule accordingly. If you have any questions, feel free to contact us.<br><br>Best regards,<br>Student Service Center",
+    "createdAt": "2025-07-08T16:54:10.608Z",
+    "source": {
+      "category": "all",
+      "documentType": "schedule_change",
+      "courseName": "ceo",
+      "additionalNote": "Our summer party will glow under the stars with refreshing tropical drinks, upbeat music, and friends creating unforgettable memories together.\n",
+      "eventTime": "05.07",
+      "location": "L",
+      "targetAudience": "MMDT Student",
+      "language": "English",
+      "name": "zzz",
+      "registration": "01.07",
+      "courseCode": "12345",
+      "instructorName": "zzz",
+      "courseStartDate": "01.05",
+      "weeklyTime": "every Monday 9:00-11:45",
+      "weeklyLocation": "L",
+      "studentName": "fff",
+      "reason": "rain",
+      "oldTime": "08.07",
+      "oldLocation": "D",
+      "newTime": "09.07",
+      "newLocation": "L"
+    },
+    "id": "012272a7-dce9-4983-a266-407646202605"
+  },
+  {
+    "type": "course_registration",
+    "title": "documentTypes.course_registration - MMDT Student",
+    "content": "<strong>Betreff:</strong> Wichtige Information: Prüfungsanmeldung für MMDT Studenten<br><strong>Subject:</strong> Important Information: Exam Registration for MMDT Students<br><br><br>Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Liebe*r <strong>MMDT Student</strong>,<br><br>bitte beachten Sie, dass die Prüfungsanmeldung für Ihre Prüfungen ab <strong>01. April 2024</strong> möglich ist. Die Anmeldefrist endet am <strong>06. Mai 2024</strong>.<br><br>Alle oben genannten Studierenden werden gebeten, sich rechtzeitig über TUMonline für die entsprechenden Prüfungen anzumelden. Eine nachträgliche Anmeldung ist nicht möglich.<br><br>Bitte stellen Sie sicher, dass Sie alle relevanten Informationen zu Ihren Prüfungen frühzeitig überprüfen.<br><br>Bei Fragen wenden Sie sich bitte an das Prüfungsamt oder Ihre Studienkoordination.<br><br>Mit freundlichen Grüßen<br>zzz<br><br>---<br><br>[English]<br><br>Dear <strong>MMDT Student</strong>,<br><br>Please note that exam registration will be open from <strong>01. April 2024</strong> and will close on <strong>06. May 2024</strong>.<br><br>All students in the above-mentioned group are required to register for their exams in TUMonline within the given period. Late registration is not possible.<br><br>Make sure to review all relevant exam information in advance.<br><br>If you have any questions, please contact the Examination Office or your program coordinator.<br><br>Best regards,<br>zzz",
+    "createdAt": "2025-07-08T16:40:30.734Z",
+    "source": {
+      "category": "student",
+      "documentType": "course_registration",
+      "startDate": "01.04",
+      "endDate": "06.05",
+      "targetAudience": "MMDT Student",
+      "name": "zzz"
+    },
+    "id": "e16eace0-0823-450d-95d3-b2e88c058641"
+  },
+  {
+    "type": "schedule_change",
+    "title": "documentTypes.schedule_change - MMDT",
+    "content": "<strong>Betreff:</strong> Änderung des Termins für ceo(123678)<br><strong>Subject:</strong> Schedule Change for ceo(123678)<br><br><br>Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Liebe Mitglieder der MMDT,<br><br>bitte beachten Sie, dass es eine Änderung bei der Veranstaltung <strong>ceo(123678)</strong> gibt.  <br>Grund der Änderung: <strong>Regen</strong><br><br>Ursprünglicher Termin: 01.05  <br>Ursprünglicher Raum: L  <br><br>Neuer Termin: <strong>05.05</strong>  <br>Neuer Raum: <strong>D</strong><br><br>Bitte passen Sie Ihre Planung entsprechend an. Bei Rückfragen stehen wir Ihnen gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>Student Service Center<br><br>---<br><br>[English]<br><br>Dear members of the MMDT,<br><br>Please note that there has been a change regarding the course <strong>ceo(123678)</strong>.  <br>Reason for change: <strong>rain</strong><br><br> Original time: 01.05  <br> Original room: L  <br><br> New time: <strong>05.05</strong>  <br> New room: <strong>D</strong><br><br>Please adjust your schedule accordingly. If you have any questions, feel free to contact us.<br><br>Best regards,  <br>Student Service Center",
+    "createdAt": "2025-07-08T16:26:24.458Z",
+    "source": {
+      "category": "staff",
+      "documentType": "schedule_change",
+      "courseName": "ceo",
+      "courseCode": "123678",
+      "reason": "rain",
+      "oldTime": "01.05",
+      "oldLocation": "L",
+      "newTime": "05.05",
+      "newLocation": "D",
+      "targetAudience": "MMDT",
+      "name": "zzz"
+    },
+    "id": "17e52b31-f248-4fd6-a5c5-66bbb5ad3551"
+  },
+  {
+    "type": "schedule_request",
+    "title": "documentTypes.schedule_request - MMDT",
+    "content": "<strong>Betreff:</strong> Terminabstimmung für die Vorlesung ceo (12345)<br><strong>Subject:</strong> Schedule Coordination for Lecture ceo (12345)<br><br><br>Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Sehr geehrte*r <strong>MMDT</strong>,<br><br>ich hoffe, diese Nachricht erreicht Sie wohlbehalten.<br><br>Im Rahmen der Vorbereitungen für das kommende <strong>3. Semester</strong> möchten wir die Vorlesung <strong>ceo (12345)</strong> terminlich koordinieren. Zu diesem Zweck bitten wir Sie höflich, Ihre zeitlichen Präferenzen aus den folgenden Optionen mitzuteilen:<br><br>01. Juni - 08. August<br><br>Bitte teilen Sie uns Ihre Verfügbarkeit bis spätestens <strong>09. Mai</strong> mit, damit wir die Raumplanung und Studierendeninformation rechtzeitig abschließen können.<br><br>Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br><br>Mit freundlichen Grüßen<br>zzz<br><br>---<br><br>[English]<br><br>Dear <strong>MMDT</strong>,<br><br>I hope this message finds you well.<br><br>In preparation for the upcoming <strong>3rd semester</strong>, we are coordinating the schedule for the lecture <strong>ceo (12345)</strong>. We kindly ask you to indicate your preferred time slots from the following options:<br><br>June 1st - August 8th<br><br>Please let us know your availability by <strong>May 9th</strong> so that we can finalize room assignments and inform students in a timely manner.<br><br>If you have any questions, feel free to contact us.<br><br>Best regards,<br>zzz",
+    "createdAt": "2025-07-08T16:25:31.655Z",
+    "source": {
+      "category": "staff",
+      "documentType": "schedule_request",
+      "courseName": "ceo",
+      "courseCode": "12345",
+      "semester": "3",
+      "timeOptions": "01.06-08.08",
+      "replyDeadline": "09.05",
+      "name": "zzz",
+      "targetAudience": "MMDT"
+    },
+    "id": "117a4d49-ce4b-452b-a2c8-66089b92f07e"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "<strong>Betreff:</strong> Antwort auf Ihre Anfrage<br><strong>Subject:</strong> Reply to Your Inquiry<br><br>Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r fuz,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>bb<br><br>---<br><br>[English]<br><br>Dear fuz,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>bb<br>",
+    "createdAt": "2025-07-08T16:13:49.611Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "fuz",
+      "name": "bb"
+    },
+    "id": "d4564424-75d3-4adc-92a6-3070a7f34503"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r fu,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>jin<br><br>---<br><br>[English]<br><br>Dear fu,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>jin<br>",
+    "createdAt": "2025-07-08T16:12:21.286Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "fu",
+      "name": "jin"
+    },
+    "id": "47c06abe-a6ab-4dca-912c-93b6f690ba9c"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r fuz,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>bb<br><br>---<br><br>[English]<br><br>Dear fuz,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>bb<br>",
+    "createdAt": "2025-07-08T15:56:47.128Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "fuz",
+      "name": "bb"
+    },
+    "id": "82dbc7d4-fe1a-404f-b15e-be5c0f6af0a5"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/8",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br><strong>Betreff:</strong> Änderung des Prüfungsplans<br><br>Sehr geehrte Studierende,<br><br>hiermit wird Ihnen mitgeteilt, dass Anpassungen am aktuellen Prüfungsplan vorgenommen wurden. Der überarbeitete Prüfungsplan steht ab sofort auf der <strong>offiziellen Website der Universität</strong> oder im <strong>Studierendenportal</strong> unter dem Abschnitt <strong>„Prüfungen“</strong> zur Einsicht bereit.<br><br>Es ist unerlässlich, dass Sie den aktualisierten Plan umgehend auf Änderungen überprüfen, die Ihre individuellen Prüfungen betreffen könnten. Für die Planung und Durchführung Ihrer Prüfungen ist ausschließlich die neueste veröffentlichte Version des Prüfungsplans verbindlich.<br><br>Mit freundlichen Grüßen,<br><br>[Name der zuständigen Abteilung/Institution]<br><br><br><br>---<br><br>[English]<br><br><br><br><strong>Subject:</strong> Exam Schedule Changes<br><br>Dear Students,<br><br>Please be informed that adjustments have been made to the current exam schedule. The revised exam schedule is now available for review on the <strong>official university website</strong> or within the <strong>student portal</strong> under the <strong>“Examinations”</strong> section.<br><br>It is imperative that you promptly review the updated schedule for any changes that may affect your individual examinations. Only the latest published version of the exam schedule is binding for the planning and conduct of your examinations.<br><br>Sincerely,<br><br>[Name of Responsible Department/Institution]",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-07-07T23:27:50.183Z",
+    "id": "eb206c04-ab16-43f2-b09f-530ce1ee427c"
+  },
+  {
+    "type": "holiday_notice",
+    "title": "documentTypes.holiday_notice - MMDT Student",
+    "content": "Scroll down for English version<br><br>[Deutsch]<br><br>Liebe Studierende,<br><br>anlässlich des Feiertags summer party bleibt die Universität am 01.07.2025 geschlossen.<br><br>Wir wünschen Ihnen einen erholsamen Feiertag.<br><br>Mit freundlichen Grüßen  <br>fuz<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>Due to the public holiday summer party, the university will be closed on 01.07.2025.<br><br>We wish you a restful and enjoyable holiday.<br><br>Best regards,  <br>fuz<br>",
+    "createdAt": "2025-07-07T23:05:37.886Z",
+    "source": {
+      "category": "all",
+      "documentType": "holiday_notice",
+      "courseName": "CEO",
+      "courseCode": "13526",
+      "reason": "Weather",
+      "oldTime": "01.06.2025",
+      "oldLocation": "L building",
+      "newTime": "03.06.2025",
+      "newLocation": "D building",
+      "targetAudience": "MMDT Student",
+      "name": "fuz",
+      "holidayName": "summer party",
+      "holidayDate": "01.07.2025"
+    },
+    "id": "5a8af6aa-ddcb-4cbf-9c92-d2603ea2ec05"
+  },
+  {
+    "type": "schedule_announcement",
+    "title": "documentTypes.schedule_announcement - BIE Student",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Liebe Mitglieder der BIE Student,<br><br>wir freuen uns, Ihnen die Details zur bevorstehenden Lehrveranstaltung Social Network (dhvbj) mitzuteilen.<br><br>Dozent*in: Dr.Mueller<br>Beginn der Veranstaltung: <strong>13. Mai 2025</strong><br>Wöchentlicher Termin: Montag 9:00-10:45<br>Raum: L Building<br><br>Bei Fragen zur Kursorganisation wenden Sie sich bitte an das Studienbüro.<br>Falls Sie nicht an der Veranstaltung teilnehmen möchten, melden Sie sich bitte rechtzeitig über TUMonline ab.<br><br>Mit freundlichen Grüßen<br>Student Service Center<br><br>---<br><br>[English]<br><br>Dear members of the BIE Student,<br><br>We are pleased to share the details of the upcoming course Social Network (dhvbj).<br><br>Instructor: Dr.Mueller<br>Course start date: <strong>13. May 2025</strong><br>Weekly schedule: monday 9:00-10:45<br>Room: L Building<br><br>For any organizational questions regarding the course, please contact your program office.<br>If you do not plan to attend the course, make sure to deregister via TUMonline in time.<br><br>Best regards,<br>Student Service Center",
+    "createdAt": "2025-07-07T22:47:45.868Z",
+    "source": {
+      "category": "student",
+      "documentType": "schedule_announcement",
+      "courseName": "Social Network",
+      "courseCode": "dhvbj",
+      "instructorName": "Dr.Mueller",
+      "courseStartDate": "13.05.2025",
+      "weeklyTime": "monday 9:00-10:45",
+      "weeklyLocation": "L Building",
+      "targetAudience": "BIE Student",
+      "name": "fuz"
+    },
+    "id": "e1d3c278-5452-461d-bd6d-6853c8d69ac0"
+  },
+  {
+    "type": "student_reply",
+    "title": "documentTypes.student_reply",
+    "content": "Scroll down for English version<br><br>[Deutsch]<br><br>Liebe/r fff,<br><br>vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und werden uns schnellstmöglich bei Ihnen melden.<br><br>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung.<br><br>Mit freundlichen Grüßen  <br>zzz<br><br>---<br><br>[English]<br><br>Dear fff,<br><br>Thank you for your message. We have received your request and will get back to you as soon as possible.<br><br>If you have any further questions, feel free to reach out.<br><br>Best regards,  <br>zzz<br>",
+    "createdAt": "2025-07-07T22:45:30.818Z",
+    "source": {
+      "category": "student",
+      "documentType": "student_reply",
+      "studentName": "fff",
+      "name": "zzz"
+    },
+    "id": "e7869888-ade8-435e-91c8-f2d93e9c0fb9"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/8",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Hiermit wird mitgeteilt, dass Anpassungen am aktuellen Prüfungsplan vorgenommen wurden.<br>Der überarbeitete Prüfungsplan ist ab sofort auf dem **offiziellen Studentenportal** verfügbar.<br>Alle Studierenden werden dringend gebeten, den aktualisierten Plan umgehend zu konsultieren, um sich über etwaige Termin- oder Raumänderungen zu informieren.<br>Die Einhaltung des neuen Zeitplans ist **verbindlich**.<br><br><br><br>---<br><br>[English]<br><br><br><br>Please be informed that adjustments have been made to the current examination schedule.<br>The revised examination schedule is now available on the **official student portal**.<br>All students are strongly advised to consult the updated schedule promptly to familiarize themselves with any changes in dates or locations.<br>Adherence to the new timetable is **mandatory**.",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-07-07T22:29:24.323Z",
+    "id": "c49f76e0-5ac1-4644-84bd-5dab3611c2b8"
+  },
+  {
+    "type": "schedule_request",
+    "title": "documentTypes.schedule_request - MMDT Student",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Sehr geehrte*r MMDT Student,<br><br>ich hoffe, diese Nachricht erreicht Sie wohlbehalten.<br><br>Im Rahmen der Vorbereitungen für das kommende zweite Semester möchten wir die Vorlesung CEO (dhjbv) terminlich koordinieren. Zu diesem Zweck bitten wir Sie höflich, Ihre zeitlichen Präferenzen aus den folgenden Optionen mitzuteilen:<br><br>01.04-05.07.2025<br><br>Bitte teilen Sie uns Ihre Verfügbarkeit bis spätestens **31. März 2025** mit, damit wir die Raumplanung und Studierendeninformation rechtzeitig abschließen können.<br><br>Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br><br>Mit freundlichen Grüßen<br>Fuz<br><br>---<br><br>[English]<br><br>Dear MMDT Student,<br><br>I hope this message finds you well.<br><br>In preparation for the upcoming second semester, we are coordinating the schedule for the lecture CEO (dhjbv). We kindly ask you to indicate your preferred time slots from the following options:<br><br>01.04-05.07.2025<br><br>Please let us know your availability by **March 31, 2025** so that we can finalize room assignments and inform students in a timely manner.<br><br>If you have any questions, feel free to contact us.<br><br>Best regards,<br>Fuz",
+    "createdAt": "2025-07-07T22:15:37.238Z",
+    "source": {
+      "category": "staff",
+      "documentType": "schedule_request",
+      "courseName": "CEO",
+      "courseCode": "dhjbv",
+      "semester": "2",
+      "timeOptions": "01.04-05.07.2025",
+      "replyDeadline": "31.03.2025",
+      "name": "Fuz",
+      "targetAudience": "MMDT Student"
+    },
+    "id": "5dcf6d60-1b2a-42db-ac86-9898e29b5a94"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/8",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Sehr geehrte Studierende,<br><br>hiermit möchten wir Sie über Änderungen im bevorstehenden Prüfungsplan informieren.<br><br>Der aktualisierte Prüfungsplan ist ab sofort auf der offiziellen Webseite des Prüfungsamtes verfügbar. Bitte konsultieren Sie diesen umgehend, um sich über etwaige Termin- oder Raumänderungen für Ihre Prüfungen zu informieren.<br><br>Es liegt in Ihrer Verantwortung, den neuen Prüfungsplan zu überprüfen.<br><br>Bei Fragen wenden Sie sich bitte an das Prüfungsamt.<br><br>Mit freundlichen Grüßen,<br><br>[Name der Institution/Abteilung]<br><br>---<br><br>[English]<br><br>Dear Students,<br><br>This notice serves to inform you of changes to the upcoming examination schedule.<br><br>The updated examination schedule is now available on the official website of the Examination Office. Please consult it immediately to ascertain any changes in dates or locations for your examinations.<br><br>It is your responsibility to review the revised examination schedule.<br><br>For any inquiries, please contact the Examination Office.<br><br>Sincerely,<br><br>[Name of Institution/Department]",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-07-07T22:05:49.676Z",
+    "id": "f11699fa-d37a-4930-94ee-ad75efa712dd"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/7",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>Sehr geehrte Kolleginnen und Kollegen,<br><br>hiermit möchten wir Sie über eine bevorstehende Fakultätssitzung informieren.<br><br>Die Sitzung findet statt am:<br>**Datum:** [Datum der Sitzung]<br>**Uhrzeit:** [Uhrzeit der Sitzung]<br>**Ort:** [Ort der Sitzung]<br><br>Ziel dieser Sitzung ist die Besprechung wichtiger administrativer und akademischer Angelegenheiten.<br><br>Ihre Teilnahme ist von großer Bedeutung und wird erwartet.<br><br>Vielen Dank für Ihr Verständnis und Ihre Mitarbeit.<br><br>Mit freundlichen Grüßen,<br><br>[Name/Abteilung der Universität/Hochschule]<br><br>---<br><br>[English]<br><br>Dear Faculty Members,<br><br>This letter serves to inform you of an upcoming faculty meeting.<br><br>The meeting is scheduled for:<br>**Date:** [Meeting Date]<br>**Time:** [Meeting Time]<br>**Location:** [Meeting Location]<br><br>The purpose of this meeting is to discuss important administrative and academic matters.<br><br>Your presence is essential and greatly appreciated.<br><br>Thank you for your attention to this matter.<br><br>Sincerely,<br><br>[Name/Department of University/College]",
+    "tone": "neutral",
+    "prompt": "Create a formal letter to faculty members about upcoming meeting",
+    "createdAt": "2025-07-07T21:47:59.332Z",
+    "id": "f918e48e-cb65-4bbb-bf11-a1b4041a1cdd"
+  },
+  {
+    "type": "freeTextGeneration",
+    "title": "Free Text Generation - 2025/7/7",
+    "content": "Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br><p>Sehr geehrte Studierende,</p><p>wir möchten Sie hi<span style=\"color: #e53935; font-size: 18px\"><strong><em><u><mark data-preserve-color=\"true\" style=\"background-color: #ffff00; color: inherit !important;\">erm</mark></u></em></strong></span>it über **wichtige Änderungen im Prüfungsplan** für die bevorstehende Prüfungsperiode informieren. Diese Anpassungen sind aus organisatorischen Gründen notwendig geworden.</p><p>Der **aktualisierte Prüfungsplan** ist ab sofort auf unserer offiziellen Webseite unter [Link/Ort, z.B. Studierendenportal] verfügbar.</p><p>Bitte überprüfen Sie den neuen Plan **umgehend**, um sich über die geänderten Termine, Uhrzeiten und Räume Ihrer Prüfungen zu informieren.</p><p>Vielen Dank für Ihr Verständnis.</p><p>Mit freundlichen Grüßen,</p><p>[Name der Institution/Abteilung]</p><p>(z.B. Die Prüfungsverwaltung / Das Studiensekretariat)</p><br>---<br><br>[English]<br><br><p>Dear Students,</p><p>We would like to inform you about **important changes to the exam schedule** for the upcoming examination period. These adjustments have become necessary due to organizational reasons.</p><p>The **updated exam schedule** is now available on our official website at [Link/Location, e.g., Student Portal].</p><p>Please review the new schedule **immediately** to familiarize yourself with the revised dates, times, and locations of your exams.</p><p>Thank you for your understanding.</p><p>Sincerely,</p><p>[Name of Institution/Department]</p><p>(e.g., The Examinations Office / The Registrar's Office)</p>",
+    "tone": "neutral",
+    "prompt": "Write a notice to inform students about exam schedule changes",
+    "createdAt": "2025-07-07T19:33:58.016Z",
+    "id": "4f5e94ee-ea87-4fc1-a37d-0f6fab0f8538",
+    "updatedAt": "2025-07-07T21:41:50.869Z"
+  }
+]
