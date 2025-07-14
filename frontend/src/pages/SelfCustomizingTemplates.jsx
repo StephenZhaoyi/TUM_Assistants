@@ -25,7 +25,7 @@ function formatDate(dateString) {
   return date.toLocaleString();
 }
 
-// Helper: Format date with minutes (仿照DraftHistory)
+// Helper: Format date with minutes (imitate DraftHistory)
 const formatDateWithMinutes = (dateString) => {
   if (!dateString || isNaN(Date.parse(dateString))) return '-';
   const date = new Date(dateString);
@@ -35,7 +35,7 @@ const formatDateWithMinutes = (dateString) => {
   if (diffInMinutes < 30) {
     return diffInMinutes < 1 ? 'Just now' : `${diffInMinutes} minutes ago`;
   }
-  // 否则显示日月年时分
+  // Otherwise, display date and time in day/month/year hour:minute format
   return date.toLocaleString('en-US', {
     year: 'numeric',
     month: '2-digit',
@@ -70,7 +70,7 @@ const SelfCustomizingTemplates = () => {
     fetch('/api/templates')
       .then(res => res.json())
       .then(data => {
-        // 适配后端返回的模板结构
+        // Adapt to the template structure returned by the backend
         const withDefaults = data.map(tpl => ({
           ...tpl,
           title: tpl.title || tpl.name || extractTitleFromHtml(tpl.content),
@@ -82,10 +82,10 @@ const SelfCustomizingTemplates = () => {
       });
   }, []);
 
-  // 复制富文本内容
+  // Copy rich text content
   const handleCopy = async (html) => {
     try {
-      // 优先使用 Clipboard API 富文本
+      // Prefer Clipboard API for rich text
       if (navigator.clipboard && window.ClipboardItem) {
         await navigator.clipboard.write([
           new window.ClipboardItem({
@@ -94,7 +94,7 @@ const SelfCustomizingTemplates = () => {
           })
         ]);
       } else {
-        // fallback: 使用 execCommand 兼容旧浏览器
+        // fallback: use execCommand for old browsers
         const listener = (e) => {
           e.clipboardData.setData('text/html', html);
           e.clipboardData.setData('text/plain', (new DOMParser().parseFromString(html, 'text/html').body.innerText));
@@ -107,7 +107,7 @@ const SelfCustomizingTemplates = () => {
       setShowCopySuccess(true);
       setTimeout(() => setShowCopySuccess(false), 2000);
     } catch (err) {
-      // fallback: 只复制纯文本
+      // fallback: only copy plain text
       const div = document.createElement('div');
       div.innerHTML = html;
       await navigator.clipboard.writeText(div.innerText);
@@ -116,7 +116,7 @@ const SelfCustomizingTemplates = () => {
     }
   }
 
-  // 删除模板
+  // Delete template
   const handleDelete = async (idx) => {
     const tpl = templates[idx]
     if (!tpl.id) return
@@ -125,7 +125,7 @@ const SelfCustomizingTemplates = () => {
     if (openIdx === idx) setOpenIdx(null)
   }
 
-  // 编辑模板，跳转到 DraftEditor 并传递内容
+  // Edit template, jump to DraftEditor and pass content
   const handleEdit = (idx) => {
     const tpl = templates[idx]
     navigate('/draft/template-edit', { state: { templateIdx: idx, template: tpl } })
@@ -154,7 +154,7 @@ const SelfCustomizingTemplates = () => {
         <p className="text-lg text-neutral-600">{t('selfCustomizingTemplates.subtitle')}</p>
       </div>
       
-      {/* 搜索框 */}
+      {/* Search box */}
       <div className="flex justify-center mb-6">
         <div className="relative w-full max-w-md">
           <input
@@ -234,7 +234,7 @@ const SelfCustomizingTemplates = () => {
           })}
         </ul>
       )}
-      {/* 分页控件 */}
+      {/* Pagination controls */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-6 gap-2 items-center">
           <button className="btn-outline px-3" disabled={currentPage===1} onClick={()=>{setCurrentPage(p=>p-1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.prev')}</button>
@@ -248,7 +248,7 @@ const SelfCustomizingTemplates = () => {
           <span>{t('messages.copySuccess')}</span>
         </div>
       )}
-      {/* 编辑弹窗 */}
+      {/* Edit modal */}
       {editIdx !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96">

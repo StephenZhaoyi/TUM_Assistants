@@ -18,7 +18,7 @@ from uuid import uuid4
 
 app = FastAPI()
 
-# 配置CORS
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5500", "http://localhost:5501", "http://localhost:5502"], 
@@ -27,12 +27,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 定义支持的模板类型
+# Define supported template types
 class TemplateRequest(BaseModel):
     templateType: Literal[
         "course_registration", "event_notice", "schedule_request", "schedule_announcement", "schedule_change"
     ]
-    # 所有可能用到的字段（部分可选）
+    # All possible fields (some optional)
     startDate: Optional[str] = None
     endDate: Optional[str] = None
     eventTime: Optional[str] = None
@@ -57,7 +57,7 @@ class TemplateRequest(BaseModel):
     timeOptions: Optional[str] = None
     name: Optional[str] = None
 
-# 草稿存储文件
+# Draft storage file
 DRAFTS_FILE = './drafts.json'
 TEMPLATES_FILE = './templates.json'
 
@@ -243,17 +243,17 @@ async def delete_draft(draft_id: str):
 
 @app.post("/api/gemini_edit")
 async def gemini_edit_api(req: GeminiEditRequest):
-    """使用 Gemini 对草稿进行二次编辑"""
+    """Use Gemini to perform secondary editing of drafts"""
     from core import client
     prompt = f"""
-你是一个行政文档写作助手。请根据用户的修改要求对以下草稿内容进行修改：
+You are an administrative document writing assistant. Please modify the following draft content according to the user's revision instructions:
 
-【用户要求】：{req.instruction}
+[User Instruction]: {req.instruction}
 
-【原始草稿】：
+[Original Draft]:
 {req.content}
 
-请严格保留原有文档的结构、格式（如加粗、换行、列表等），只做必要的内容调整。输出格式为 HTML，换行请用<br>，加粗请用<strong>，不要添加解释。
+Please strictly retain the original structure and formatting of the document (such as bold, line breaks, lists, etc.), and only make necessary content adjustments. The output format should be HTML, use <br> for line breaks, <strong> for bold, and do not add explanations.
 """
     try:
         response = client.models.generate_content(

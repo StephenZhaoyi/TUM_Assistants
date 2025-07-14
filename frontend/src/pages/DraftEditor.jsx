@@ -75,7 +75,7 @@ const DraftEditor = () => {
 
   // Load draft data (only depends on id)
   useEffect(() => {
-    // 只在非模板编辑模式下加载
+    // Only load if not in template edit mode
     if (location.pathname === '/draft/template-edit') return;
     const loadDraft = async () => {
       try {
@@ -92,7 +92,7 @@ const DraftEditor = () => {
 
   // Sync content when both editor and draft are ready
   useEffect(() => {
-    // 只在非模板编辑模式下同步
+    // Only sync if not in template edit mode
     if (location.pathname === '/draft/template-edit') return;
     if (editor && draft) {
       try {
@@ -110,10 +110,10 @@ const DraftEditor = () => {
     setIsLoading(true)
   }, [id])
 
-  // 检查是否为模板编辑模式
+  // Check if in template edit mode
   const isTemplateEdit = location.pathname === '/draft/template-edit' && location.state && location.state.template;
 
-  // 初始化模板编辑内容
+  // Initialize template edit content
   useEffect(() => {
     if (isTemplateEdit && editor) {
       editor.commands.setContent(autoParagraph(location.state.template.content || ''))
@@ -128,7 +128,7 @@ const DraftEditor = () => {
     }
   }, [isTemplateEdit, editor, autoParagraph])
 
-  // 页面顶部加防御性跳转，防止 location.state 丢失时报错
+  // Add defensive redirect for template edit mode to prevent errors if location.state is lost
   useEffect(() => {
     if (location.pathname === '/draft/template-edit' && (!location.state || !location.state.template)) {
       navigate('/self-customizing-templates');
@@ -139,7 +139,7 @@ const DraftEditor = () => {
     if (location.pathname === '/draft/template-edit') {
       let template = location.state?.template;
       let templateIdx = location.state?.templateIdx;
-      // 如果刷新导致 state 丢失，尝试从 localStorage 取
+      // If refresh causes state to be lost, try to get from localStorage
       if (!template && typeof templateIdx === 'number') {
         const templates = JSON.parse(localStorage.getItem('selfCustomizingTemplates') || '[]');
         template = templates[templateIdx];
@@ -171,7 +171,7 @@ const DraftEditor = () => {
         type: draft.type || 'announcement',
       }
       setDraft(updatedDraft)
-      // 模板编辑模式下，保存到后端API
+      // In template edit mode, save to backend API
       if (isTemplateEdit && location.state && location.state.template) {
         const updatedTemplate = {
           ...location.state.template,
@@ -180,7 +180,7 @@ const DraftEditor = () => {
           date: updatedDraft.updatedAt
         }
         
-        // 如果是新模板，使用POST创建
+        // If it's a new template, use POST to create
         if (location.state.isNewTemplate) {
           await fetch('/api/templates', {
             method: 'POST',
@@ -188,7 +188,7 @@ const DraftEditor = () => {
             body: JSON.stringify(updatedTemplate)
           })
         } else {
-          // 如果是编辑现有模板，使用PUT更新
+          // If editing an existing template, use PUT to update
           await fetch(`/api/templates/${location.state.template.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -196,7 +196,7 @@ const DraftEditor = () => {
           })
         }
         setIsSaving(false)
-        // 返回模板页
+        // Return to template page
         navigate('/self-customizing-templates')
         return
       }
@@ -224,7 +224,7 @@ const DraftEditor = () => {
           })
         ])
       } else {
-        // fallback: 只复制纯文本
+        // fallback: only copy plain text
         await navigator.clipboard.writeText(div.innerText)
       }
       setShowCopySuccess(true)
@@ -236,7 +236,7 @@ const DraftEditor = () => {
     }
   }
 
-  // 新增：去除关键信息并保存为模板
+  // New: Save as template by removing sensitive information
   const handleSaveAsTemplate = () => {
     setShowTemplateModal(true)
   }
@@ -260,7 +260,7 @@ const DraftEditor = () => {
       })
       if (!res.ok) throw new Error('Failed to save template')
       const savedTemplate = await res.json()
-      // 跳转到模板编辑界面，带上新建的模板
+      // Navigate to template edit page, bringing the new template
       navigate('/draft/template-edit', {
         state: {
           template: savedTemplate,
@@ -277,17 +277,17 @@ const DraftEditor = () => {
     setTemplateName('')
   }
 
-  // 渲染标题时用 type key 动态翻译
+  // Render title using type key for dynamic translation
   const getDraftTitle = () => {
     if (!draft) return ''
     if (draft.type && t(`documentTypes.${draft.type}`) !== `documentTypes.${draft.type}`) {
       return t(`documentTypes.${draft.type}`)
     }
-    // 兼容旧数据
+    // Compatible with old data
     return draft.title || t('draftEditor.title')
   }
 
-  // Gemini 再次修改草稿（占位实现）
+  // Gemini again revise draft (placeholder implementation)
   const handleGeminiEdit = async () => {
     if (!editor || !geminiPrompt.trim()) return
     setIsGeminiLoading(true)
@@ -305,7 +305,7 @@ const DraftEditor = () => {
         editor.commands.setContent(autoParagraph(data.content))
       }
     } catch (e) {
-      alert('Gemini API 调用失败')
+      alert('Gemini API call failed')
     } finally {
       setIsGeminiLoading(false)
     }
@@ -313,13 +313,13 @@ const DraftEditor = () => {
 
   function getDocumentTypeLabel(type) {
     if (!type) return '';
-    // 支持snake_case和camelCase
+    // Support both snake_case and camelCase
     const camelCase = type.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
     const translated = t(`documentTypes.${camelCase}`);
     if (translated && translated !== `documentTypes.${camelCase}`) {
       return translated;
     }
-    // 兼容snake_case
+    // Also support snake_case
     const mapping = {
       'course_registration': t('documentTypes.courseRegistration'),
       'event_notice': t('documentTypes.eventNotice'),
@@ -409,9 +409,9 @@ const DraftEditor = () => {
         </div>
       </div>
 
-      {/* 编辑器与 Gemini revise 输入框并排布局 */}
+      {/* Editor and Gemini revise input box side by side */}
       <div className="flex gap-6 items-start">
-        {/* Gemini 再次修改输入框 */}
+        {/* Gemini again revise input box */}
         <div className="w-full max-w-xs">
           <div className="mb-4 flex flex-col gap-2">
             <textarea
@@ -443,7 +443,7 @@ const DraftEditor = () => {
             )}
           </div>
         </div>
-        {/* 编辑器主体 */}
+        {/* Editor main body */}
         <div className="flex-1">
           <div className="card p-4">
             <div className="flex items-center gap-2 mb-4 border-b border-neutral-200 pb-4">
@@ -490,7 +490,7 @@ const DraftEditor = () => {
               
               <div className="w-px h-6 bg-neutral-300 mx-2"></div>
               
-              {/* 字体颜色选择器 */}
+              {/* Font color selector */}
               <select
                 className="text-sm border rounded px-1 py-0.5"
                 title="Font Color"
@@ -503,7 +503,7 @@ const DraftEditor = () => {
                 <option value="#e53935">Red</option>
                 <option value="#3070b3">TUM Blue</option>
               </select>
-              {/* 字体大小选择器 */}
+              {/* Font size selector */}
               <select
                 className="text-sm border rounded px-1 py-0.5"
                 title="Font Size"
@@ -520,7 +520,7 @@ const DraftEditor = () => {
                 <option value="28px">28px</option>
                 <option value="32px">32px</option>
               </select>
-              {/* 高亮选择器 */}
+              {/* Highlight selector */}
               <select
                 className="text-sm border rounded px-1 py-0.5"
                 title="Highlight Color"
