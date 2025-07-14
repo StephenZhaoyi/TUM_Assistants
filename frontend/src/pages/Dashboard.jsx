@@ -234,7 +234,7 @@ const Dashboard = () => {
     return 'Untitled Draft';
   };
 
-  // Helper: Format date with minutes (30分钟内显示"xx分钟前"，否则显示日月年时分)
+  // Helper: Format date with minutes (show "xx minutes ago" if within 30 minutes, otherwise show date and time)
   const formatDateWithMinutes = (dateString) => {
     if (!dateString || isNaN(Date.parse(dateString))) return '-';
     const date = new Date(dateString);
@@ -244,7 +244,7 @@ const Dashboard = () => {
     if (diffInMinutes < 30) {
       return diffInMinutes < 1 ? t('draftHistory.timeAgo.justNow') : t('draftHistory.timeAgo.minutesAgo', { minutes: diffInMinutes });
     }
-    // 否则显示日月年时分
+    // Otherwise show date and time
     return date.toLocaleString(t('language') === 'de' ? 'de-DE' : 'en-US', {
       year: 'numeric',
       month: '2-digit',
@@ -274,7 +274,7 @@ const Dashboard = () => {
     try {
       await navigator.clipboard.writeText(content)
       setShowCopySuccess(true)
-      // 3秒后自动隐藏提示
+      // Automatically hide the prompt after 3 seconds
       setTimeout(() => {
         setShowCopySuccess(false)
       }, 3000)
@@ -301,10 +301,10 @@ const Dashboard = () => {
     }
   }
 
-  // 统计数据
+  // Statistics
   const totalGenerated = allDrafts.length
   const generatedToday = allDrafts.filter(draft => draft.createdAt && new Date(draft.createdAt).toDateString() === new Date().toDateString()).length
-  // 平均生成时间（秒）
+  // Average generation time (seconds)
   const avgTime = (() => {
     const times = allDrafts
       .map(d => {
