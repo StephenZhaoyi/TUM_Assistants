@@ -1,7 +1,7 @@
-姓名: 张三
-年龄: 30
-职业: 软件工程师
+Name: Zhang San
+Age: 30
+Occupation: Software Engineer
 
-姓名: 李四
-年龄: 25
-职业: 产品经理 
+Name: Li Si
+Age: 25
+Occupation: Product Manager 
