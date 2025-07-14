@@ -106,11 +106,11 @@ const DraftHistory = () => {
   const getDocumentTypeLabel = (type) => {
     if (!type) return 'N/A';
     
-    // First try with toCamel conversion
+    // First try to convert to camelCase
     const camelCase = toCamel(type);
     const translated = t(`documentTypes.${camelCase}`);
     
-    // If translation exists and is not the key itself, use it
+    // If translation exists and is not the key itself, use translation
     if (translated && translated !== `documentTypes.${camelCase}`) {
       return translated;
     }
@@ -248,7 +248,6 @@ const DraftHistory = () => {
             return `Letter to ${match[1].trim()}`;
           }
         }
-        
         // Look for specific document types in content
         if (trimmedLine.toLowerCase().includes('notice') || trimmedLine.toLowerCase().includes('bekanntmachung')) {
           return 'Notice';
@@ -324,7 +323,7 @@ const DraftHistory = () => {
     if (diffInMinutes < 30) {
       return diffInMinutes < 1 ? t('draftHistory.timeAgo.justNow') : t('draftHistory.timeAgo.minutesAgo', { minutes: diffInMinutes });
     }
-    // 否则显示日月年时分
+    // Otherwise show date and time
     return date.toLocaleString(t('language') === 'de' ? 'de-DE' : 'en-US', {
       year: 'numeric',
       month: '2-digit',
@@ -340,7 +339,7 @@ const DraftHistory = () => {
       div.innerHTML = content.replace(/<br>/g, '\n');
       await navigator.clipboard.writeText(div.innerText);
       setShowCopySuccess(true);
-      // 3秒后自动隐藏提示
+      // Automatically hide the prompt after 3 seconds
       setTimeout(() => {
         setShowCopySuccess(false);
       }, 3000);
@@ -509,7 +508,7 @@ const DraftHistory = () => {
         )}
       </div>
 
-      {/* 分页控件 */}
+      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-6 gap-2 items-center">
           <button className="btn-outline px-3" disabled={currentPage===1} onClick={()=>{setCurrentPage(p=>p-1); window.scrollTo({top:0,behavior:'smooth'});}}>{t('common.prev')}</button>
