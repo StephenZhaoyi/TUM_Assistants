@@ -66,10 +66,23 @@ const FreePromptInput = () => {
     }
   }
 
+  // 复制为富文本（HTML）
   const handleCopy = async () => {
     if (generatedDraft) {
       try {
-        await navigator.clipboard.writeText(generatedDraft.content)
+        // 使用 Clipboard API 写入 HTML 和纯文本
+        await navigator.clipboard.write([
+          new window.ClipboardItem({
+            'text/html': new Blob([generatedDraft.content], { type: 'text/html' }),
+            'text/plain': new Blob([
+              (() => {
+                const tmp = document.createElement('div');
+                tmp.innerHTML = generatedDraft.content;
+                return tmp.innerText || tmp.textContent || '';
+              })()
+            ], { type: 'text/plain' })
+          })
+        ]);
         setShowCopySuccess(true)
         setTimeout(() => {
           setShowCopySuccess(false)

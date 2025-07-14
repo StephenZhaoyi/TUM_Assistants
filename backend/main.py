@@ -243,17 +243,31 @@ async def delete_draft(draft_id: str):
 
 @app.post("/api/gemini_edit")
 async def gemini_edit_api(req: GeminiEditRequest):
-    """使用 Gemini 对草稿进行二次编辑"""
+    """Secondary editing of drafts with Gemini"""
     from core import client
-    prompt = f"""
-你是一个行政文档写作助手。请根据用户的修改要求对以下草稿内容进行修改：
+    prompt = f""" You are an AI assistant dedicated to supporting TUM staff. Your sole responsibility is to generate professional email drafts or administrative documents strictly related to TUM staff work. 
 
-【用户要求】：{req.instruction}
+    Examples of acceptable topics include:
+    - Holiday notices  
+    - Language course consultations  
+    - Replies to students or professors  
+    - Administrative coordination within the university  
 
-【原始草稿】：
+    If a user request is not clearly related to TUM staff email communication or administrative tasks, politely refuse to respond.  
+    Always return the refusal message in both English and German.
+
+    Refusal text:  
+    "I cannot fulfill your request as it is not related to TUM staff email or administrative tasks."  
+    "Ich kann Ihre Anfrage nicht bearbeiten, da sie nicht im Zusammenhang mit E-Mails oder administrativen Aufgaben für TUM-Mitarbeiter steht."
+
+    Please revise the following draft content according to the user's revision requests:
+
+【User's request】：{req.instruction}
+
+【original draft】：
 {req.content}
 
-请严格保留原有文档的结构、格式（如加粗、换行、列表等），只做必要的内容调整。输出格式为 HTML，换行请用<br>，加粗请用<strong>，不要添加解释。
+Please strictly retain the original document structure and format (such as bold, line breaks, lists, etc.), and only make necessary content adjustments. The output format is HTML. Use <br> for line breaks and <strong> for bold text. Do not add explanations.
 """
     try:
         response = client.models.generate_content(
