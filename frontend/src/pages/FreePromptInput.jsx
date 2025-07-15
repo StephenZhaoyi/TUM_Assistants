@@ -45,9 +45,11 @@ const FreePromptInput = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt, tone })
       })
-      if (!response.ok) throw new Error(t('freePrompt.generationError'))
-      const data = await response.json()
-      
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error('API 请求失败: ' + response.status + ' 内容: ' + text);
+      }
+      const data = await response.json();
       // Only save to local state, do not save to backend
       const localDraft = {
         type: 'freeTextGeneration',
@@ -57,7 +59,6 @@ const FreePromptInput = () => {
         prompt,
         createdAt: new Date().toISOString()
       }
-      
       setGeneratedDraft(localDraft)
     } catch (err) {
       console.error('Free prompt generation error:', err)

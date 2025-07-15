@@ -21,7 +21,10 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "http://localhost:5501", "http://localhost:5502"], 
+    allow_origins=[
+        "https://tum-assistants-frontend.onrender.com",  # Render 前端实际域名
+        "http://localhost:5500", "http://localhost:5501", "http://localhost:5502"
+    ], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -181,10 +184,19 @@ async def holiday_notice_api(req: HolidayNoticeRequest):
     content = process_holiday_notice(holiday_name=req.holiday_name, holiday_date=req.holiday_date, name=req.name)
     return {"content": content}
 
+#@app.post("/api/free_prompt")
+#async def free_prompt_api(req: FreePromptRequest):
+#    content = process_free_prompt(prompt=req.prompt, tone=req.tone)
+#    return {"content": content}
+
 @app.post("/api/free_prompt")
 async def free_prompt_api(req: FreePromptRequest):
-    content = process_free_prompt(prompt=req.prompt, tone=req.tone)
-    return {"content": content}
+    try:
+        content = process_free_prompt(prompt=req.prompt, tone=req.tone)
+        return {"content": content or ""}
+    except Exception as e:
+        return {"content": f"Error: {str(e)}"}
+
 
 @app.get("/api/self_templates")
 async def get_self_customizing_templates():

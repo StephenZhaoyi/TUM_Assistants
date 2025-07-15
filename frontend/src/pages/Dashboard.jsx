@@ -259,7 +259,12 @@ const Dashboard = () => {
     if (!isInitialized) return
     setIsLoading(true)
     fetch(apiUrl('/api/drafts'))
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          return res.text().then(text => { throw new Error('API 请求失败: ' + res.status + ' 内容: ' + text); });
+        }
+        return res.json();
+      })
       .then(data => {
         setAllDrafts(data)
         setRecentDrafts(data.slice(0, 5))
