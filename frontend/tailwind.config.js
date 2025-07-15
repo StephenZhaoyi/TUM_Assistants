@@ -11,14 +11,14 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // TUM品牌色彩
+        // TUM brand colors
         'tum-blue': {
           50: '#f0f8ff',
           100: '#e0f2fe',
           200: '#bae6fd',
           300: '#7dd3fc',
           400: '#38bdf8',
-          500: '#0066cc', // TUM主蓝色
+          500: '#0066cc', // TUM main blue
           600: '#0052a3',
           700: '#003d7a',
           800: '#002952',
@@ -30,7 +30,7 @@ export default {
           200: '#fed7aa',
           300: '#fdba74',
           400: '#fb923c',
-          500: '#f97316', // TUM橙色
+          500: '#f97316', // TUM orange
           600: '#ea580c',
           700: '#c2410c',
           800: '#9a3412',
@@ -54,7 +54,7 @@ export default {
           200: '#bae6fd',
           300: '#7dd3fc',
           400: '#38bdf8',
-          500: '#0066cc', // 使用TUM蓝色
+          500: '#0066cc', // Use TUM blue
           600: '#0052a3',
           700: '#003d7a',
           800: '#002952',

@@ -18,7 +18,7 @@ from uuid import uuid4
 
 app = FastAPI()
 
-# 配置CORS
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5500", "http://localhost:5501", "http://localhost:5502"], 
@@ -27,12 +27,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 定义支持的模板类型
+# Define supported template types
 class TemplateRequest(BaseModel):
     templateType: Literal[
         "course_registration", "event_notice", "schedule_request", "schedule_announcement", "schedule_change"
     ]
-    # 所有可能用到的字段（部分可选）
+    # All possible fields (some optional)
     startDate: Optional[str] = None
     endDate: Optional[str] = None
     eventTime: Optional[str] = None
@@ -57,7 +57,7 @@ class TemplateRequest(BaseModel):
     timeOptions: Optional[str] = None
     name: Optional[str] = None
 
-# 草稿存储文件
+# Draft storage file
 DRAFTS_FILE = './drafts.json'
 TEMPLATES_FILE = './templates.json'
 

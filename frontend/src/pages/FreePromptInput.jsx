@@ -47,7 +47,7 @@ const FreePromptInput = () => {
       if (!response.ok) throw new Error(t('freePrompt.generationError'))
       const data = await response.json()
       
-      // 只保存到本地状态，不保存到后端
+      // Only save to local state, do not save to backend
       const localDraft = {
         type: 'freeTextGeneration',
         title: `${t('freePrompt.title')} - ${new Date().toLocaleDateString()}`,
@@ -97,7 +97,7 @@ const FreePromptInput = () => {
     if (!generatedDraft) return;
     
     try {
-      // 保存到后端
+      // Save to backend
       const saveRes = await fetch('/api/drafts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -110,7 +110,7 @@ const FreePromptInput = () => {
       }
       
       const savedDraft = await saveRes.json()
-      // 导航到编辑页面
+      // Navigate to edit page
       navigate(`/draft/${savedDraft.id}`)
     } catch (err) {
       console.error('Save error:', err)
@@ -224,7 +224,7 @@ const FreePromptInput = () => {
         {/* Output Section */}
         <div className="lg:col-span-2">
           <div className="card p-0 flex flex-col h-[600px] min-h-[400px]">
-            {/* 内容区 */}
+            {/* Content area */}
             <div className="p-6 flex-1 overflow-auto">
               <h2 className="text-xl font-semibold text-neutral-900 mb-6">
                 {t('freePrompt.output.title')}
@@ -253,7 +253,7 @@ const FreePromptInput = () => {
                 </div>
               )}
             </div>
-            {/* 按钮栏 */}
+            {/* Button bar */}
             <div className="flex gap-3 p-4 border-t border-neutral-200 bg-white shrink-0 relative">
               {/* Copy Success Toast */}
               {showCopySuccess && (
