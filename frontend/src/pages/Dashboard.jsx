@@ -11,6 +11,7 @@ import {
   Plus,
   Check
 } from 'lucide-react'
+import { apiUrl } from '../utils/api'
 
 // Helper: snake_case -> camelCase
 const toCamel = (str) => str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
@@ -257,7 +258,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!isInitialized) return
     setIsLoading(true)
-    fetch('/api/drafts')
+    fetch(apiUrl('/api/drafts'))
       .then(res => res.json())
       .then(data => {
         setAllDrafts(data)
@@ -290,12 +291,12 @@ const Dashboard = () => {
     
     // Call API to delete on server
     try {
-      await fetch(`/api/drafts/${id}`, { method: 'DELETE' });
+      await fetch(apiUrl(`/api/drafts/${id}`), { method: 'DELETE' });
     } catch (error) {
       console.error('Failed to delete draft:', error);
       // If API call fails, revert UI change
       // (This part can be improved with a more robust state management)
-      fetch('/api/drafts')
+      fetch(apiUrl('/api/drafts'))
         .then(res => res.json())
         .then(data => setRecentDrafts(data.slice(0, 5)))
     }

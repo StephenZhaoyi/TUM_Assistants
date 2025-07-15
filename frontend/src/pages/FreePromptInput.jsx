@@ -11,6 +11,7 @@ import {
   Check
 } from 'lucide-react'
 import ToneSelector from '../components/ToneSelector'
+import { apiUrl } from '../utils/api'
 
 const FreePromptInput = () => {
   const navigate = useNavigate()
@@ -39,7 +40,7 @@ const FreePromptInput = () => {
     setError('')
 
     try {
-      const response = await fetch('/api/free_prompt', {
+      const response = await fetch(apiUrl('/api/free_prompt'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt, tone })
@@ -98,7 +99,7 @@ const FreePromptInput = () => {
     
     try {
       // Save to backend
-      const saveRes = await fetch('/api/drafts', {
+      const saveRes = await fetch(apiUrl('/api/drafts'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(generatedDraft)

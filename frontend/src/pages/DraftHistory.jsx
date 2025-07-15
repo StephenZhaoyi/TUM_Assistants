@@ -12,6 +12,7 @@ import {
   Loader2,
   Check
 } from 'lucide-react'
+import { apiUrl } from '../utils/api'
 
 const DraftHistory = () => {
   const { t, isInitialized } = useTranslation()
@@ -30,7 +31,7 @@ const DraftHistory = () => {
   useEffect(() => {
     if (!isInitialized) return
     setIsLoading(true)
-    fetch('/api/drafts')
+    fetch(apiUrl('/api/drafts'))
       .then(res => res.json())
       .then(data => {
         const draftsArray = Array.isArray(data) ? data : []
@@ -349,7 +350,7 @@ const DraftHistory = () => {
   }
 
   const handleDelete = async (id) => {
-    await fetch(`/api/drafts/${id}`, { method: 'DELETE' })
+    await fetch(apiUrl(`/api/drafts/${id}`), { method: 'DELETE' })
     const newDrafts = drafts.filter(d => d.id !== id)
     setDrafts(newDrafts)
   }

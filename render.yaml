@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: tum-assistants-backend
+    env: python
+    buildCommand: ""
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: PORT
+        value: 10000
+    plan: free
+    rootDir: backend
+
+  - type: static
+    name: tum-assistants-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    rootDir: frontend 
