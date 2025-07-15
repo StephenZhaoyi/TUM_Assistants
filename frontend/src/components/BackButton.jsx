@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react'
 const BackButton = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  // 不在首页时显示返回按钮
+  // Show back button when not on the home page
   if (location.pathname === '/') {
     return null
   }

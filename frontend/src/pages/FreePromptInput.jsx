@@ -66,11 +66,11 @@ const FreePromptInput = () => {
     }
   }
 
-  // 复制为富文本（HTML）
+  // Copy as rich text (HTML)
   const handleCopy = async () => {
     if (generatedDraft) {
       try {
-        // 使用 Clipboard API 写入 HTML 和纯文本
+        // Use Clipboard API to write HTML and plain text
         await navigator.clipboard.write([
           new window.ClipboardItem({
             'text/html': new Blob([generatedDraft.content], { type: 'text/html' }),
