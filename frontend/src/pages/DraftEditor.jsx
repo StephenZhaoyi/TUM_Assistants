@@ -25,6 +25,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
 import { FontSize } from '../extensions/FontSize'
 import { CustomHighlight } from '../extensions/Highlight'
+import { apiUrl } from '../utils/api'
 
 function autoParagraph(html) {
   if (/<p[\s>]/.test(html)) return html;
@@ -80,7 +81,7 @@ const DraftEditor = () => {
     if (location.pathname === '/draft/template-edit') return;
     const loadDraft = async () => {
       try {
-        const res = await fetch(`/api/drafts/${id}`)
+        const res = await fetch(apiUrl(`/api/drafts/${id}`))
         if (!res.ok) throw new Error('Not found')
         const foundDraft = await res.json()
         setDraft(foundDraft)
@@ -183,14 +184,14 @@ const DraftEditor = () => {
         
         // If it's a new template, use POST to create
         if (location.state.isNewTemplate) {
-          await fetch('/api/templates', {
+          await fetch(apiUrl('/api/templates'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTemplate)
           })
         } else {
           // If editing an existing template, use PUT to update
-          await fetch(`/api/templates/${location.state.template.id}`, {
+          await fetch(apiUrl(`/api/templates/${location.state.template.id}`), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTemplate)
@@ -203,7 +204,7 @@ const DraftEditor = () => {
         navigate('/self-customizing-templates')
         return
       }
-      await fetch(`/api/drafts/${id}`, {
+      await fetch(apiUrl(`/api/drafts/${id}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedDraft)
@@ -254,7 +255,7 @@ const DraftEditor = () => {
     setShowTemplateModal(false)
     setTemplateName('')
     try {
-      const res = await fetch('/api/templates', {
+      const res = await fetch(apiUrl('/api/templates'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -297,7 +298,7 @@ const DraftEditor = () => {
     if (!editor || !geminiPrompt.trim()) return
     setIsGeminiLoading(true)
     try {
-      const res = await fetch('/api/gemini_edit', {
+      const res = await fetch(apiUrl('/api/gemini_edit'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

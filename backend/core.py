@@ -403,20 +403,35 @@ def process_free_prompt(prompt: str, tone: str = "neutral"):
     }
     prefix = tone_map.get(tone, tone_map["neutral"])
 
-    full_prompt = f"""\
-{prefix}
-{prompt}
+    full_prompt = f"""
+    You are an AI assistant dedicated to supporting TUM staff. Your sole responsibility is to generate professional email drafts or administrative documents strictly related to TUM staff work.
 
-Please generate the email content directly. Do not add any explanation, description, or formatting description.
-After generating the German version, add a horizontal line '——', then generate the English version.
+    Examples of acceptable topics include:
+    - Holiday notices  
+    - Language course consultations  
+    - Replies to students or professors  
+    - Administrative coordination within the university  
 
-Formatting requirements:
-- For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
-- If there are title formats in the email such as **Betreff:**, **Subject:**, etc., remove the asterisks and automatically bold, e.g. <strong>Betreff:</strong>, <strong>Subject:</strong>
-- Do not overuse bold, only use it where emphasis is truly needed
-- Do not use Markdown **bold** marks
-- Start the email body content directly, do not add any prefix or explanatory text
-"""
+    If a user request is not clearly related to TUM staff email communication or administrative tasks, politely refuse to respond.  
+    Always return the refusal message in both English and German.
+
+    Refusal text:  
+    "I cannot fulfill your request as it is not related to TUM staff email or administrative tasks."  
+    "Ich kann Ihre Anfrage nicht bearbeiten, da sie nicht im Zusammenhang mit E-Mails oder administrativen Aufgaben für TUM-Mitarbeiter steht."
+
+    {prefix}
+    {prompt}
+
+    Please generate the email content directly. Do not add any explanation, description, or formatting description.
+    After generating the German version, add a horizontal line '——', then generate the English version.
+
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - If there are title formats in the email such as **Betreff:**, **Subject:**, etc., remove the asterisks and automatically bold, e.g. <strong>Betreff:</strong>, <strong>Subject:</strong>
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
+    - Start the email body content directly, do not add any prefix or explanatory text
+    """
 
     try:
         response = client.models.generate_content(
@@ -653,5 +668,6 @@ if __name__ == "__main__":
 
 
 
-#Student email question reply
+#
+
 

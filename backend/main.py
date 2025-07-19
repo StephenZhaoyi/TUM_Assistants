@@ -21,7 +21,10 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "http://localhost:5501", "http://localhost:5502"], 
+    allow_origins=[
+        "https://tum-assistants-frontend.onrender.com",  # Render 前端实际域名
+        "http://localhost:5500", "http://localhost:5501", "http://localhost:5502"
+    ], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -181,10 +184,19 @@ async def holiday_notice_api(req: HolidayNoticeRequest):
     content = process_holiday_notice(holiday_name=req.holiday_name, holiday_date=req.holiday_date, name=req.name)
     return {"content": content}
 
+#@app.post("/api/free_prompt")
+#async def free_prompt_api(req: FreePromptRequest):
+#    content = process_free_prompt(prompt=req.prompt, tone=req.tone)
+#    return {"content": content}
+
 @app.post("/api/free_prompt")
 async def free_prompt_api(req: FreePromptRequest):
-    content = process_free_prompt(prompt=req.prompt, tone=req.tone)
-    return {"content": content}
+    try:
+        content = process_free_prompt(prompt=req.prompt, tone=req.tone)
+        return {"content": content or ""}
+    except Exception as e:
+        return {"content": f"Error: {str(e)}"}
+
 
 @app.get("/api/self_templates")
 async def get_self_customizing_templates():
@@ -243,17 +255,31 @@ async def delete_draft(draft_id: str):
 
 @app.post("/api/gemini_edit")
 async def gemini_edit_api(req: GeminiEditRequest):
-    """Use Gemini to perform secondary editing of drafts"""
+    """Secondary editing of drafts with Gemini"""
     from core import client
-    prompt = f"""
-You are an administrative document writing assistant. Please modify the following draft content according to the user's revision instructions:
+    prompt = f""" You are an AI assistant dedicated to supporting TUM staff. Your sole responsibility is to generate professional email drafts or administrative documents strictly related to TUM staff work. 
 
-[User Instruction]: {req.instruction}
+    Examples of acceptable topics include:
+    - Holiday notices  
+    - Language course consultations  
+    - Replies to students or professors  
+    - Administrative coordination within the university  
 
-[Original Draft]:
+    If a user request is not clearly related to TUM staff email communication or administrative tasks, politely refuse to respond.  
+    Always return the refusal message in both English and German.
+
+    Refusal text:  
+    "I cannot fulfill your request as it is not related to TUM staff email or administrative tasks."  
+    "Ich kann Ihre Anfrage nicht bearbeiten, da sie nicht im Zusammenhang mit E-Mails oder administrativen Aufgaben für TUM-Mitarbeiter steht."
+
+    Please revise the following draft content according to the user's revision requests:
+
+【User's request】：{req.instruction}
+
+【original draft】：
 {req.content}
 
-Please strictly retain the original structure and formatting of the document (such as bold, line breaks, lists, etc.), and only make necessary content adjustments. The output format should be HTML, use <br> for line breaks, <strong> for bold, and do not add explanations.
+Please strictly retain the original document structure and format (such as bold, line breaks, lists, etc.), and only make necessary content adjustments. The output format is HTML. Use <br> for line breaks and <strong> for bold text. Do not add explanations.
 """
     try:
         response = client.models.generate_content(

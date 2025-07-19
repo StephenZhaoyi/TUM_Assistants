@@ -11,6 +11,7 @@ import {
   Check
 } from 'lucide-react'
 import ToneSelector from '../components/ToneSelector'
+import { apiUrl } from '../utils/api'
 
 const FreePromptInput = () => {
   const navigate = useNavigate()
@@ -39,14 +40,16 @@ const FreePromptInput = () => {
     setError('')
 
     try {
-      const response = await fetch('/api/free_prompt', {
+      const response = await fetch(apiUrl('/api/free_prompt'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt, tone })
       })
-      if (!response.ok) throw new Error(t('freePrompt.generationError'))
-      const data = await response.json()
-      
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error('API 请求失败: ' + response.status + ' 内容: ' + text);
+      }
+      const data = await response.json();
       // Only save to local state, do not save to backend
       const localDraft = {
         type: 'freeTextGeneration',
@@ -56,7 +59,6 @@ const FreePromptInput = () => {
         prompt,
         createdAt: new Date().toISOString()
       }
-      
       setGeneratedDraft(localDraft)
     } catch (err) {
       console.error('Free prompt generation error:', err)
@@ -66,10 +68,23 @@ const FreePromptInput = () => {
     }
   }
 
+  // Copy as rich text (HTML)
   const handleCopy = async () => {
     if (generatedDraft) {
       try {
-        await navigator.clipboard.writeText(generatedDraft.content)
+        // Use Clipboard API to write HTML and plain text
+        await navigator.clipboard.write([
+          new window.ClipboardItem({
+            'text/html': new Blob([generatedDraft.content], { type: 'text/html' }),
+            'text/plain': new Blob([
+              (() => {
+                const tmp = document.createElement('div');
+                tmp.innerHTML = generatedDraft.content;
+                return tmp.innerText || tmp.textContent || '';
+              })()
+            ], { type: 'text/plain' })
+          })
+        ]);
         setShowCopySuccess(true)
         setTimeout(() => {
           setShowCopySuccess(false)
@@ -85,7 +100,7 @@ const FreePromptInput = () => {
     
     try {
       // Save to backend
-      const saveRes = await fetch('/api/drafts', {
+      const saveRes = await fetch(apiUrl('/api/drafts'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(generatedDraft)

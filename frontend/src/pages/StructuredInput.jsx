@@ -7,6 +7,7 @@ import {
   Loader2,
   Check
 } from 'lucide-react'
+import { apiUrl } from '../utils/api'
 
 const StructuredInput = () => {
   const navigate = useNavigate()
@@ -159,7 +160,7 @@ const StructuredInput = () => {
         payload = { holiday_name: formData.holidayName, holiday_date: formData.holidayDate, name: formData.name }
       }
 
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(apiUrl(apiEndpoint), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -202,7 +203,7 @@ const StructuredInput = () => {
         source: lastGenerationData,
       }
       
-      const saveRes = await fetch('/api/drafts', {
+      const saveRes = await fetch(apiUrl('/api/drafts'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDraft)

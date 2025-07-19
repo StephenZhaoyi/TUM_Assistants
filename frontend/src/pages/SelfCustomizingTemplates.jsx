@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from '../translations'
 import { Copy, Edit, Trash2, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../utils/api'
 
 function extractTitleFromHtml(html) {
   const div = document.createElement('div');
@@ -67,7 +68,7 @@ const SelfCustomizingTemplates = () => {
   const pagedTemplates = filteredTemplates.slice((currentPage-1)*pageSize, currentPage*pageSize);
 
   useEffect(() => {
-    fetch('/api/templates')
+    fetch(apiUrl('/api/templates'))
       .then(res => res.json())
       .then(data => {
         // Adapt to the template structure returned by the backend
@@ -120,7 +121,7 @@ const SelfCustomizingTemplates = () => {
   const handleDelete = async (idx) => {
     const tpl = templates[idx]
     if (!tpl.id) return
-    await fetch(`/api/templates/${tpl.id}`, { method: 'DELETE' })
+    await fetch(apiUrl(`/api/templates/${tpl.id}`), { method: 'DELETE' })
     setTemplates(templates.filter((_, i) => i !== idx))
     if (openIdx === idx) setOpenIdx(null)
   }
@@ -134,7 +135,7 @@ const SelfCustomizingTemplates = () => {
     if (!editTitle.trim()) return
     const tpl = templates[editIdx]
     const updated = { ...tpl, title: editTitle.trim(), content: editContent }
-    await fetch(`/api/templates/${tpl.id}`, {
+    await fetch(apiUrl(`/api/templates/${tpl.id}`), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)

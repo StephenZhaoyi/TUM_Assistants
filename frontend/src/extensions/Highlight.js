@@ -4,7 +4,7 @@ export const CustomHighlight = Highlight.extend({
   addAttributes() {
     return {
       color: {
-        default: '#ffff00', // 默认正黄色
+        default: '#ffff00', // Default bright yellow
         parseHTML: element => element.style.backgroundColor || '#ffff00',
         renderHTML: attributes => {
           if (!attributes.color) {
@@ -30,7 +30,7 @@ export const CustomHighlight = Highlight.extend({
     }
   },
 
-  // 确保高亮不会覆盖文本颜色
+  // Ensure highlight does not override text color
   addGlobalAttributes() {
     return [
       {
