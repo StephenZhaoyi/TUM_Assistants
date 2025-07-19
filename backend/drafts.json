@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "type": "course_registration",
+    "title": "documentTypes.course_registration - All Students",
+    "content": "<p>📩 Scroll down for English version<br><br>---<br><br>[Deutsch]<br><br>**Zielgruppe: All Students**<br><br>Liebe*r Studierende*r,<br><br>bitte beachten Sie, dass die Prüfungsanmeldung für Ihre Prüfungen ab **01. Mai 2025** möglich ist. Die Anmeldefrist endet am **01. Juni 2025**.<br><br>Alle oben genannten Studierenden werden gebeten, sich rechtzeitig über TUMonline für die entsprechenden Prüfungen anzumelden. Eine nachträgliche Anmeldung ist nicht möglich.<br><br>Bitte stellen Sie sicher, dass Sie alle relevanten Informationen zu Ihren Prüfungen frühzeitig überprüfen.<br><br>Bei Fragen wenden Sie sich bitte an das Prüfungsamt oder Ihre Studienkoordination.<br><br>Mit freundlichen Grüßen <br>Yi Zhao<br><br>---<br><br>[English]<br><br>**Target group: All Students**<br><br>Dear Student,<br><br>Please note that exam registration will be open from **01 May 2025** and will close on **01 June 2025**.<br><br>All students in the above-mentioned group are required to register for their exams in TUMonline within the given period. Late registration is not possible.<br><br>Make sure to review all relevant exam information in advance.<br><br>If you have any questions, please contact the Examination Office or your program coordinator.<br><br>Best regards, <br>Yi Zhao</p>",
+    "createdAt": "2025-07-02T15:10:55.102Z",
+    "source": {
+      "category": "student",
+      "documentType": "course_registration",
+      "startDate": "01.05.2025",
+      "endDate": "01.06.2025",
+      "targetAudience": "All Students",
+      "name": "Yi Zhao"
+    },
+    "id": "95453fed-6079-48ed-bdee-03d29f613241",
+    "updatedAt": "2025-07-02T15:10:57.447Z"
+  }
+]
