@@ -1,0 +1,33 @@
+directories:
+  output: dist
+  buildResources: assets
+appId: com.example.TUM_Assistant
+productName: TUM_Assistant
+files:
+  - filter:
+      - frontend/**/*
+      - main.js
+extraResources:
+  - from: ../backend/build/main.dist
+    to: backend
+mac:
+  category: public.app-category.utilities
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+  shortcutName: TUM_Assistant
+  installerLanguages:
+    - en_US
+    - de_DE
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+electronVersion: 37.2.3
