@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from '../translations'
+import { useToast } from '../contexts/ToastContext'
 import { 
   Save, 
   Copy, 
@@ -8,7 +9,6 @@ import {
   ArrowLeft,
   Loader2,
   Lightbulb,
-  Check,
   Bold,
   Italic,
   Quote,
@@ -41,13 +41,12 @@ const DraftEditor = () => {
   const { id } = useParams()
   const location = useLocation()
   const { t, language, isInitialized } = useTranslation()
+  const { showCopySuccess, showSaveSuccess } = useToast()
   const navigate = useNavigate()
   const [draft, setDraft] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
-  const [showCopySuccess, setShowCopySuccess] = useState(false)
-  const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [geminiPrompt, setGeminiPrompt] = useState('')
   const [isGeminiLoading, setIsGeminiLoading] = useState(false)
   const [showTemplateModal, setShowTemplateModal] = useState(false)
@@ -198,8 +197,7 @@ const DraftEditor = () => {
           })
         }
         setIsSaving(false)
-        setShowSaveSuccess(true)
-        setTimeout(() => setShowSaveSuccess(false), 3000)
+        showSaveSuccess(t('messages.saveSuccess') || 'Saved successfully!')
         // Return to template page
         navigate('/self-customizing-templates')
         return
@@ -210,8 +208,7 @@ const DraftEditor = () => {
         body: JSON.stringify(updatedDraft)
       })
       setTimeout(() => setIsSaving(false), 1000)
-      setShowSaveSuccess(true)
-      setTimeout(() => setShowSaveSuccess(false), 3000)
+      showSaveSuccess(t('messages.saveSuccess') || 'Saved successfully!')
     } catch (error) {
       setIsSaving(false)
     }
@@ -233,10 +230,7 @@ const DraftEditor = () => {
         // fallback: only copy plain text
         await navigator.clipboard.writeText(div.innerText)
       }
-      setShowCopySuccess(true)
-      setTimeout(() => {
-        setShowCopySuccess(false)
-      }, 3000)
+      showCopySuccess(t('messages.copySuccess'))
     } catch (err) {
       console.error('Copy failed:', err)
     }
@@ -361,20 +355,6 @@ const DraftEditor = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* Copy Success Toast */}
-      {showCopySuccess && (
-        <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
-          <Check className="h-4 w-4" />
-          <span>{t('messages.copySuccess')}</span>
-        </div>
-      )}
-      {/* Save Success Toast */}
-      {showSaveSuccess && (
-        <div className="fixed top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
-          <Check className="h-4 w-4" />
-          <span>{t('messages.saveSuccess') || 'Saved successfully!'}</span>
-        </div>
-      )}
       
       <div className="flex items-center justify-between mb-6">
         <div>
