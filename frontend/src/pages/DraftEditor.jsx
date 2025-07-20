@@ -47,6 +47,7 @@ const DraftEditor = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
   const [showCopySuccess, setShowCopySuccess] = useState(false)
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [geminiPrompt, setGeminiPrompt] = useState('')
   const [isGeminiLoading, setIsGeminiLoading] = useState(false)
   const [showTemplateModal, setShowTemplateModal] = useState(false)
@@ -197,6 +198,8 @@ const DraftEditor = () => {
           })
         }
         setIsSaving(false)
+        setShowSaveSuccess(true)
+        setTimeout(() => setShowSaveSuccess(false), 3000)
         // Return to template page
         navigate('/self-customizing-templates')
         return
@@ -207,6 +210,8 @@ const DraftEditor = () => {
         body: JSON.stringify(updatedDraft)
       })
       setTimeout(() => setIsSaving(false), 1000)
+      setShowSaveSuccess(true)
+      setTimeout(() => setShowSaveSuccess(false), 3000)
     } catch (error) {
       setIsSaving(false)
     }
@@ -361,6 +366,13 @@ const DraftEditor = () => {
         <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
           <Check className="h-4 w-4" />
           <span>{t('messages.copySuccess')}</span>
+        </div>
+      )}
+      {/* Save Success Toast */}
+      {showSaveSuccess && (
+        <div className="fixed top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-50">
+          <Check className="h-4 w-4" />
+          <span>{t('messages.saveSuccess') || 'Saved successfully!'}</span>
         </div>
       )}
       

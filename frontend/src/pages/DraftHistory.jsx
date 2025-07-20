@@ -10,7 +10,8 @@ import {
   Trash2,
   FileText,
   Loader2,
-  Check
+  Check,
+  SortAsc
 } from 'lucide-react'
 import { apiUrl } from '../utils/api'
 
@@ -423,6 +424,7 @@ const DraftHistory = () => {
 
           {/* Sort */}
           <div className="relative">
+            <SortAsc className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}

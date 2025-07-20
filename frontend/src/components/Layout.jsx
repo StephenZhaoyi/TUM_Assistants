@@ -8,7 +8,7 @@ import {
   MessageSquare, 
   History
 } from 'lucide-react'
-import tumLogo from '../assets/TUM.png'
+import myLogo from '../assets/Logo.png'
 import BackButton from './BackButton'
 
 const Layout = ({ children }) => {
@@ -44,8 +44,8 @@ const Layout = ({ children }) => {
             <div className="flex items-center">
               <BackButton />
               <img 
-                src={tumLogo}
-                alt={t('header.logo')}
+                src={myLogo}
+                alt="My Logo"
                 className="h-12 w-auto"
               />
             </div>

@@ -144,7 +144,7 @@ const FreePromptInput = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="lg:col-span-1">
           <div className="card p-6">
@@ -162,8 +162,8 @@ const FreePromptInput = () => {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder={t('freePrompt.form.placeholder')}
-                  className="textarea w-full"
-                  rows={4}
+                  className="textarea w-full min-h-[160px]"
+                  rows={10}
                 />
               </div>
 
@@ -224,7 +224,7 @@ const FreePromptInput = () => {
         </div>
 
         {/* Output Section */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-1">
           <div className="card p-0 flex flex-col h-[600px] min-h-[400px]">
             {/* Content area */}
             <div className="p-6 flex-1 overflow-auto">
