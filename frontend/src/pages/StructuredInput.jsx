@@ -19,6 +19,7 @@ const StructuredInput = () => {
   const [error, setError] = useState('')
   const [lastGenerationData, setLastGenerationData] = useState(null)
   const [showCopySuccess, setShowCopySuccess] = useState(false)
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false)
 
   if (!isInitialized) {
     return null
@@ -215,6 +216,9 @@ const StructuredInput = () => {
       }
 
       const savedDraft = await saveRes.json()
+
+      setShowSaveSuccess(true)
+      setTimeout(() => setShowSaveSuccess(false), 2000)
       navigate(`/draft/${savedDraft.id}`)
 
     } catch(err) {
@@ -378,6 +382,12 @@ const StructuredInput = () => {
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-[9999]">
           <Check className="h-4 w-4" />
           <span>{t('messages.copySuccess')}</span>
+        </div>
+      )}
+      {showSaveSuccess && (
+        <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 z-[9999]">
+          <Check className="h-4 w-4" />
+          <span>{t('draftEditor.saveSuccess')}</span>
         </div>
       )}
     </div>

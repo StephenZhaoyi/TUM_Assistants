@@ -549,7 +549,7 @@ def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
     except Exception as e:
         print(f"Failed to read holiday_notice template: {str(e)}")
         return None
-
+    
     if holiday_name:
         template = template.replace("{holiday_name}", f"<strong>{holiday_name}</strong>")
     if holiday_date:
@@ -558,11 +558,39 @@ def process_holiday_notice(holiday_name=None, holiday_date=None, name=None):
         template = template.replace("{name}", name)
     else:
         template = template.replace("{name}", "Student Service Center")
-
-    content = template.replace('\n', '<br>')
     de_title = "<strong>Betreff:</strong> Feiertagsankündigung<br>"
     en_title = "<strong>Subject:</strong> Holiday Notice<br><br>"
-    return de_title + en_title + content
+
+    prompt = f"""
+    Strictly generate a bilingual (German-English) holiday notification according to the following template format. Do not add any extra content or explanation:
+    At the very beginning of the email, generate German and English titles, formatted as <strong>Betreff:</strong> ... and <strong>Subject:</strong> ... respectively. The title content should be automatically summarized based on the email content. If the template contains title formats like **Betreff:**, **Subject:**, etc., remove the asterisks and wrap with <strong>.
+    All variables should be replaced according to the input parameters; keep line breaks, list symbols, spaces, and bold marks, but do not use asterisks (*) as formatting marks;
+    Start the email body content directly.
+    Ensure the date format is consistent as DD.MM.YYYY and highlight it in the output. MM should be translated to the corresponding language's month expression, not a number;
+    Please help translate all user input information into English in the English version and into German in the German version;
+    Output only the email content, do not add any explanation, description, or formatting description.
+
+    Formatting requirements:
+    - For important words or phrases that need emphasis, use HTML format: <strong>important content</strong>
+    - Do not overuse bold, only use it where emphasis is truly needed
+    - Do not use Markdown **bold** marks
+
+    Template content:
+    {template}
+    """
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        contents = response.text.replace('\n', '<br>')
+        return extract_and_prepend_titles(contents)
+    except Exception as e:
+        print(f"Failed to generate holiday notification: {str(e)}")
+        return None
+
+    #return de_title + en_title + content
 
 def extract_and_prepend_titles(content):
     # Extract German and English titles

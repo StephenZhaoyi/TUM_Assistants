@@ -320,6 +320,23 @@ async def delete_template(template_id: str):
     save_templates(templates)
     return {"success": True}
 
+
+from fastapi import Request
+
+class HolidayNoticeRequest(BaseModel):
+    holiday_name: str
+    holiday_date: str
+    name: str = None
+
+@app.post("/api/holiday_notice")
+async def holiday_notice_api(req: HolidayNoticeRequest):
+    content = process_holiday_notice(
+        holiday_name=req.holiday_name,
+        holiday_date=req.holiday_date,
+        name=req.name
+    )
+    return {"content": content}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
